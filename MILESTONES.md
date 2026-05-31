@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: core_claim_plus**
 
 ## Progress Log
 
@@ -22,5 +22,10 @@
 - The five-target target-session run completed but did not preserve the control gap; shuffled LR ranked closer top candidates than LR on average.
 - Replaced the target-session shortcut with the released synthetic-train/random-candidate protocol used for Table 1 scale-downs.
 - Restored the upstream shuffled/aligned RMSE ratio scoring and submitted a faithful five-target rerun.
+
+### [2026-05-31 12:04] - core_claim_plus
+- The five-target synthetic-random run completed successfully with LR `target_rank=1.4`, `top_rank_distance=0.023`, and `control_gap_top_rank_distance=21.509`.
+- The shuffled and dummy controls remained much worse while supervision audit metrics stayed at zero.
+- Submitting an all-target synthetic-random run with 1000 observations per target to expand toward the paper's Table 1 setting.
 
 ## Stop Justification

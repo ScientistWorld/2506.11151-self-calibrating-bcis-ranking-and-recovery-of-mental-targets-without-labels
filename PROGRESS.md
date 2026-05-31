@@ -19,11 +19,16 @@
 - The main method beats both controls on top-ranked candidate distance while preserving zero label supervision and zero pretrained decoder use, supporting the core claim at small scale.
 - Job `518c02f7-f66` completed on five target-specific sessions, but this shortcut did not reproduce the claim: LR `top_rank_distance=16.246` while shuffled LR reached `13.803`.
 - Because that failure came from a known protocol shortcut, the next job switches to the released synthetic train/random candidate construction rather than tuning the shortcut.
+- Job `179c678c-167` completed on the five-target synthetic-random protocol and strongly supports the core claim:
+  - `lr`: `top_rank_distance=0.023`, `target_rank=1.4`, `score_distance_pearson_r=-0.832`, `control_gap_top_rank_distance=21.509`
+  - `s_lr`: `top_rank_distance=21.532`, `target_rank=9.0`, `score_distance_pearson_r=-0.380`
+  - `dummy`: `top_rank_distance=22.066`, `target_rank=38.4`, `score_distance_pearson_r=0.000`
+- This reaches `core_claim_plus`: the paper-style generated candidate protocol works beyond the one-target smoke setting and preserves the zero-label, zero-pretrained-decoder constraints.
 
 ## Remaining
 
-- Run the five-target synthetic-random CPU job and inspect whether the control gap persists.
-- If the five-target synthetic-random run works, expand targets or observations toward the Table 1 setting for `core_claim_plus`.
+- Run the all-target synthetic-random CPU job with 1000 observations per target.
+- If the all-target job works, consider adding a diagonal-candidate setting or more estimators for secondary coverage.
 
 ## Issues
 
@@ -35,4 +40,5 @@
 - Paper setting: full ranking experiments use generated train/test candidate sets and report averages across 17 targets and repeated train splits.
 - Completed first job: target-specific observed sessions, 1 target, up to 300 observations per target. The CURSOR scoring algorithm itself is unchanged; only the scale/data split was reduced for a smoke test.
 - Completed diagnostic job: target-specific observed sessions, 5 targets, up to 500 observations per target; it did not support a stronger milestone.
-- Next job: synthetic generated train faces, random candidates with exact target included, 5 targets, up to 500 observations per target.
+- Completed core-plus job: synthetic generated train faces, random candidates with exact target included, 5 targets, up to 500 observations per target.
+- Next job: same synthetic-random protocol across all 17 targets, up to 1000 observations per target.

@@ -3,6 +3,6 @@
 # only after your turn ends. Sleeping blocks the entire pipeline.
 action: submit
 gpus: 0
-test: true
-milestone: core_claim
-notes: "Rerun CURSOR with paper-style synthetic train faces and random candidate hypotheses across 5 targets to test the Table 1 ranking protocol."
+test: false
+milestone: core_claim_plus
+notes: "Expand the successful synthetic-random CURSOR run to all 17 targets with 1000 observations per target."

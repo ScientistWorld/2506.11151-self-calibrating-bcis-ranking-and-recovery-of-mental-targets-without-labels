@@ -14,10 +14,11 @@ set -e
 cd /home/user
 
 # Paper-style synthetic-random CPU run. The full scripts remain externally
-# configurable; these defaults test whether the effect holds across targets.
+# configurable; these defaults expand the successful five-target setting to
+# every target while keeping runtime under the CPU-node limit.
 export PROTOCOL="${PROTOCOL:-synthetic_random}"
-export N_TARGETS="${N_TARGETS:-5}"
-export N_OBSERVATIONS="${N_OBSERVATIONS:-500}"
+export N_TARGETS="${N_TARGETS:-17}"
+export N_OBSERVATIONS="${N_OBSERVATIONS:-1000}"
 export SEED="${SEED:-0}"
 
 bash scripts/method.sh
