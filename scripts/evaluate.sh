@@ -26,5 +26,10 @@ cd /home/user
 
 mkdir -p scoring
 
-INPUT="${1:-outputs/cursor_ranking.json}"
-python eval/evaluate_cursor.py --input "$INPUT" --scores scoring/scores.json
+if [ "$#" -gt 0 ]; then
+  INPUTS=("$@")
+else
+  INPUTS=(outputs/cursor_ranking.json)
+fi
+
+python eval/evaluate_cursor.py --input "${INPUTS[@]}" --scores scoring/scores.json

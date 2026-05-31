@@ -8,6 +8,8 @@
 - The method runner now supports the paper-style generated train faces and random candidate hypotheses used for Table 1 scale-downs.
 - The evaluator reads method outputs from `outputs/` and writes `scoring/scores.json` without importing from `method/`.
 - Scoring target, constraint, experiment, and research-direction files now match the implemented benchmark experiment.
+- The evaluator now accepts multiple output artifacts, allowing raw-EEG and
+  EEGNet ranking experiments to be scored together.
 
 ## Results
 
@@ -36,8 +38,11 @@
 
 ## Remaining
 
-- Higher milestones would require adding more paper variants, such as diagonal
-  candidate sets, SVR/MLP estimators, and downstream calibration experiments.
+- The next submitted job targets the paper's secondary EEGNet representation
+  claim. If successful, the workspace can advance to `secondary_claims`.
+- Higher milestones after that would require adding more paper variants, such
+  as diagonal candidate sets, SVR/MLP estimators, and downstream calibration
+  experiments.
 
 ## Issues
 
@@ -53,3 +58,6 @@
 - Attempted expansion: same synthetic-random protocol across all 17 targets, up to 1000 observations per target; this exceeded the CPU job limit.
 - Attempted expansion: same all-target protocol with 500 observations per target; this completed 14 targets before timeout.
 - Completed expansion: same all-target protocol with 300 observations per target plus progress logging and partial output writes.
+- Pending expansion: same all-target synthetic-random ranking protocol on the
+  released `eeg_net` representation, at 300 observations per target and 5 CV
+  splits to stay within CPU runtime.

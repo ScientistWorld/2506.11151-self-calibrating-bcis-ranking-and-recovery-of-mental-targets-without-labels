@@ -18,4 +18,24 @@ set -e
 
 cd /home/user
 
+PROTOCOL="${PROTOCOL:-synthetic_random}" \
+N_TARGETS="${N_TARGETS:-17}" \
+N_OBSERVATIONS="${N_OBSERVATIONS:-300}" \
+N_SPLITS="${N_SPLITS:-10}" \
+SEED="${SEED:-0}" \
+EEG=eeg_raw \
+OUTPUT=outputs/cursor_ranking.json \
+CONTINUE_EXISTING=1 \
 bash scripts/method.sh
+
+PROTOCOL="${PROTOCOL:-synthetic_random}" \
+N_TARGETS="${N_TARGETS:-17}" \
+N_OBSERVATIONS="${N_OBSERVATIONS:-300}" \
+N_SPLITS="${EEGNET_N_SPLITS:-5}" \
+SEED="${SEED:-0}" \
+EEG=eeg_net \
+OUTPUT=outputs/cursor_ranking_eegnet.json \
+CONTINUE_EXISTING=1 \
+bash scripts/method.sh
+
+bash scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet.json

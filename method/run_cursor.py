@@ -26,8 +26,11 @@ from method.cursor import CursorConfig, score_candidates  # noqa: E402
 
 
 def write_output(path: Path, args: argparse.Namespace, runs: list[dict], complete: bool) -> None:
+    experiment = "unsupervised_ranking_target_sessions"
+    if args.eeg == "eeg_net":
+        experiment = "unsupervised_ranking_eegnet"
     output = {
-        "experiment": "unsupervised_ranking_target_sessions",
+        "experiment": experiment,
         "data": str(Path(args.data).resolve()),
         "eeg": args.eeg,
         "seed": args.seed,
@@ -56,6 +59,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-candidates", type=int, default=60)
     parser.add_argument("--n-splits", type=int, default=10)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument(
+        "--continue-existing",
+        action="store_true",
+        help="Resume from an incomplete output file with the same run schema.",
+    )
     return parser.parse_args()
 
 
@@ -78,9 +86,21 @@ def main() -> None:
     rng = np.random.default_rng(args.seed)
     target_order = rng.permutation(len(targets))[: args.n_targets]
 
-    runs = []
     out_path = Path(args.output)
+    runs = []
+    if args.continue_existing and out_path.exists():
+        previous = json.loads(out_path.read_text())
+        if (
+            previous.get("protocol") == args.protocol
+            and previous.get("eeg") == args.eeg
+            and int(previous.get("seed", args.seed)) == args.seed
+        ):
+            runs = previous.get("runs", [])
+            print(f"[cursor] resuming {out_path} with {len(runs)} completed runs", flush=True)
+
     for run_number, target_index in enumerate(target_order):
+        if run_number < len(runs):
+            continue
         target = targets[target_index]
         print(
             f"[cursor] target {run_number + 1}/{len(target_order)} "

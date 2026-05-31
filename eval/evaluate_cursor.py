@@ -48,35 +48,39 @@ def _summarize_method(runs: list[dict], method: str) -> dict[str, float]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate CURSOR ranking outputs.")
-    parser.add_argument("--input", default=str(WORKSPACE / "outputs/cursor_ranking.json"))
+    parser.add_argument(
+        "--input",
+        nargs="+",
+        default=[str(WORKSPACE / "outputs/cursor_ranking.json")],
+        help="One or more CURSOR output JSON files.",
+    )
     parser.add_argument("--scores", default=str(WORKSPACE / "scoring/scores.json"))
     args = parser.parse_args()
 
-    output = json.loads(Path(args.input).read_text())
-    runs = output["runs"]
-    methods = sorted({name for run in runs for name in run["scores"]})
+    experiments = {}
+    for input_name in args.input:
+        output = json.loads(Path(input_name).read_text())
+        runs = output["runs"]
+        methods = sorted({name for run in runs for name in run["scores"]})
 
-    results = {method: _summarize_method(runs, method) for method in methods}
-    if "lr" in results:
-        controls = [
-            results[name]["top_rank_distance"]
-            for name in ("s_lr", "dummy")
-            if name in results
-        ]
-        if controls:
-            results["lr"]["control_gap_top_rank_distance"] = float(
-                min(controls) - results["lr"]["top_rank_distance"]
-            )
-    for name in results:
-        results[name].setdefault("control_gap_top_rank_distance", 0.0)
-
-    scores = {
-        "experiments": {
-            "unsupervised_ranking_target_sessions": {
-                "results": results,
-            }
+        results = {method: _summarize_method(runs, method) for method in methods}
+        if "lr" in results:
+            controls = [
+                results[name]["top_rank_distance"]
+                for name in ("s_lr", "dummy")
+                if name in results
+            ]
+            if controls:
+                results["lr"]["control_gap_top_rank_distance"] = float(
+                    min(controls) - results["lr"]["top_rank_distance"]
+                )
+        for name in results:
+            results[name].setdefault("control_gap_top_rank_distance", 0.0)
+        experiments[output.get("experiment", "unsupervised_ranking_target_sessions")] = {
+            "results": results
         }
-    }
+
+    scores = {"experiments": experiments}
     score_path = Path(args.scores)
     score_path.parent.mkdir(parents=True, exist_ok=True)
     score_path.write_text(json.dumps(scores, indent=2))

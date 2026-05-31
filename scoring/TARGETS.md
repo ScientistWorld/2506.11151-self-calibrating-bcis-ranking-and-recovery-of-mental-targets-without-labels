@@ -16,6 +16,20 @@ brain/stimulus observations from the released BCI dataset.
 - **How to evaluate**: run `scripts/evaluate.sh outputs/cursor_ranking.json`
   after a method writes ranking artifacts in the standard JSON format.
 
+## Secondary: unsupervised_ranking_eegnet
+
+Tests the same label-free candidate ranking task on the released EEGNet
+embedding representation. This follows the paper's secondary claim that the
+self-calibrating ranking framework is not tied to one EEG preprocessing
+representation.
+
+- **Primary metric**: `control_gap_top_rank_distance` (higher is better)
+- **Supporting metrics**: `top_rank_distance`, `target_rank`, and
+  `score_distance_pearson_r`
+- **How to evaluate**: run
+  `scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet.json`
+  after both method artifacts exist.
+
 ## Constraint: zero_supervision
 
 The task is self-calibrating: the ranking method must not use labels that reveal

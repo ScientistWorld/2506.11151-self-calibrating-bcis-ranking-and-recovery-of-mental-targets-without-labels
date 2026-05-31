@@ -2,7 +2,7 @@
   "experiments": {
     "unsupervised_ranking_target_sessions": {
       "description": "CURSOR ranks 60 random candidate face hypotheses for an unknown mental target using unlabeled EEG-response/stimulus pairs. Paper reference is the full windowed-EEG ranking task in Table 1; this environment evaluates the same quantities on a smaller generated-candidate subset.",
-      "weight": 1.0,
+      "weight": 0.65,
       "primary_metric": "control_gap_top_rank_distance",
       "metrics": {
         "score_distance_pearson_r": {
@@ -54,6 +54,75 @@
           "score_distance_pearson_r": 0.01,
           "target_rank": 27.91,
           "top_rank_distance": 21.97,
+          "control_gap_top_rank_distance": 0,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        },
+        "random": {
+          "type": "baseline",
+          "score_distance_pearson_r": 0,
+          "target_rank": 30,
+          "top_rank_distance": 23.08,
+          "control_gap_top_rank_distance": 0,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        }
+      }
+    },
+    "unsupervised_ranking_eegnet": {
+      "description": "CURSOR ranks 60 random candidate face hypotheses using the released EEGNet embedding representation instead of windowed raw EEG. Paper reference is Appendix Table 2 EEGNet columns.",
+      "weight": 0.35,
+      "primary_metric": "control_gap_top_rank_distance",
+      "metrics": {
+        "score_distance_pearson_r": {
+          "higher_is_better": false,
+          "coefficient": 1.0
+        },
+        "target_rank": {
+          "higher_is_better": false,
+          "coefficient": 1.0
+        },
+        "top_rank_distance": {
+          "higher_is_better": false,
+          "coefficient": 1.5
+        },
+        "control_gap_top_rank_distance": {
+          "higher_is_better": true,
+          "coefficient": 1.0
+        },
+        "label_supervision_count": {
+          "higher_is_better": false,
+          "coefficient": -1.0
+        },
+        "pretrained_decoder_count": {
+          "higher_is_better": false,
+          "coefficient": -1.0
+        }
+      },
+      "results": {
+        "lr": {
+          "type": "proposed",
+          "score_distance_pearson_r": -0.76,
+          "target_rank": 6.21,
+          "top_rank_distance": 2.66,
+          "control_gap_top_rank_distance": 18.41,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        },
+        "s_lr": {
+          "type": "baseline",
+          "score_distance_pearson_r": -0.01,
+          "target_rank": 26.35,
+          "top_rank_distance": 21.07,
+          "control_gap_top_rank_distance": 0,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        },
+        "dummy": {
+          "type": "baseline",
+          "score_distance_pearson_r": -0.01,
+          "target_rank": 27.73,
+          "top_rank_distance": 22.29,
           "control_gap_top_rank_distance": 0,
           "label_supervision_count": 0,
           "pretrained_decoder_count": 0

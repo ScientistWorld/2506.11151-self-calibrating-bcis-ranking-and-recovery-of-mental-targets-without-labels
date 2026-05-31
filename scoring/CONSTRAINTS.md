@@ -13,9 +13,11 @@ change the problem rather than improve the method.
 
 Submit rankings through the artifact schema consumed by `scripts/evaluate.sh`.
 Each evaluated target must use the same candidate count and the same metrics as
-the benchmark experiment. The evaluator must remain independent of `method/`;
-method code may write artifacts, but it may not change metric definitions or
-read reference scores.
+the benchmark experiment. For the EEGNet experiment, methods must use the
+released `eeg_net` array from the same dataset rather than training a new EEG
+embedding model. The evaluator must remain independent of `method/`; method
+code may write artifacts, but it may not change metric definitions or read
+reference scores.
 
 ## Supervision
 

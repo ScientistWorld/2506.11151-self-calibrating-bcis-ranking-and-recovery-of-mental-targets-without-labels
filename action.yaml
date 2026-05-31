@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Run an additional all-target synthetic-random CURSOR ranking scale check at 500 observations per target with 5 CV splits."
+notes: "Run the secondary EEGNet representation ranking experiment and merge it with the existing raw-EEG scores."

@@ -10,4 +10,4 @@
 - Completed an all-target synthetic-random ranking run at 300 observations per target where LR retained a positive control gap.
 
 ## Stop Justification
-- Not stopped; submitting an additional all-target scale check.
+- Not stopped; submitting an additional EEGNet representation check.
