@@ -25,6 +25,20 @@ from data.cursor_data import (  # noqa: E402
 from method.cursor import CursorConfig, score_candidates  # noqa: E402
 
 
+def write_output(path: Path, args: argparse.Namespace, runs: list[dict], complete: bool) -> None:
+    output = {
+        "experiment": "unsupervised_ranking_target_sessions",
+        "data": str(Path(args.data).resolve()),
+        "eeg": args.eeg,
+        "seed": args.seed,
+        "protocol": args.protocol,
+        "complete": complete,
+        "runs": runs,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(output, indent=2))
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run CURSOR ranking experiments.")
     parser.add_argument("--data", default=str(WORKSPACE / "data/downloads/all_data_sorted.npz"))
@@ -65,8 +79,14 @@ def main() -> None:
     target_order = rng.permutation(len(targets))[: args.n_targets]
 
     runs = []
+    out_path = Path(args.output)
     for run_number, target_index in enumerate(target_order):
         target = targets[target_index]
+        print(
+            f"[cursor] target {run_number + 1}/{len(target_order)} "
+            f"(index={int(target_index)}, protocol={args.protocol}, n={args.n_observations})",
+            flush=True,
+        )
         if args.protocol == "target_sessions":
             target_rows = rows_for_target(arrays["target_faces"], target)
             obs_rows = subsample_rows(target_rows, args.n_observations, args.seed + run_number)
@@ -104,6 +124,7 @@ def main() -> None:
 
         method_scores = {}
         for method in args.methods:
+            print(f"[cursor]   scoring {method}", flush=True)
             method_eeg = np.array(observed_eeg, copy=True)
             estimator_name = method
             if method == "s_lr":
@@ -128,17 +149,9 @@ def main() -> None:
                 "scores": method_scores,
             }
         )
+        write_output(out_path, args, runs, complete=False)
 
-    output = {
-        "experiment": "unsupervised_ranking_target_sessions",
-        "data": str(Path(args.data).resolve()),
-        "eeg": args.eeg,
-        "seed": args.seed,
-        "runs": runs,
-    }
-    out_path = Path(args.output)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(output, indent=2))
+    write_output(out_path, args, runs, complete=True)
     print(f"Wrote {out_path}")
 
 

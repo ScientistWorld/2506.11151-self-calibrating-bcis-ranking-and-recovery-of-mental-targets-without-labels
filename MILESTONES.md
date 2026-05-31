@@ -28,4 +28,9 @@
 - The shuffled and dummy controls remained much worse while supervision audit metrics stayed at zero.
 - Submitting an all-target synthetic-random run with 1000 observations per target to expand toward the paper's Table 1 setting.
 
+### [2026-05-31 13:09] - core_claim_plus
+- The all-target 1000-observation CPU run timed out after 3600 seconds before writing final scores.
+- Added per-target progress logging and partial artifact writes so long runs are diagnosable.
+- Retrying the all-target synthetic-random run with 500 observations per target, matching the successful five-target scale.
+
 ## Stop Justification

@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Expand the successful synthetic-random CURSOR run to all 17 targets with 1000 observations per target."
+notes: "Retry all-target synthetic-random CURSOR with 500 observations per target and per-target progress logging after the 1000-observation run timed out."

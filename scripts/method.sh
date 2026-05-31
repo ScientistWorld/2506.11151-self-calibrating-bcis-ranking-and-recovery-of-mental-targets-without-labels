@@ -16,7 +16,7 @@ python method/run_cursor.py \
   --n-targets "${N_TARGETS:-3}" \
   --n-observations "${N_OBSERVATIONS:-500}" \
   --n-candidates 60 \
-  --n-splits 10 \
+  --n-splits "${N_SPLITS:-10}" \
   --seed "${SEED:-0}" \
   --output outputs/cursor_ranking.json
 
