@@ -2,8 +2,8 @@
 # Once you set action to 'done', STOP immediately.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: pending
+action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: ""
+notes: "Improvements: added top-k/reciprocal/near-target ranking metrics, required complete artifacts, and made split scripts cover both default experiments. Notes: see DESIGN_NOTES.md."

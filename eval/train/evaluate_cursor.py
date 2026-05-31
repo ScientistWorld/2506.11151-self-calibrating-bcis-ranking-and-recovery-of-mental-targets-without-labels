@@ -101,10 +101,16 @@ def _summarize_method(output: dict, runs: list[dict], method: str) -> dict[str, 
     if not pearsons:
         raise ValueError(f"No {SLICE_NAME} runs found for method {method}")
 
+    rank_array = np.asarray(ranks, dtype=float)
+    top_distance_array = np.asarray(top_distances, dtype=float)
     return {
         "score_distance_pearson_r": float(np.mean(pearsons)),
         "target_rank": float(np.mean(ranks)),
         "top_rank_distance": float(np.mean(top_distances)),
+        "target_top1_accuracy": float(np.mean(rank_array == 1)),
+        "target_top5_accuracy": float(np.mean(rank_array <= 5)),
+        "reciprocal_target_rank": float(np.mean(1.0 / rank_array)),
+        "near_target_top_rank_rate": float(np.mean(top_distance_array <= 5.0)),
         "label_supervision_count": float(audit["label_supervision_count"]),
         "pretrained_decoder_count": float(audit["pretrained_decoder_count"]),
     }
@@ -128,6 +134,10 @@ def _add_control_gaps(results: dict[str, dict[str, float]]) -> None:
 
 def _score_output(input_name: str) -> tuple[str, dict]:
     output = json.loads(Path(input_name).read_text())
+    if output.get("complete") is not True:
+        raise ValueError(
+            f"{input_name} is not marked complete; evaluate only finished method artifacts"
+        )
     if "label_supervision_count" not in output.get("audit", {}):
         raise ValueError(f"{input_name} is missing audit.label_supervision_count")
     if "pretrained_decoder_count" not in output.get("audit", {}):

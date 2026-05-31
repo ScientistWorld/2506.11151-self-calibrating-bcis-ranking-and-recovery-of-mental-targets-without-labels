@@ -7,27 +7,53 @@
       "metrics": {
         "score_distance_pearson_r": {
           "higher_is_better": false,
-          "coefficient": 1.0
+          "coefficient": 1.0,
+          "description": "Mean Pearson correlation between candidate scores and true target distance; useful rankings should assign higher scores to nearer candidates."
         },
         "target_rank": {
           "higher_is_better": false,
-          "coefficient": 1.0
+          "coefficient": 1.0,
+          "description": "Mean rank position of the exact target candidate among the 60 hypotheses."
         },
         "top_rank_distance": {
           "higher_is_better": false,
-          "coefficient": 1.5
+          "coefficient": 1.5,
+          "description": "Mean Euclidean distance from the top-scored candidate to the true target embedding."
+        },
+        "target_top1_accuracy": {
+          "higher_is_better": true,
+          "coefficient": 0.35,
+          "description": "Fraction of runs where the exact target candidate is ranked first."
+        },
+        "target_top5_accuracy": {
+          "higher_is_better": true,
+          "coefficient": 0.25,
+          "description": "Fraction of runs where the exact target candidate appears within the top five ranked hypotheses."
+        },
+        "reciprocal_target_rank": {
+          "higher_is_better": true,
+          "coefficient": 0.25,
+          "description": "Mean reciprocal rank of the exact target candidate, rewarding improvements near the top of the ranking."
+        },
+        "near_target_top_rank_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.4,
+          "description": "Fraction of runs where the top-scored candidate is within distance 5.0 of the target embedding."
         },
         "control_gap_top_rank_distance": {
           "higher_is_better": true,
-          "coefficient": 1.0
+          "coefficient": 1.0,
+          "description": "Distance improvement of the method's top-ranked candidate over the best broken-control top-ranked candidate."
         },
         "label_supervision_count": {
           "higher_is_better": false,
-          "coefficient": -1.0
+          "coefficient": -1.0,
+          "description": "Audit count of target-label supervision used by the method; the self-calibrating claim requires this to remain zero."
         },
         "pretrained_decoder_count": {
           "higher_is_better": false,
-          "coefficient": -1.0
+          "coefficient": -1.0,
+          "description": "Audit count of pretrained EEG decoders used by the method; the self-calibrating claim requires this to remain zero."
         }
       },
       "results": {
@@ -76,27 +102,53 @@
       "metrics": {
         "score_distance_pearson_r": {
           "higher_is_better": false,
-          "coefficient": 1.0
+          "coefficient": 1.0,
+          "description": "Mean Pearson correlation between candidate scores and true target distance; useful rankings should assign higher scores to nearer candidates."
         },
         "target_rank": {
           "higher_is_better": false,
-          "coefficient": 1.0
+          "coefficient": 1.0,
+          "description": "Mean rank position of the exact target candidate among the 60 hypotheses."
         },
         "top_rank_distance": {
           "higher_is_better": false,
-          "coefficient": 1.5
+          "coefficient": 1.5,
+          "description": "Mean Euclidean distance from the top-scored candidate to the true target embedding."
+        },
+        "target_top1_accuracy": {
+          "higher_is_better": true,
+          "coefficient": 0.35,
+          "description": "Fraction of runs where the exact target candidate is ranked first."
+        },
+        "target_top5_accuracy": {
+          "higher_is_better": true,
+          "coefficient": 0.25,
+          "description": "Fraction of runs where the exact target candidate appears within the top five ranked hypotheses."
+        },
+        "reciprocal_target_rank": {
+          "higher_is_better": true,
+          "coefficient": 0.25,
+          "description": "Mean reciprocal rank of the exact target candidate, rewarding improvements near the top of the ranking."
+        },
+        "near_target_top_rank_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.4,
+          "description": "Fraction of runs where the top-scored candidate is within distance 5.0 of the target embedding."
         },
         "control_gap_top_rank_distance": {
           "higher_is_better": true,
-          "coefficient": 1.0
+          "coefficient": 1.0,
+          "description": "Distance improvement of the method's top-ranked candidate over the best broken-control top-ranked candidate."
         },
         "label_supervision_count": {
           "higher_is_better": false,
-          "coefficient": -1.0
+          "coefficient": -1.0,
+          "description": "Audit count of target-label supervision used by the method; the self-calibrating claim requires this to remain zero."
         },
         "pretrained_decoder_count": {
           "higher_is_better": false,
-          "coefficient": -1.0
+          "coefficient": -1.0,
+          "description": "Audit count of pretrained EEG decoders used by the method; the self-calibrating claim requires this to remain zero."
         }
       },
       "results": {
