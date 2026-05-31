@@ -44,3 +44,4 @@
 - Supervision and pretrained-decoder audit metrics remained zero.
 
 ## Stop Justification
+- Completed at milestone `core_claim_plus`.

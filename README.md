@@ -1,26 +1,226 @@
+# Overview
+
+This reproduction implements CURSOR from “Self-Calibrating BCIs: Ranking and
+Recovery of Mental Targets Without Labels.”
+
+- **Paper ID:** 2506.11151
+- **Title:** Self-Calibrating BCIs: Ranking and Recovery of Mental Targets
+  Without Labels
+- **Domain:** Brain-computer interfaces / EEG target recovery
+- **TL;DR:** The paper ranks possible mental targets from unlabeled
+  EEG-stimulus interactions by testing which candidate makes the observed brain
+  responses internally predictive of candidate-specific distances.
+
+## Short Summary
+
+The benchmark asks a solver to rank candidate face embeddings for an unknown
+mental target using only paired stimulus embeddings and EEG responses. CURSOR
+scores each candidate by comparing held-out regression error for aligned EEG
+against a shuffled control. This workspace reproduces the core ranking claim on
+the released dataset with paper-style synthetic training stimuli and random
+candidate hypotheses.
+
+## Key Results
+
+- Five-target synthetic-random run: LR achieved `target_rank=1.4` and
+  `top_rank_distance=0.023`, far better than shuffled and dummy controls.
+- All 17 targets at 300 observations per target: LR retained a positive control
+  gap (`control_gap_top_rank_distance=11.524`) with zero label and decoder use.
+
+---
+
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
+The task is to recover a continuous mental target from an interaction session
+containing paired visual stimuli and EEG responses, without calibration labels.
+Each visual stimulus is represented by a face latent vector and each response by
+an EEG feature vector. During each session, the participant has one target face
+in mind, but the solver only receives the stimulus vectors and corresponding EEG
+responses.
 
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+Can a system rank candidate face targets so that candidates closer to the
+participant's intended mental target receive better scores, using only
+unlabeled interaction data from the session?
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+A successful solution would reduce or remove explicit labeled calibration for
+brain-computer interfaces that need to infer user intent over continuous target
+spaces.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+A good solver should rank near-target candidates above distant candidates,
+perform better than broken or random controls, and preserve the self-calibrating
+setting: no target labels and no pretrained EEG decoder.
+
+---
+
+# Paper's Method
+
+CURSOR scores a hypothetical mental target by constructing labels internally
+from that hypothesis. For a candidate latent vector `h`, each observed stimulus
+embedding `z_i` is mapped to a hypothetical distance `||h - z_i||_2`. A
+regressor is trained to predict these distances from paired EEG features, and
+the same task is repeated after deliberately misaligning EEG responses and
+stimuli.
+
+The released Table 1 analysis computes the candidate score as the held-out
+shuffled/aligned RMSE ratio, averaged over repeated 90/10 random splits. If the
+candidate matches the user's true mental target, aligned EEG should predict
+candidate distances better than shuffled EEG and produce a ratio above chance.
+Ranking candidates by this score recovers the target without using target
+labels or a pretrained EEG decoder.
+
+For the main ranking experiment, the released setup generates synthetic train
+stimulus embeddings around each true target at the same distance distribution
+as the recorded stimulus-target pairs. Main ranking test candidates are sampled
+at uniformly random distances from the true target with the exact target
+included among the candidate hypotheses. The paper reports ranking quality for
+60 candidates per target using LR, shuffled LR, dummy, SVR, and MLP estimators.
+
+## Key Contribution
+
+The key contribution is a self-calibrating score for continuous mental-target
+recovery: the method evaluates whether unlabeled EEG/stimulus observations are
+more internally consistent for one candidate target than for alternatives.
+
+## Main Claims
+
+- CURSOR ranks hypotheses by similarity to the unknown mental target without
+  calibration labels.
+- Effective estimators such as linear regression outperform shuffled and dummy
+  controls, showing that the signal comes from EEG/stimulus alignment.
+- The recovered target distances are useful as labels for downstream
+  calibration-style tasks.
+
+---
+
+# Evaluation
+
+The evaluation ranks a fixed candidate set of 60 face hypotheses for each target
+condition. The evaluator reads candidate scores produced by a solver and
+compares them with the true Euclidean distances from each candidate to the held
+out target. The target is used only by the evaluator after scores are written.
+
+## Metrics
+
+- `score_distance_pearson_r`: Pearson correlation between solver score and true
+  candidate distance. Lower is better because high scores should correspond to
+  nearby candidates.
+- `target_rank`: one-indexed rank of the exact target when candidates are sorted
+  by descending score. Lower is better.
+- `top_rank_distance`: Euclidean distance between the top-ranked candidate and
+  the true target. Lower is better.
+- `control_gap_top_rank_distance`: the primary metric for this scaled gym.
+  It is the difference between the best control top-ranked distance and the
+  proposed solver's top-ranked distance. Higher is better.
+- `label_supervision_count`: number of target labels used by the solver. Must
+  remain zero for the self-calibrating setting.
+- `pretrained_decoder_count`: number of pretrained EEG decoders used by the
+  solver. Must remain zero.
+
+## Baselines and Targets
+
+The paper reports linear regression as the main solver and compares it against a
+shuffled-control linear regression, a dummy regressor, and random ranking. The
+reference values in `scoring/reference.json` are the paper's reported Table 1
+ranking metrics for the random-candidate condition. The absolute top-ranked
+distance is retained as a benefit metric, while the primary metric is the gap
+against controls because the scaled reproduction is designed to test the
+comparative self-calibrating claim.
+
+## Evaluation Protocol
+
+Methods write a JSON artifact at `outputs/cursor_ranking.json` with candidate
+scores, true candidate distances, and audit metadata. `scripts/evaluate.sh`
+calls only code in `eval/` and writes `scoring/scores.json`, which mirrors the
+experiment and metric structure of `scoring/reference.json`.
+
+---
+
+# Reproduction Log
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `none` | **Status**: error
+- **Working time**: 15m | **GPU**: 0.0h
+
+<details>
+<summary>Progress Log</summary>
+
+<!-- Write your progress here -->
+
+</details>
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `none` | **Status**: error
+- **Working time**: 30m | **GPU**: 0.0h
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `none` | **Status**: error
+- **Working time**: 30m | **GPU**: 0.0h
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `none` | **Status**: error
+- **Working time**: 30m | **GPU**: 0.0h
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `core_claim_plus` | **Status**: done
+- **Working time**: 21m | **GPU**: 0.0h
+- **Jobs**: 6 total (4 completed, 2 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-05-31 11:45] - none
+- Read the paper and released repository.
+- Implemented a compact CURSOR ranking runner and independent evaluator.
+- Prepared a CPU smoke job to verify the method end-to-end before claiming `method_runs`.
+
+### [2026-05-31 11:47] - method_runs
+- CPU test job completed without errors and wrote `outputs/cursor_ranking.json` plus `scoring/scores.json`.
+- Verified that `scripts/evaluate.sh` scores method artifacts independently of `method/`.
+
+### [2026-05-31 11:47] - core_claim
+- On the compact one-target setting, the proposed label-free ranking method placed a much closer candidate first than both shuffled and dummy controls.
+- Supervision audit metrics remained zero for labels and pretrained EEG decoders.
+- Submitting an expanded CPU run over more targets to test robustness beyond the smoke setting.
+
+### [2026-05-31 11:57] - core_claim
+- The five-target target-session run completed but did not preserve the control gap; shuffled LR ranked closer top candidates than LR on average.
+- Replaced the target-session shortcut with the released synthetic-train/random-candidate protocol used for Table 1 scale-downs.
+- Restored the upstream shuffled/aligned RMSE ratio scoring and submitted a faithful five-target rerun.
+
+### [2026-05-31 12:04] - core_claim_plus
+- The five-target synthetic-random run completed successfully with LR `target_rank=1.4`, `top_rank_distance=0.023`, and `control_gap_top_rank_distance=21.509`.
+- The shuffled and dummy controls remained much worse while supervision audit metrics stayed at zero.
+- Submitting an all-target synthetic-random run with 1000 observations per target to expand toward the paper's Table 1 setting.
+
+### [2026-05-31 13:09] - core_claim_plus
+- The all-target 1000-observation CPU run timed out after 3600 seconds before writing final scores.
+- Added per-target progress logging and partial artifact writes so long runs are diagnosable.
+- Retrying the all-target synthetic-random run with 500 observations per target, matching the successful five-target scale.
+
+### [2026-05-31 14:10] - core_claim_plus
+- The all-target 500-observation run timed out after completing 14 of 17 targets, so the method is progressing but still slightly too slow for the one-core limit.
+- The partial artifact confirms 14 completed target runs were written before timeout.
+- Retrying all 17 targets with 300 observations per target while preserving the 10-split CURSOR scoring protocol.
+
+### [2026-05-31 14:18] - core_claim_plus
+- The all-target 300-observation run completed successfully across all 17 targets.
+- LR retained a useful advantage over shuffled and dummy controls: `top_rank_distance=15.577` vs `29.974` and `27.101`, with `control_gap_top_rank_distance=11.524`.
+- Supervision and pretrained-decoder audit metrics remained zero.
+
+</details>
+
 
 ---
 
 # Reproduction Milestones
 
-**Current: none**
+**Current: core_claim_plus**
 
 ## Stop Justification
-- Completed at milestone `none`.
+- Completed at milestone `core_claim_plus`.
