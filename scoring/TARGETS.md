@@ -6,13 +6,12 @@ Tests whether candidate face embeddings can be ranked so that candidates closer
 to the intended mental target receive better ranks using only unlabeled
 brain/stimulus observations from the released BCI dataset.
 
-- **Primary metric**: `control_gap_top_rank_distance` (higher is better),
-  because the core claim is that the label-free ranker beats deliberately
-  broken controls while keeping the same zero-supervision constraints.
-- **Supporting metrics**: `top_rank_distance` (lower is better),
-  `target_rank` (lower is better), and `score_distance_pearson_r` (lower is
-  better; scores should decrease as candidate distance from the target
-  increases).
+- **Primary metric**: `target_top5_accuracy` (higher is better), because it is
+  directly comparable to the paper's reported target-recovery rate.
+- **Supporting metrics**: `control_gap_top_rank_distance` (higher is better),
+  `top_rank_distance` (lower is better), `target_rank` (lower is better), and
+  `score_distance_pearson_r` (lower is better; scores should decrease as
+  candidate distance from the target increases).
 - **How to evaluate**: run `scripts/evaluate.sh outputs/cursor_ranking.json`
   after a method writes ranking artifacts in the standard JSON format.
 
@@ -23,9 +22,9 @@ embedding representation. This follows the paper's secondary claim that the
 self-calibrating ranking framework is not tied to one EEG preprocessing
 representation.
 
-- **Primary metric**: `control_gap_top_rank_distance` (higher is better)
-- **Supporting metrics**: `top_rank_distance`, `target_rank`, and
-  `score_distance_pearson_r`
+- **Primary metric**: `target_top5_accuracy` (higher is better)
+- **Supporting metrics**: `control_gap_top_rank_distance`,
+  `top_rank_distance`, `target_rank`, and `score_distance_pearson_r`
 - **How to evaluate**: run
   `scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet_n500.json`
   after both method artifacts exist.

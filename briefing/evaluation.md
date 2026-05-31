@@ -14,9 +14,12 @@ out target. The target is used only by the evaluator after scores are written.
   by descending score. Lower is better.
 - `top_rank_distance`: Euclidean distance between the top-ranked candidate and
   the true target. Lower is better.
-- `control_gap_top_rank_distance`: the primary metric for this scaled gym.
-  It is the difference between the best control top-ranked distance and the
-  proposed solver's top-ranked distance. Higher is better.
+- `target_top5_accuracy`: fraction of target conditions where the exact target
+  appears in the top five ranked candidates. Higher is better and this is the
+  primary metric for paper-consistency checks.
+- `control_gap_top_rank_distance`: difference between the best control
+  top-ranked distance and the evaluated method's top-ranked distance. Higher is
+  better and this keeps the comparative control claim in the gym score.
 - `label_supervision_count`: number of target labels used by the solver. Must
   remain zero for the self-calibrating setting.
 - `pretrained_decoder_count`: number of pretrained EEG decoders used by the
@@ -27,10 +30,10 @@ out target. The target is used only by the evaluator after scores are written.
 The reference values in `scoring/reference.json` are the paper's reported
 ranking metrics for the random-candidate condition. Evaluated artifacts may
 include solver variants and broken or random controls, but the evaluator only
-assumes that each method key provides one score per candidate. The absolute
-top-ranked distance is retained as a benefit metric, while the primary metric is
-the gap against controls because the scaled reproduction is designed to test the
-comparative self-calibrating claim.
+assumes that each method key provides one score per candidate. Top-five target
+recovery is the formal primary metric because it is directly comparable to the
+paper tables. The control-gap and absolute-distance metrics remain scored so
+the scaled reproduction still tests the comparative self-calibrating claim.
 
 ## Evaluation Protocol
 

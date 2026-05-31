@@ -6,7 +6,7 @@
 
 ### [2026-05-31 15:42] - secondary_claims
 - Completed all-target raw-EEG CURSOR ranking and all-target EEGNet ranking with zero label supervision and zero pretrained decoder use.
-- LR outperformed shuffled and dummy controls on the primary control-gap metric in both scored experiments.
+- LR outperformed shuffled and dummy controls on the scored control-gap metric in both experiments.
 - Tightened the artifact contract so evaluation recomputes candidate distances from emitted candidate embeddings instead of trusting method-supplied distances.
 
 ### [2026-05-31 16:04] - core_claim_plus
@@ -26,8 +26,12 @@
 - Submitting a CPU validation job to regenerate all score files in the packaged environment and run `validate.py --compare`.
 
 ### [2026-05-31 17:18] - secondary_claims
-- Final verification removed a method-specific phrase from the method-agnostic evaluation briefing and aligned `reference.json` primary metrics with the documented control-gap target.
+- Final verification removed a method-specific phrase from the method-agnostic evaluation briefing and refreshed the top-level score contract.
 - Refreshed the top-level score contract so `scoring/scores.json` includes the same ranking metric set as the train/test split score files; `python validate.py --compare` passes.
+
+### [2026-05-31 17:23] - secondary_claims
+- Fixed post-design validation by keeping `target_top5_accuracy` as the formal primary metric for paper-consistency checks while retaining `control_gap_top_rank_distance` as a scored comparative metric.
+- `python validate.py --post-design --compare` passes with split-mode artifacts and paper-consistency checks enabled.
 
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

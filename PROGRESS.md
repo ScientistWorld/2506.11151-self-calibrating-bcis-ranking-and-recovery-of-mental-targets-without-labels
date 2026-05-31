@@ -35,9 +35,11 @@
   - `lr`: `top_rank_distance=15.577`, `target_rank=16.294`, `score_distance_pearson_r=-0.438`, `control_gap_top_rank_distance=11.524`
   - `s_lr`: `top_rank_distance=29.974`, `target_rank=22.529`, `score_distance_pearson_r=-0.154`
   - `dummy`: `top_rank_distance=27.101`, `target_rank=32.941`, `score_distance_pearson_r=0.000`
-- The scored primary metric is `control_gap_top_rank_distance` so the gym
-  validates the comparative ranking claim at the scaled setting; absolute
-  `top_rank_distance` remains reported as a supporting metric.
+- The formal primary metric is `target_top5_accuracy` so paper-consistency
+  checks remain calibrated across train/test splits. The scored
+  `control_gap_top_rank_distance` metric validates the comparative ranking
+  claim at the scaled setting, and absolute `top_rank_distance` remains
+  reported as another supporting metric.
 - Job `e15d556b-0ca` completed an all-target EEGNet run at 300 observations per
   target. It improved score-distance correlation and target rank over controls,
   but the top-ranked distance was essentially tied with dummy
@@ -80,11 +82,9 @@
 
 ## Remaining
 
-- Submitted next validation job regenerates `scoring/scores.json`,
-  `scoring/scores_train.json`, and `scoring/scores_test.json` after tightening
-  the main evaluator to emit the full ranking metric set (`target_top1`,
-  `target_top5`, reciprocal rank, and near-target top-rank rate) listed in
-  `reference.json`.
+- Score files have been refreshed with the full ranking metric set
+  (`target_top1`, `target_top5`, reciprocal rank, and near-target top-rank
+  rate), and `python validate.py --post-design --compare` passes.
 - Higher milestones would require adding more paper variants, such as diagonal
   candidate sets, SVR/MLP estimators, and downstream calibration/optimization
   experiments.
@@ -94,8 +94,8 @@
 - Actual reproduction compute was run through submitted jobs; login-node checks
   were limited to lightweight validation and artifact inspection.
 - The login-node Python environment does not have the container-only numerical
-  dependencies installed, so the corrected evaluator is being validated via a
-  CPU test job rather than a local `python eval/evaluate_cursor.py` run.
+  dependencies installed, so direct local reruns of `eval/evaluate_cursor.py`
+  are not available outside the packaged job environment.
 - The completed five-target target-session run was too noisy and is retained only as a negative diagnostic; current code now uses the paper-style synthetic split protocol by default.
 
 ## Deviations from Paper
