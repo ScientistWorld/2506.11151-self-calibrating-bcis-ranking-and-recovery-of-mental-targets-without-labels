@@ -18,4 +18,9 @@
 - Supervision audit metrics remained zero for labels and pretrained EEG decoders.
 - Submitting an expanded CPU run over more targets to test robustness beyond the smoke setting.
 
+### [2026-05-31 11:57] - core_claim
+- The five-target target-session run completed but did not preserve the control gap; shuffled LR ranked closer top candidates than LR on average.
+- Replaced the target-session shortcut with the released synthetic-train/random-candidate protocol used for Table 1 scale-downs.
+- Restored the upstream shuffled/aligned RMSE ratio scoring and submitted a faithful five-target rerun.
+
 ## Stop Justification

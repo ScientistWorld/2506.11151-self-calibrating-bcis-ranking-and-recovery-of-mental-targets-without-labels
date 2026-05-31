@@ -68,12 +68,13 @@ def cursor_score(
     hypothesis: np.ndarray,
     config: CursorConfig,
 ) -> float:
-    """Compute Algorithm 1's held-out shuffled/aligned RMSE ratio for one h."""
+    """Compute the held-out shuffled/aligned RMSE ratio for one h."""
     distances = np.linalg.norm(observed_faces - hypothesis, axis=1)
     model = _estimator(config.estimator)
-    rng = np.random.default_rng(config.seed)
     distances = StandardScaler().fit_transform(distances.reshape(-1, 1)).ravel()
     splitter = ShuffleSplit(n_splits=config.n_splits, test_size=0.1, random_state=config.seed)
+    shuffled_eeg = np.array(eeg, copy=True)
+    shuffled_eeg = shuffled_eeg[np.random.default_rng(config.seed).permutation(len(shuffled_eeg))]
     fold_ratios: list[float] = []
 
     for fold_id, (train_idx, test_idx) in enumerate(splitter.split(eeg)):
@@ -81,10 +82,6 @@ def cursor_score(
         aligned.fit(eeg[train_idx], distances[train_idx])
         aligned_pred = aligned.predict(eeg[test_idx])
         aligned_rmse = float(np.sqrt(mean_squared_error(distances[test_idx], aligned_pred)))
-
-        rng_fold = np.random.default_rng(config.seed + 1009 * (fold_id + 1))
-        shuffled_eeg = np.array(eeg, copy=True)
-        shuffled_eeg = shuffled_eeg[rng_fold.permutation(len(shuffled_eeg))]
 
         shuffled = clone(model)
         shuffled.fit(shuffled_eeg[train_idx], distances[train_idx])

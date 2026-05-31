@@ -13,8 +13,9 @@ set -e
 
 cd /home/user
 
-# Expanded CPU run. The full scripts remain externally configurable; these
-# defaults test whether the smoke-run effect holds across multiple targets.
+# Paper-style synthetic-random CPU run. The full scripts remain externally
+# configurable; these defaults test whether the effect holds across targets.
+export PROTOCOL="${PROTOCOL:-synthetic_random}"
 export N_TARGETS="${N_TARGETS:-5}"
 export N_OBSERVATIONS="${N_OBSERVATIONS:-500}"
 export SEED="${SEED:-0}"
