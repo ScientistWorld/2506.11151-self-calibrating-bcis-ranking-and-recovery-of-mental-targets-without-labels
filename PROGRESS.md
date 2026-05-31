@@ -62,11 +62,17 @@
   candidate embeddings and audit metadata. Active milestone is therefore held at
   `core_claim_plus` until the raw-EEG validation job and follow-up EEGNet job
   regenerate `scoring/scores.json` through the current evaluator.
+- Job `f55aef50-ae1` completed the raw-EEG artifact-contract validation run:
+  `outputs/cursor_ranking.json` now has 17 complete all-target runs, candidate
+  embeddings for every run, zero-supervision audit metadata, and no
+  method-written `true_distances`. The independently recomputed scores match the
+  previous raw-EEG result: LR `control_gap_top_rank_distance=11.524` with zero
+  label supervision and zero pretrained decoder use.
 
 ## Remaining
 
-- Re-run the raw-EEG and EEGNet ranking jobs after the candidate-artifact
-  contract update so `scoring/scores.json` is regenerated entirely from
+- Re-run the EEGNet ranking job after the candidate-artifact contract update so
+  `scoring/scores.json` is regenerated for both experiments entirely from
   evaluator-computed distances.
 - Higher milestones would require adding more paper variants, such as diagonal
   candidate sets, SVR/MLP estimators, and downstream calibration experiments.

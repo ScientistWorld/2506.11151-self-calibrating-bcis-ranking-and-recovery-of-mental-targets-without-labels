@@ -3,6 +3,6 @@
 # only after your turn ends. Sleeping blocks the entire pipeline.
 action: submit
 gpus: 0
-test: true
+test: false
 milestone: core_claim_plus
-notes: "Regenerate the all-target raw-EEG CURSOR ranking artifact with candidate embeddings so evaluation recomputes ground-truth distances independently of method output."
+notes: "Regenerate the all-target EEGNet CURSOR ranking artifact with candidate embeddings, then evaluate raw-EEG and EEGNet artifacts together under the independent evaluator."
