@@ -4,24 +4,24 @@
       "results": {
         "dummy": {
           "score_distance_pearson_r": 0.0,
-          "target_rank": 38.4,
-          "top_rank_distance": 22.066238135885232,
+          "target_rank": 32.94117647058823,
+          "top_rank_distance": 27.101173741472994,
           "label_supervision_count": 0.0,
           "pretrained_decoder_count": 0.0,
           "control_gap_top_rank_distance": 0.0
         },
         "lr": {
-          "score_distance_pearson_r": -0.8315646691739588,
-          "target_rank": 1.4,
-          "top_rank_distance": 0.023485651816508524,
+          "score_distance_pearson_r": -0.43804388355402263,
+          "target_rank": 16.294117647058822,
+          "top_rank_distance": 15.57724662818803,
           "label_supervision_count": 0.0,
           "pretrained_decoder_count": 0.0,
-          "control_gap_top_rank_distance": 21.508512676536427
+          "control_gap_top_rank_distance": 11.523927113284964
         },
         "s_lr": {
-          "score_distance_pearson_r": -0.38046025208636575,
-          "target_rank": 9.0,
-          "top_rank_distance": 21.531998328352934,
+          "score_distance_pearson_r": -0.15436543749189843,
+          "target_rank": 22.529411764705884,
+          "top_rank_distance": 29.974374934544382,
           "label_supervision_count": 0.0,
           "pretrained_decoder_count": 0.0,
           "control_gap_top_rank_distance": 0.0
