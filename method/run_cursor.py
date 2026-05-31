@@ -39,6 +39,10 @@ def write_output(path: Path, args: argparse.Namespace, runs: list[dict], complet
         "n_observations": args.n_observations,
         "n_candidates": args.n_candidates,
         "n_splits": args.n_splits,
+        "audit": {
+            "label_supervision_count": 0,
+            "pretrained_decoder_count": 0,
+        },
         "complete": complete,
         "runs": runs,
     }
@@ -102,6 +106,7 @@ def main() -> None:
             and int(previous.get("n_observations", -1)) == args.n_observations
             and int(previous.get("n_candidates", -1)) == args.n_candidates
             and int(previous.get("n_splits", -1)) == args.n_splits
+            and all("candidates" in run for run in previous.get("runs", []))
         ):
             runs = previous.get("runs", [])
             print(f"[cursor] resuming {out_path} with {len(runs)} completed runs", flush=True)
@@ -175,7 +180,7 @@ def main() -> None:
                 "protocol": args.protocol,
                 "n_observations": int(len(obs_rows)),
                 "n_candidates": int(len(candidates)),
-                "true_distances": true_distances.tolist(),
+                "candidates": candidates.tolist(),
                 "scores": method_scores,
             }
         )

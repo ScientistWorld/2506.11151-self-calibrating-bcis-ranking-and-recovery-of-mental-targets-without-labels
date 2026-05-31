@@ -10,6 +10,9 @@
 - Scoring target, constraint, experiment, and research-direction files now match the implemented benchmark experiment.
 - The evaluator now accepts multiple output artifacts, allowing raw-EEG and
   EEGNet ranking experiments to be scored together.
+- Method artifacts now include candidate embeddings and audit metadata; the
+  evaluator recomputes candidate-to-target distances from the dataset instead
+  of trusting method-supplied `true_distances`.
 
 ## Results
 
@@ -49,9 +52,16 @@
   LR ranks the target near the top and clearly outperforms shuffled/dummy
   controls while preserving the zero-label and zero-pretrained-decoder
   constraints. This supports `secondary_claims`.
+- 2026-05-31 integrity update: `method/run_cursor.py` and
+  `eval/evaluate_cursor.py` were revised so future scores use evaluator-owned
+  ground truth distances. The next submitted job reruns the raw-EEG artifact
+  under this schema before rerunning the slower EEGNet artifact.
 
 ## Remaining
 
+- Re-run the raw-EEG and EEGNet ranking jobs after the candidate-artifact
+  contract update so `scoring/scores.json` is regenerated entirely from
+  evaluator-computed distances.
 - Higher milestones would require adding more paper variants, such as diagonal
   candidate sets, SVR/MLP estimators, and downstream calibration experiments.
 
@@ -83,3 +93,6 @@
   improves target rank, correlation, and top-ranked distance relative to
   shuffled and dummy controls, though absolute top-ranked distance remains
   above the full paper reference.
+- Artifact schema deviation fixed after review: earlier artifacts contained
+  `true_distances` written by the method runner. Current code writes candidate
+  embeddings and target indexes, and evaluation owns distance computation.

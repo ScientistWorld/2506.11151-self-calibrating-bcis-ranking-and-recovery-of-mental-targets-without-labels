@@ -13,18 +13,16 @@ set -e
 
 cd /home/user
 
-# Secondary-claim CPU run: repeat the paper-style synthetic-random ranking
-# benchmark on the released EEGNet embeddings. The raw-EEG all-target result
-# already exists in outputs/cursor_ranking.json; the final evaluation merges
-# both artifacts into scoring/scores.json.
+# Artifact-contract validation run: regenerate the all-target raw-EEG
+# synthetic-random ranking artifact with candidate embeddings so eval computes
+# ground-truth distances independently of method code.
 export PROTOCOL="${PROTOCOL:-synthetic_random}"
 export N_TARGETS="${N_TARGETS:-17}"
-export N_OBSERVATIONS="${N_OBSERVATIONS:-500}"
-export N_SPLITS="${N_SPLITS:-5}"
+export N_OBSERVATIONS="${N_OBSERVATIONS:-300}"
+export N_SPLITS="${N_SPLITS:-10}"
 export SEED="${SEED:-0}"
-export EEG="${EEG:-eeg_net}"
-export OUTPUT="${OUTPUT:-outputs/cursor_ranking_eegnet_n500.json}"
-export CONTINUE_EXISTING=1
+export EEG="${EEG:-eeg_raw}"
+export OUTPUT="${OUTPUT:-outputs/cursor_ranking.json}"
+unset CONTINUE_EXISTING
 
 bash scripts/method.sh
-bash scripts/evaluate.sh outputs/cursor_ranking.json "$OUTPUT"
