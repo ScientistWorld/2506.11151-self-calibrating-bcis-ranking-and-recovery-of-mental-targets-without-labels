@@ -2,4 +2,4 @@ action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Final verification passed after method-agnostic documentation and scoring-contract cleanup; workspace is ready as a secondary-claims gym."
+notes: "Post-design validation passes; CURSOR ranking is reproduced on raw EEG and EEGNet artifacts with zero label supervision and reusable method-independent evaluation."
