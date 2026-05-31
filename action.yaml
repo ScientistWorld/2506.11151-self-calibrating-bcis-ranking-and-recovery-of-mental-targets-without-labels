@@ -1,8 +1,8 @@
-# This iteration submits the split evaluation job.
+# Split evaluation is complete.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Run evaluate_{train,test}.sh against final cursor_ranking artifacts and populate split scores."
+notes: "Deterministic target-hash split; 60 train metric values, 60 test metric values; lr beats controls on both slices, with primary gaps 13.09->8.83 and 20.95->4.87. Caveat: 9/8 runs per split make top-k metrics coarse."

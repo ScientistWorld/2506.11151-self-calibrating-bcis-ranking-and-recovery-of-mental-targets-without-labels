@@ -39,3 +39,22 @@
 - The supervision constraint metrics are audit fields read from the method
   artifact. They are useful for honest benchmark submissions but are not a
   cryptographic guard against a malicious artifact writer.
+
+## Real Split Run
+
+- Job `ef043e1b-b2e` ran `scripts/evaluate_train.sh` and
+  `scripts/evaluate_test.sh` on `outputs/cursor_ranking.json` and
+  `outputs/cursor_ranking_eegnet_n500.json` with `gpus: 0`; exit code was 0.
+- Generated `scoring/scores_train.json` and `scoring/scores_test.json`.
+  Both files cover both experiments, the same three method keys
+  (`dummy`, `lr`, `s_lr`), and ten metrics per method.
+- `python validate.py` passed, including train/test method-key parity,
+  split-value differentiation, and primary metric discrimination on train.
+- The split is not byte-identical: the proposed `lr` method's primary
+  `control_gap_top_rank_distance` changed from 13.09 train to 8.83 test on
+  `unsupervised_ranking_target_sessions`, and from 20.95 train to 4.87 test on
+  `unsupervised_ranking_eegnet`.
+- The proposed method remains stronger than controls on both slices, so the gym
+  has a meaningful baseline to improve. The main caveat is sample size: each
+  experiment has only 9 train runs and 8 test runs, so top-k rates move in
+  coarse increments.
