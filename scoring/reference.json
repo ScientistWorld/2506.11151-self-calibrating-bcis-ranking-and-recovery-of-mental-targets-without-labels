@@ -1,0 +1,73 @@
+{
+  "experiments": {
+    "unsupervised_ranking_target_sessions": {
+      "description": "CURSOR ranks 60 candidate face hypotheses for an unknown mental target using unlabeled EEG-response/stimulus pairs. Paper reference is the full windowed-EEG ranking task in Table 1; this environment evaluates the same quantities on target-specific sessions.",
+      "weight": 1.0,
+      "primary_metric": "top_rank_distance",
+      "metrics": {
+        "score_distance_pearson_r": {
+          "higher_is_better": false,
+          "coefficient": 1.0
+        },
+        "target_rank": {
+          "higher_is_better": false,
+          "coefficient": 1.0
+        },
+        "top_rank_distance": {
+          "higher_is_better": false,
+          "coefficient": 1.5
+        },
+        "control_gap_top_rank_distance": {
+          "higher_is_better": true,
+          "coefficient": 1.0
+        },
+        "label_supervision_count": {
+          "higher_is_better": false,
+          "coefficient": -1.0
+        },
+        "pretrained_decoder_count": {
+          "higher_is_better": false,
+          "coefficient": -1.0
+        }
+      },
+      "results": {
+        "lr": {
+          "type": "proposed",
+          "score_distance_pearson_r": -0.77,
+          "target_rank": 6.63,
+          "top_rank_distance": 2.9,
+          "control_gap_top_rank_distance": 17.95,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        },
+        "s_lr": {
+          "type": "baseline",
+          "score_distance_pearson_r": -0.01,
+          "target_rank": 27.13,
+          "top_rank_distance": 20.85,
+          "control_gap_top_rank_distance": 0,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        },
+        "dummy": {
+          "type": "baseline",
+          "score_distance_pearson_r": 0.01,
+          "target_rank": 27.91,
+          "top_rank_distance": 21.97,
+          "control_gap_top_rank_distance": 0,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        },
+        "random": {
+          "type": "baseline",
+          "score_distance_pearson_r": 0,
+          "target_rank": 30,
+          "top_rank_distance": 23.08,
+          "control_gap_top_rank_distance": 0,
+          "label_supervision_count": 0,
+          "pretrained_decoder_count": 0
+        }
+      }
+    }
+  }
+}

@@ -17,4 +17,10 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+python baseline/run_baseline.py \
+  --n-targets "${N_TARGETS:-3}" \
+  --n-observations "${N_OBSERVATIONS:-500}" \
+  --seed "${SEED:-0}" \
+  --output outputs/baseline_ranking.json
+
+bash scripts/evaluate.sh outputs/baseline_ranking.json

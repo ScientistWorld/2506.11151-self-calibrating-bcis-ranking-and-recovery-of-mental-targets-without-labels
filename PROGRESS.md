@@ -2,36 +2,27 @@
 
 ## What Works
 
-<!-- What has been successfully reproduced so far. -->
+- The paper and upstream repository have been inspected.
+- The released `all_data_sorted.npz` dataset is available locally under `data/downloads/`.
+- A local CURSOR implementation computes hypothesis-specific Euclidean distances, trains aligned and shuffled regressors over repeated held-out splits, and writes candidate scores.
+- The evaluator reads method outputs from `outputs/` and writes `scoring/scores.json` without importing from `method/`.
 
 ## Results
 
-<!-- Reproduced numbers compared to the paper's reported numbers. -->
+- No reproduced scores yet. A CPU test job is being submitted to run the first end-to-end ranking experiment.
 
 ## Remaining
 
-<!-- What still needs to be done to reach higher milestones. -->
+- Run the CPU job and inspect `scoring/scores.json`.
+- If the target-session scale is too small to support the claim, increase target count or observations, or switch to the upstream synthetic split generation protocol.
+- Fill final scoring guidance files once scores exist.
 
 ## Issues
 
-<!-- Blockers, bugs, or difficulties encountered. -->
+- The login-node Python lacks scientific packages, so numerical validation is deferred to the submitted container job.
+- The reproduction currently uses target-specific observed sessions rather than the full upstream synthetic split generation. This is a scale/protocol deviation to validate quickly; it may need expansion before `core_claim`.
 
 ## Deviations from Paper
 
-<!-- Do not edit this section unless you deviated from the paper's original setup.
-     For each deviation, document: what the paper used, what you substituted, and why.
-
-     ACCEPTABLE deviations (data/resource/scale substitutions — milestones still valid):
-       - Replaced a proprietary dataset with a public one
-       - Used a smaller model of the same architecture
-       - Scaled down training (fewer epochs, smaller batch)
-       - Used a different library for the same algorithm
-
-     UNACCEPTABLE deviations (algorithm substitutions — milestones above 'none' are void):
-       - Replaced the paper's algorithm with a fundamentally different one
-       - Wrote a generic model trained to approximate the method's outputs
-         instead of implementing the method's computational steps
-
-     The test: could someone reading your code identify which algorithm from
-     the paper you implemented? If not, you replaced the method. -->
-
+- Paper setting: full ranking experiments use generated train/test candidate sets and report averages across 17 targets and repeated train splits.
+- Current first job: target-specific observed sessions, 3 targets, up to 500 observations per target. The CURSOR scoring algorithm itself is unchanged; only the scale/data split is reduced for a smoke test.
