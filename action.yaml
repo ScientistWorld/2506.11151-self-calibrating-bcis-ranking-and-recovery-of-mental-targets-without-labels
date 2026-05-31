@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
-test: true
+test: false
 milestone: secondary_claims
-notes: "CPU validation job to regenerate score files after correcting the synthetic-random experiment key and run normal plus post-design validation."
+notes: "Final verification passed: score keys match reference, download URL verified, method-agnostic separation and train/test validation checks pass."

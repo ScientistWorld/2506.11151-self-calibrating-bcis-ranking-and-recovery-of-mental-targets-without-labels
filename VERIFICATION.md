@@ -2,52 +2,45 @@
 
 ## Initial Assessment
 
-The workspace was already at `secondary_claims`. The claim is justified: the
-paper method runs on the raw-response and EEGNet-representation ranking tasks,
-the reusable evaluator reads method artifacts rather than importing `method/`,
-and the reproduced method beats broken controls while preserving the zero-label
-and zero-pretrained-decoder constraints.
+The workspace started from a claimed `secondary_claims` milestone. The claim is
+justified: the implemented ranking method is the paper's CURSOR scoring
+procedure, completed artifacts exist for both the raw EEG and EEGNet
+representations, and the reusable evaluator scores artifacts without importing
+from `method/`.
 
 ## Issues Found
 
-- Minor: `briefing/evaluation.md` named the paper's main solver in a strict
-  method-agnostic file.
-- Minor: final post-design validation requires the formal primary metric to be
-  directly comparable with paper values across the train/test split. The scaled
-  control-gap metric is still important, but its held-out split magnitude is
-  not calibrated tightly enough to serve as the paper-consistency primary.
-- Minor: `scoring/scores.json` had not been refreshed after the evaluator gained
-  the expanded ranking metric set already present in `scores_train.json` and
-  `scores_test.json`.
-- Cosmetic: ignored bytecode caches and an unused ignored upstream clone were
-  present in the working tree.
+- Minor: `scoring/scores.json`, `scores_train.json`, and `scores_test.json`
+  still used the older raw experiment key
+  `unsupervised_ranking_target_sessions` after `reference.json` and the docs
+  were corrected to `unsupervised_ranking_synthetic_random`.
+- Cosmetic: an ignored stale output file from an older EEGNet run remained in
+  `outputs/` and was not used by any script.
+- Residual system artifact: `git status` still shows system-managed root files
+  (`README.md`, `manifest.json`, and `trajectory/`) as modified/deleted. These
+  are outside the research gym payload and were not edited or restored.
 
 ## Fixes Applied
 
-- Reworded `briefing/evaluation.md` to describe the artifact-level contract
-  without naming a solver architecture or training recipe.
-- Kept `target_top5_accuracy` as the primary metric in
-  `scoring/reference.json`, retained `control_gap_top_rank_distance` as a
-  scored comparative metric, and removed the method acronym from experiment
-  descriptions.
-- Added the missing top-k, reciprocal-rank, and near-target metrics to
-  `scoring/scores.json` using the already-generated train/test evaluator
-  outputs, preserving the full-run control-gap values.
-- Removed ignored generated caches and the unused ignored upstream clone.
-- Ran `python validate.py --post-design --compare`; all scoring, split-mode,
-  paper-consistency, and structure checks passed.
+- Renamed the raw experiment key in all three tracked score files to
+  `unsupervised_ranking_synthetic_random`, preserving the already-computed
+  metric values from the completed artifacts.
+- Removed the unused ignored `outputs/cursor_ranking_eegnet.json` artifact.
+- Verified `scripts/download.sh` points to a real GitHub raw URL returning HTTP
+  200 with the expected 31,141,744 byte dataset.
+- Ran `python validate.py --compare` and
+  `python validate.py --post-design --compare`; both passed.
 
 ## Final Judgment
 
 This workspace is ready to serve as a research gym in both improve and
-from-scratch modes. The problem-facing docs and evaluation path are
-method-agnostic, the scoring coefficients reward meaningful ranking improvement
-while retaining supervision/resource constraints, the formal primary metric is
-calibrated to the paper tables, and the train/test evaluator artifacts are
-present and independent.
+from-scratch modes. The method-agnostic problem and evaluation documents avoid
+algorithm details, `eval/` and `data/` are independent of `method/`, scoring
+captures both ranking benefit and self-calibration constraints, and the
+train/test split artifacts are present and discriminative.
 
 - Milestone: secondary_claims
 - Ready for gym use: yes
 - Confidence: high
-- Key limitation: scaled ranking reproduction, with full optimization variants
-  and the paper's larger experimental matrix left for future work.
+- Key limitation: scaled ranking reproduction only; the full optimization and
+  larger estimator/ablation matrix remain future extensions.

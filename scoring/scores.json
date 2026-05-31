@@ -1,6 +1,6 @@
 {
   "experiments": {
-    "unsupervised_ranking_target_sessions": {
+    "unsupervised_ranking_synthetic_random": {
       "results": {
         "dummy": {
           "score_distance_pearson_r": 0.0,

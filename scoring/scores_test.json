@@ -1,7 +1,7 @@
 {
   "_slice": "test",
   "experiments": {
-    "unsupervised_ranking_target_sessions": {
+    "unsupervised_ranking_synthetic_random": {
       "slice": "test",
       "split_id": "cursor_target_hash_v1",
       "n_runs": 8,

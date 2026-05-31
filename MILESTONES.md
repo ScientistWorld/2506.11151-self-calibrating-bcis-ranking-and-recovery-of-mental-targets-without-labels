@@ -37,5 +37,9 @@
 - Renamed the raw ranking experiment from `unsupervised_ranking_target_sessions` to `unsupervised_ranking_synthetic_random` so the score contract matches the protocol used by the current artifacts.
 - Submitting a CPU validation job to regenerate score files under the corrected experiment key and rerun normal plus post-design validation inside the packaged environment.
 
+### [2026-05-31 17:41] - secondary_claims
+- Final verification corrected stale score-file experiment keys to match `scoring/reference.json`.
+- Verified normal and post-design validation pass, checked the download URL, and removed one unused ignored output artifact.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
