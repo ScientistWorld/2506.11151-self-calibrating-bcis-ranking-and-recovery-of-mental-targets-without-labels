@@ -16,6 +16,9 @@ from data.cursor_data import load_arrays, unique_targets  # noqa: E402
 
 
 CONTROL_METHODS = {"dummy", "random", "s_lr"}
+EXPERIMENT_ALIASES = {
+    "unsupervised_ranking_target_sessions": "unsupervised_ranking_synthetic_random",
+}
 
 
 def _is_control_method(method: str) -> bool:
@@ -106,6 +109,11 @@ def _add_control_gaps(results: dict[str, dict[str, float]]) -> None:
             )
 
 
+def _experiment_name(output: dict) -> str:
+    name = output.get("experiment", "unsupervised_ranking_synthetic_random")
+    return EXPERIMENT_ALIASES.get(name, name)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate CURSOR ranking outputs.")
     parser.add_argument(
@@ -128,9 +136,7 @@ def main() -> None:
 
         results = {method: _summarize_method(output, method) for method in methods}
         _add_control_gaps(results)
-        experiments[output.get("experiment", "unsupervised_ranking_target_sessions")] = {
-            "results": results
-        }
+        experiments[_experiment_name(output)] = {"results": results}
 
     scores = {"experiments": experiments}
     score_path = Path(args.scores)

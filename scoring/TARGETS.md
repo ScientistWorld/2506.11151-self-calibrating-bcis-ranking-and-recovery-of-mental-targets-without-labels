@@ -1,10 +1,10 @@
 # Evaluation Targets
 
-## Primary: unsupervised_ranking_target_sessions
+## Primary: unsupervised_ranking_synthetic_random
 
-Tests whether candidate face embeddings can be ranked so that candidates closer
-to the intended mental target receive better ranks using only unlabeled
-brain/stimulus observations from the released BCI dataset.
+Tests whether synthetic-random candidate face embeddings can be ranked so that
+candidates closer to the intended mental target receive better ranks using only
+unlabeled brain/stimulus observations from the released BCI dataset.
 
 - **Primary metric**: `target_top5_accuracy` (higher is better), because it is
   directly comparable to the paper's reported target-recovery rate.

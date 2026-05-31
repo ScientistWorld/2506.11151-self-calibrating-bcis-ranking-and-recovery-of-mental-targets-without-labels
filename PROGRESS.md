@@ -17,7 +17,7 @@
 ## Results
 
 - Job `16ddec1d-905` completed successfully on a compact one-target setting.
-- Reproduced scores for `unsupervised_ranking_target_sessions`:
+- Reproduced scores for `unsupervised_ranking_synthetic_random`:
   - `lr`: `top_rank_distance=5.883`, `target_rank=31.0`, `score_distance_pearson_r=-0.162`, `control_gap_top_rank_distance=12.219`
   - `s_lr`: `top_rank_distance=18.102`, `target_rank=50.0`, `score_distance_pearson_r=-0.042`
   - `dummy`: `top_rank_distance=22.627`, `target_rank=52.0`, `score_distance_pearson_r=0.000`
@@ -79,6 +79,10 @@
   `score_distance_pearson_r=-0.622`, and
   `control_gap_top_rank_distance=13.387`, restoring the secondary
   representation claim under the independent evaluator.
+- 2026-05-31 naming cleanup: the raw ranking score contract now uses
+  `unsupervised_ranking_synthetic_random`, which matches the current
+  `synthetic_random` method artifact protocol. The evaluator maps older artifact
+  metadata to the corrected key so completed outputs remain reusable.
 
 ## Remaining
 

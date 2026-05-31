@@ -19,6 +19,9 @@ from data.cursor_data import load_arrays, unique_targets  # noqa: E402
 SLICE_NAME = "train"
 SPLIT_ID = "cursor_target_hash_v1"
 CONTROL_METHODS = {"dummy", "random", "s_lr"}
+EXPERIMENT_ALIASES = {
+    "unsupervised_ranking_target_sessions": "unsupervised_ranking_synthetic_random",
+}
 
 
 def _split_digest(run: dict, fallback_index: int) -> str:
@@ -132,6 +135,11 @@ def _add_control_gaps(results: dict[str, dict[str, float]]) -> None:
             )
 
 
+def _experiment_name(output: dict) -> str:
+    name = output.get("experiment", "unsupervised_ranking_synthetic_random")
+    return EXPERIMENT_ALIASES.get(name, name)
+
+
 def _score_output(input_name: str) -> tuple[str, dict]:
     output = json.loads(Path(input_name).read_text())
     if output.get("complete") is not True:
@@ -151,7 +159,7 @@ def _score_output(input_name: str) -> tuple[str, dict]:
     results = {method: _summarize_method(output, runs, method) for method in methods}
     _add_control_gaps(results)
 
-    experiment = output.get("experiment", "unsupervised_ranking_target_sessions")
+    experiment = _experiment_name(output)
     return experiment, {
         "slice": SLICE_NAME,
         "split_id": SPLIT_ID,

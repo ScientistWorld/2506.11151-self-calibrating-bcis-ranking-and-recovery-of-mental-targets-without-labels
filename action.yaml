@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: secondary_claims
-notes: "Post-design validation passes; CURSOR ranking is reproduced on raw EEG and EEGNet artifacts with zero label supervision and reusable method-independent evaluation."
+notes: "CPU validation job to regenerate score files after correcting the synthetic-random experiment key and run normal plus post-design validation."

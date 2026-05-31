@@ -33,5 +33,9 @@
 - Fixed post-design validation by keeping `target_top5_accuracy` as the formal primary metric for paper-consistency checks while retaining `control_gap_top_rank_distance` as a scored comparative metric.
 - `python validate.py --post-design --compare` passes with split-mode artifacts and paper-consistency checks enabled.
 
+### [2026-05-31 17:32] - secondary_claims
+- Renamed the raw ranking experiment from `unsupervised_ranking_target_sessions` to `unsupervised_ranking_synthetic_random` so the score contract matches the protocol used by the current artifacts.
+- Submitting a CPU validation job to regenerate score files under the corrected experiment key and rerun normal plus post-design validation inside the packaged environment.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

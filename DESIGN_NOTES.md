@@ -56,10 +56,10 @@
   split-value differentiation, and primary metric discrimination on train.
 - The split is not byte-identical: the proposed `lr` method's primary
   `target_top5_accuracy` changed from 0.67 train to 0.50 test on
-  `unsupervised_ranking_target_sessions`, and from 0.67 train to 0.88 test on
+  `unsupervised_ranking_synthetic_random`, and from 0.67 train to 0.88 test on
   `unsupervised_ranking_eegnet`.
 - The control-gap diagnostic also differs substantially across slices: 13.09
-  train to 8.83 test on `unsupervised_ranking_target_sessions`, and 20.95 train
+  train to 8.83 test on `unsupervised_ranking_synthetic_random`, and 20.95 train
   to 4.87 test on `unsupervised_ranking_eegnet`.
 - The proposed method remains stronger than controls on both slices, so the gym
   has a meaningful baseline to improve. The main caveat is sample size: each

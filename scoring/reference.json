@@ -1,7 +1,7 @@
 {
   "experiments": {
-    "unsupervised_ranking_target_sessions": {
-      "description": "Ranks 60 random candidate face hypotheses for an unknown mental target using unlabeled EEG-response/stimulus pairs. Paper reference is the full windowed-EEG ranking task in Table 1; this environment evaluates the same quantities on a smaller generated-candidate subset.",
+    "unsupervised_ranking_synthetic_random": {
+      "description": "Ranks 60 random candidate face hypotheses for an unknown mental target using unlabeled EEG-response/stimulus pairs. Paper reference is the full windowed-EEG ranking task in Table 1; this environment evaluates the same quantities on a smaller synthetic-random generated-candidate subset.",
       "weight": 0.65,
       "primary_metric": "target_top5_accuracy",
       "metrics": {

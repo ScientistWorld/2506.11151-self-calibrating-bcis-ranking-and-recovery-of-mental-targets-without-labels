@@ -19,6 +19,9 @@ from data.cursor_data import load_arrays, unique_targets  # noqa: E402
 SLICE_NAME = "test"
 SPLIT_ID = "cursor_target_hash_v1"
 CONTROL_METHODS = {"dummy", "random", "s_lr"}
+EXPERIMENT_ALIASES = {
+    "unsupervised_ranking_target_sessions": "unsupervised_ranking_synthetic_random",
+}
 
 
 def _split_digest(run: dict, fallback_index: int) -> str:
@@ -132,6 +135,11 @@ def _add_control_gaps(results: dict[str, dict[str, float]]) -> None:
             )
 
 
+def _experiment_name(output: dict) -> str:
+    name = output.get("experiment", "unsupervised_ranking_synthetic_random")
+    return EXPERIMENT_ALIASES.get(name, name)
+
+
 def _train_methods(train_scores_path: Path) -> dict[str, list[str]]:
     train_scores = json.loads(train_scores_path.read_text())
     experiments = train_scores.get("experiments", train_scores)
@@ -159,7 +167,7 @@ def _score_output(input_name: str, expected_methods: dict[str, list[str]]) -> tu
     if "pretrained_decoder_count" not in output.get("audit", {}):
         raise ValueError(f"{input_name} is missing audit.pretrained_decoder_count")
 
-    experiment = output.get("experiment", "unsupervised_ranking_target_sessions")
+    experiment = _experiment_name(output)
     if experiment not in expected_methods:
         raise ValueError(
             f"{experiment} is not present in the train scores; run evaluate_train.sh "

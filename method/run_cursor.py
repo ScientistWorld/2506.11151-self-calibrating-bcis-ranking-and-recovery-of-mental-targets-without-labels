@@ -26,7 +26,7 @@ from method.cursor import CursorConfig, score_candidates  # noqa: E402
 
 
 def write_output(path: Path, args: argparse.Namespace, runs: list[dict], complete: bool) -> None:
-    experiment = "unsupervised_ranking_target_sessions"
+    experiment = f"unsupervised_ranking_{args.protocol}"
     if args.eeg == "eeg_net":
         experiment = "unsupervised_ranking_eegnet"
     output = {
