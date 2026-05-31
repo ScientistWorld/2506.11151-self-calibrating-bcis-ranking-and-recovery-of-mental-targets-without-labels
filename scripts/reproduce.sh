@@ -30,7 +30,7 @@ bash scripts/method.sh
 
 PROTOCOL="${PROTOCOL:-synthetic_random}" \
 N_TARGETS="${N_TARGETS:-17}" \
-N_OBSERVATIONS="${N_OBSERVATIONS:-300}" \
+N_OBSERVATIONS="${EEGNET_N_OBSERVATIONS:-500}" \
 N_SPLITS="${EEGNET_N_SPLITS:-5}" \
 SEED="${SEED:-0}" \
 EEG=eeg_net \

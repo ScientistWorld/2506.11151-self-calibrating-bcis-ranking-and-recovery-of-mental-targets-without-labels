@@ -4,5 +4,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: secondary_claims
+milestone: core_claim_plus
 notes: "Regenerate the all-target raw-EEG CURSOR ranking artifact with candidate embeddings so evaluation recomputes ground-truth distances independently of method output."

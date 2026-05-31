@@ -48,14 +48,20 @@
   - `lr`: `top_rank_distance=13.714`, `target_rank=6.176`, `score_distance_pearson_r=-0.622`, `control_gap_top_rank_distance=13.387`
   - `s_lr`: `top_rank_distance=27.883`, `target_rank=22.824`, `score_distance_pearson_r=-0.174`
   - `dummy`: `top_rank_distance=27.101`, `target_rank=32.941`, `score_distance_pearson_r=0.000`
-- The larger EEGNet run reproduces the paper's secondary representation trend:
+- The larger EEGNet run reproduced the paper's secondary representation trend
+  under the previous artifact schema:
   LR ranks the target near the top and clearly outperforms shuffled/dummy
   controls while preserving the zero-label and zero-pretrained-decoder
-  constraints. This supports `secondary_claims`.
+  constraints.
 - 2026-05-31 integrity update: `method/run_cursor.py` and
   `eval/evaluate_cursor.py` were revised so future scores use evaluator-owned
   ground truth distances. The next submitted job reruns the raw-EEG artifact
   under this schema before rerunning the slower EEGNet artifact.
+- 2026-05-31 continuation audit: current `outputs/cursor_ranking.json` and
+  `outputs/cursor_ranking_eegnet_n500.json` are stale because they lack
+  candidate embeddings and audit metadata. Active milestone is therefore held at
+  `core_claim_plus` until the raw-EEG validation job and follow-up EEGNet job
+  regenerate `scoring/scores.json` through the current evaluator.
 
 ## Remaining
 

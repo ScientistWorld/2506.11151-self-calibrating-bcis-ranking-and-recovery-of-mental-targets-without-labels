@@ -27,7 +27,7 @@ representation.
 - **Supporting metrics**: `top_rank_distance`, `target_rank`, and
   `score_distance_pearson_r`
 - **How to evaluate**: run
-  `scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet.json`
+  `scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet_n500.json`
   after both method artifacts exist.
 
 ## Constraint: zero_supervision
