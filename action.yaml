@@ -1,9 +1,8 @@
-# This iteration writes files only — do NOT submit compute jobs.
-# Once you set action to 'done', STOP immediately.
+# This iteration submits the split evaluation job.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: done
+action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Improvements: added top-k/reciprocal/near-target ranking metrics, required complete artifacts, and made split scripts cover both default experiments. Notes: see DESIGN_NOTES.md."
+notes: "Run evaluate_{train,test}.sh against final cursor_ranking artifacts and populate split scores."
