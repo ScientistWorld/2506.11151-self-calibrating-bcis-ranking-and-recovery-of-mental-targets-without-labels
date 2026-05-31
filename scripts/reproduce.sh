@@ -34,8 +34,8 @@ N_OBSERVATIONS="${N_OBSERVATIONS:-300}" \
 N_SPLITS="${EEGNET_N_SPLITS:-5}" \
 SEED="${SEED:-0}" \
 EEG=eeg_net \
-OUTPUT=outputs/cursor_ranking_eegnet.json \
+OUTPUT=outputs/cursor_ranking_eegnet_n500.json \
 CONTINUE_EXISTING=1 \
 bash scripts/method.sh
 
-bash scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet.json
+bash scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet_n500.json

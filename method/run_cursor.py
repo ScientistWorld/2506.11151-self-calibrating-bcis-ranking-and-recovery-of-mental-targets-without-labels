@@ -35,6 +35,10 @@ def write_output(path: Path, args: argparse.Namespace, runs: list[dict], complet
         "eeg": args.eeg,
         "seed": args.seed,
         "protocol": args.protocol,
+        "methods": args.methods,
+        "n_observations": args.n_observations,
+        "n_candidates": args.n_candidates,
+        "n_splits": args.n_splits,
         "complete": complete,
         "runs": runs,
     }
@@ -94,9 +98,15 @@ def main() -> None:
             previous.get("protocol") == args.protocol
             and previous.get("eeg") == args.eeg
             and int(previous.get("seed", args.seed)) == args.seed
+            and previous.get("methods") == args.methods
+            and int(previous.get("n_observations", -1)) == args.n_observations
+            and int(previous.get("n_candidates", -1)) == args.n_candidates
+            and int(previous.get("n_splits", -1)) == args.n_splits
         ):
             runs = previous.get("runs", [])
             print(f"[cursor] resuming {out_path} with {len(runs)} completed runs", flush=True)
+        else:
+            print(f"[cursor] ignoring incompatible existing output at {out_path}", flush=True)
 
     for run_number, target_index in enumerate(target_order):
         if run_number < len(runs):

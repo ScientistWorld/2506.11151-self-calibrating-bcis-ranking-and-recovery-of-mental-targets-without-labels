@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Run the secondary EEGNet representation ranking experiment and merge it with the existing raw-EEG scores."
+notes: "Retry the secondary EEGNet representation ranking experiment at 500 observations per target; N=300 improved rank/correlation but not top-ranked distance."

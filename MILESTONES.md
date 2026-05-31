@@ -10,4 +10,5 @@
 - Completed an all-target synthetic-random ranking run at 300 observations per target where LR retained a positive control gap.
 
 ## Stop Justification
-- Not stopped; submitting an additional EEGNet representation check.
+- Not stopped; EEGNet N=300 did not strongly reproduce the secondary claim, so
+  submitting a larger EEGNet N=500 run.

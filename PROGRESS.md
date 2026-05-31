@@ -61,3 +61,9 @@
 - Pending expansion: same all-target synthetic-random ranking protocol on the
   released `eeg_net` representation, at 300 observations per target and 5 CV
   splits to stay within CPU runtime.
+- Job `e15d556b-0ca` completed that EEGNet run. It produced better
+  score-distance correlation and target rank than controls, but the top-ranked
+  distance was still too high (`lr=27.031`, `dummy=27.101`), so it is not enough
+  to claim `secondary_claims`.
+- Next attempt increases the EEGNet setting to 500 observations per target with
+  5 CV splits, preserving the same CURSOR scoring algorithm and output schema.

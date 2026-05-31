@@ -19,12 +19,12 @@ cd /home/user
 # both artifacts into scoring/scores.json.
 export PROTOCOL="${PROTOCOL:-synthetic_random}"
 export N_TARGETS="${N_TARGETS:-17}"
-export N_OBSERVATIONS="${N_OBSERVATIONS:-300}"
+export N_OBSERVATIONS="${N_OBSERVATIONS:-500}"
 export N_SPLITS="${N_SPLITS:-5}"
 export SEED="${SEED:-0}"
 export EEG="${EEG:-eeg_net}"
-export OUTPUT="${OUTPUT:-outputs/cursor_ranking_eegnet.json}"
+export OUTPUT="${OUTPUT:-outputs/cursor_ranking_eegnet_n500.json}"
 export CONTINUE_EXISTING=1
 
 bash scripts/method.sh
-bash scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet.json
+bash scripts/evaluate.sh outputs/cursor_ranking.json "$OUTPUT"
