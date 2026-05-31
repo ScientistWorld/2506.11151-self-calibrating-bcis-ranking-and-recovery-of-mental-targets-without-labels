@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Retry all-target synthetic-random CURSOR with 500 observations per target and per-target progress logging after the 1000-observation run timed out."
+notes: "Retry all-target synthetic-random CURSOR with 300 observations per target after the 500-observation run completed 14/17 targets before timeout."

@@ -19,7 +19,7 @@ cd /home/user
 # one-core jobs.
 export PROTOCOL="${PROTOCOL:-synthetic_random}"
 export N_TARGETS="${N_TARGETS:-17}"
-export N_OBSERVATIONS="${N_OBSERVATIONS:-500}"
+export N_OBSERVATIONS="${N_OBSERVATIONS:-300}"
 export N_SPLITS="${N_SPLITS:-10}"
 export SEED="${SEED:-0}"
 

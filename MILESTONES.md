@@ -33,4 +33,9 @@
 - Added per-target progress logging and partial artifact writes so long runs are diagnosable.
 - Retrying the all-target synthetic-random run with 500 observations per target, matching the successful five-target scale.
 
+### [2026-05-31 14:10] - core_claim_plus
+- The all-target 500-observation run timed out after completing 14 of 17 targets, so the method is progressing but still slightly too slow for the one-core limit.
+- The partial artifact confirms 14 completed target runs were written before timeout.
+- Retrying all 17 targets with 300 observations per target while preserving the 10-split CURSOR scoring protocol.
+
 ## Stop Justification

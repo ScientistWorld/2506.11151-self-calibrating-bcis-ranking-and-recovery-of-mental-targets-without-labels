@@ -25,10 +25,11 @@
   - `dummy`: `top_rank_distance=22.066`, `target_rank=38.4`, `score_distance_pearson_r=0.000`
 - This reaches `core_claim_plus`: the paper-style generated candidate protocol works beyond the one-target smoke setting and preserves the zero-label, zero-pretrained-decoder constraints.
 - Job `1cf9db06-d34` attempted the all-target synthetic-random protocol with 1000 observations per target, but the one-core CPU job hit the 3600 second timeout before writing final scores.
+- Job `fc585e11-021` attempted the all-target synthetic-random protocol with 500 observations per target. It completed and wrote 14 target runs before timing out during target 15, so the scale remains just above the CPU job limit.
 
 ## Remaining
 
-- Run the all-target synthetic-random CPU job with 500 observations per target.
+- Run the all-target synthetic-random CPU job with 300 observations per target.
 - If the all-target job works, consider adding a diagonal-candidate setting or more estimators for secondary coverage.
 
 ## Issues
@@ -43,4 +44,5 @@
 - Completed diagnostic job: target-specific observed sessions, 5 targets, up to 500 observations per target; it did not support a stronger milestone.
 - Completed core-plus job: synthetic generated train faces, random candidates with exact target included, 5 targets, up to 500 observations per target.
 - Attempted expansion: same synthetic-random protocol across all 17 targets, up to 1000 observations per target; this exceeded the CPU job limit.
-- Next job: same all-target protocol with 500 observations per target plus progress logging and partial output writes.
+- Attempted expansion: same all-target protocol with 500 observations per target; this completed 14 targets before timeout.
+- Next job: same all-target protocol with 300 observations per target plus progress logging and partial output writes.
