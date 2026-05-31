@@ -411,6 +411,53 @@ of `scoring/reference.json`.
 
 </details>
 
+### Iteration 9: gpt-5.5 (verifier)
+- **Milestone**: `secondary_claims` | **Status**: done
+- **Working time**: 8m | **GPU**: 0.0h
+- **Jobs**: 11 total (9 completed, 2 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-05-31 15:42] - secondary_claims
+- Completed all-target raw-EEG CURSOR ranking and all-target EEGNet ranking with zero label supervision and zero pretrained decoder use.
+- LR outperformed shuffled and dummy controls on the scored control-gap metric in both experiments.
+- Tightened the artifact contract so evaluation recomputes candidate distances from emitted candidate embeddings instead of trusting method-supplied distances.
+
+### [2026-05-31 16:04] - core_claim_plus
+- Follow-up audit found the scored raw-EEG and EEGNet artifacts were produced before the candidate-embedding artifact contract was enforced.
+- Downgraded the active milestone to the reset `core_claim_plus` state until the all-target raw-EEG and EEGNet artifacts are regenerated and rescored under the independent evaluator.
+
+### [2026-05-31 16:48] - core_claim_plus
+- Job `f55aef50-ae1` regenerated the all-target raw-EEG artifact under the current artifact contract: 17 complete runs, candidate embeddings present, audit metadata present, and no method-supplied ground-truth distances.
+- Submitting the all-target EEGNet rerun next so the secondary representation claim can be restored with both scored artifacts evaluated together.
+
+### [2026-05-31 17:00] - secondary_claims
+- Job `5f2cbf4d-94d` regenerated the all-target EEGNet artifact under the same candidate-embedding contract.
+- `scoring/scores.json` now contains both raw-EEG and EEGNet experiments scored by `eval/`, with LR outperforming shuffled and dummy controls while preserving zero label supervision and zero pretrained decoder use.
+
+### [2026-05-31 17:13] - secondary_claims
+- Tightened the main evaluator so the reusable `scoring/scores.json` output includes the full ranking metric set already used by the train/test split evaluators.
+- Submitting a CPU validation job to regenerate all score files in the packaged environment and run `validate.py --compare`.
+
+### [2026-05-31 17:18] - secondary_claims
+- Final verification removed a method-specific phrase from the method-agnostic evaluation briefing and refreshed the top-level score contract.
+- Refreshed the top-level score contract so `scoring/scores.json` includes the same ranking metric set as the train/test split score files; `python validate.py --compare` passes.
+
+### [2026-05-31 17:23] - secondary_claims
+- Fixed post-design validation by keeping `target_top5_accuracy` as the formal primary metric for paper-consistency checks while retaining `control_gap_top_rank_distance` as a scored comparative metric.
+- `python validate.py --post-design --compare` passes with split-mode artifacts and paper-consistency checks enabled.
+
+### [2026-05-31 17:32] - secondary_claims
+- Renamed the raw ranking experiment from `unsupervised_ranking_target_sessions` to `unsupervised_ranking_synthetic_random` so the score contract matches the protocol used by the current artifacts.
+- Submitting a CPU validation job to regenerate score files under the corrected experiment key and rerun normal plus post-design validation inside the packaged environment.
+
+### [2026-05-31 17:41] - secondary_claims
+- Final verification corrected stale score-file experiment keys to match `scoring/reference.json`.
+- Verified normal and post-design validation pass, checked the download URL, and removed one unused ignored output artifact.
+
+</details>
+
 
 ---
 
