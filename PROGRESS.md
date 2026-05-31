@@ -68,18 +68,26 @@
   method-written `true_distances`. The independently recomputed scores match the
   previous raw-EEG result: LR `control_gap_top_rank_distance=11.524` with zero
   label supervision and zero pretrained decoder use.
+- Job `5f2cbf4d-94d` completed the EEGNet artifact-contract validation run:
+  `outputs/cursor_ranking_eegnet_n500.json` now has 17 complete all-target
+  runs, candidate embeddings for every run, zero-supervision audit metadata, and
+  no method-written `true_distances`. The combined `scoring/scores.json`
+  contains both experiments. EEGNet LR achieves
+  `top_rank_distance=13.714`, `target_rank=6.176`,
+  `score_distance_pearson_r=-0.622`, and
+  `control_gap_top_rank_distance=13.387`, restoring the secondary
+  representation claim under the independent evaluator.
 
 ## Remaining
 
-- Re-run the EEGNet ranking job after the candidate-artifact contract update so
-  `scoring/scores.json` is regenerated for both experiments entirely from
-  evaluator-computed distances.
 - Higher milestones would require adding more paper variants, such as diagonal
-  candidate sets, SVR/MLP estimators, and downstream calibration experiments.
+  candidate sets, SVR/MLP estimators, and downstream calibration/optimization
+  experiments.
 
 ## Issues
 
-- The login-node now has enough scientific packages to run validation, but actual reproduction compute remains on submitted jobs.
+- Actual reproduction compute was run through submitted jobs; login-node checks
+  were limited to lightweight validation and artifact inspection.
 - The completed five-target target-session run was too noisy and is retained only as a negative diagnostic; current code now uses the paper-style synthetic split protocol by default.
 
 ## Deviations from Paper

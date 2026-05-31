@@ -11,7 +11,7 @@ Check off items as you complete them. Order doesn't matter — work however make
 ## Scoring
 - [x] `scoring/reference.json` — paper's reported numbers
 - [x] Workspace validated via `python validate.py`
-- [ ] `scoring/scores.json` — reproduced numbers regenerated under the current candidate-embedding artifact contract
+- [x] `scoring/scores.json` — reproduced numbers regenerated under the current candidate-embedding artifact contract
 - [x] `scoring/EXPERIMENTS.md` — high-level purpose of each experiment in `scores.json`
 - [x] `scoring/TARGETS.md` — primary, constraint, and ablation targets
 - [x] `scoring/CONSTRAINTS.md` — what a scientist must hold fixed
@@ -39,7 +39,7 @@ Check off items as you complete them. Order doesn't matter — work however make
 - [x] `method_runs` — executes end-to-end without errors
 - [x] `core_claim` — minimum experiment supports central claim
 - [x] `core_claim_plus` — additional settings
-- [ ] `secondary_claims`
+- [x] `secondary_claims`
 - [ ] `majority`
 - [ ] `near_complete`
 - [ ] `full`

@@ -34,7 +34,10 @@ comparative self-calibrating claim.
 
 ## Evaluation Protocol
 
-Methods write a JSON artifact at `outputs/cursor_ranking.json` with candidate
-scores, true candidate distances, and audit metadata. `scripts/evaluate.sh`
-calls only code in `eval/` and writes `scoring/scores.json`, which mirrors the
-experiment and metric structure of `scoring/reference.json`.
+Methods write JSON artifacts such as `outputs/cursor_ranking.json` and
+`outputs/cursor_ranking_eegnet_n500.json` with candidate embeddings, candidate
+scores, target indexes, and audit metadata. The artifacts must not supply true
+candidate distances; `scripts/evaluate.sh` calls only code in `eval/`, reloads
+the dataset through `data/`, recomputes target distances independently, and
+writes `scoring/scores.json`, which mirrors the experiment and metric structure
+of `scoring/reference.json`.

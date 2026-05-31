@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: secondary_claims**
 
 ## Progress Log
 
@@ -17,5 +17,9 @@
 - Job `f55aef50-ae1` regenerated the all-target raw-EEG artifact under the current artifact contract: 17 complete runs, candidate embeddings present, audit metadata present, and no method-supplied ground-truth distances.
 - Submitting the all-target EEGNet rerun next so the secondary representation claim can be restored with both scored artifacts evaluated together.
 
+### [2026-05-31 17:00] - secondary_claims
+- Job `5f2cbf4d-94d` regenerated the all-target EEGNet artifact under the same candidate-embedding contract.
+- `scoring/scores.json` now contains both raw-EEG and EEGNet experiments scored by `eval/`, with LR outperforming shuffled and dummy controls while preserving zero label supervision and zero pretrained decoder use.
+
 ## Stop Justification
-- Not stopped; submitting the EEGNet validation rerun for the revised artifact schema.
+- Stopping at `secondary_claims`: the audited core and secondary representation claims are reproduced under the independent artifact contract. Higher milestones would require additional long-running estimator, optimization, or ablation experiments beyond the current validated gym.
