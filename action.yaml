@@ -5,4 +5,4 @@ action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Deterministic target-hash split; 60 train metric values, 60 test metric values; lr beats controls on both slices, with primary gaps 13.09->8.83 and 20.95->4.87. Caveat: 9/8 runs per split make top-k metrics coarse."
+notes: "Deterministic target-hash split; 60 train metric values, 60 test metric values; primary target_top5 lr gaps are 0.67->0.50 and 0.67->0.88. Control-gap remains scored but is noisy on 9/8-run splits."

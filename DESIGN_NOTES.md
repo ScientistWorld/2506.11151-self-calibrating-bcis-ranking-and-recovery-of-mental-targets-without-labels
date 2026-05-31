@@ -26,6 +26,10 @@
 - Added the required `description` field to every metric in
   `scoring/reference.json` and registered the new ranking metrics in both
   experiments with modest coefficients.
+- After the first real split run, changed both experiments' primary metric from
+  `control_gap_top_rank_distance` to `target_top5_accuracy`. The control-gap
+  metric remains scored, but it was too sensitive to which broken-control runs
+  landed in the eight-run held-out slice to serve as the split-ranking primary.
 
 ## Runtime Concerns For Next Iteration
 
@@ -51,9 +55,12 @@
 - `python validate.py` passed, including train/test method-key parity,
   split-value differentiation, and primary metric discrimination on train.
 - The split is not byte-identical: the proposed `lr` method's primary
-  `control_gap_top_rank_distance` changed from 13.09 train to 8.83 test on
-  `unsupervised_ranking_target_sessions`, and from 20.95 train to 4.87 test on
+  `target_top5_accuracy` changed from 0.67 train to 0.50 test on
+  `unsupervised_ranking_target_sessions`, and from 0.67 train to 0.88 test on
   `unsupervised_ranking_eegnet`.
+- The control-gap diagnostic also differs substantially across slices: 13.09
+  train to 8.83 test on `unsupervised_ranking_target_sessions`, and 20.95 train
+  to 4.87 test on `unsupervised_ranking_eegnet`.
 - The proposed method remains stronger than controls on both slices, so the gym
   has a meaningful baseline to improve. The main caveat is sample size: each
   experiment has only 9 train runs and 8 test runs, so top-k rates move in

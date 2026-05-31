@@ -3,7 +3,7 @@
     "unsupervised_ranking_target_sessions": {
       "description": "CURSOR ranks 60 random candidate face hypotheses for an unknown mental target using unlabeled EEG-response/stimulus pairs. Paper reference is the full windowed-EEG ranking task in Table 1; this environment evaluates the same quantities on a smaller generated-candidate subset.",
       "weight": 0.65,
-      "primary_metric": "control_gap_top_rank_distance",
+      "primary_metric": "target_top5_accuracy",
       "metrics": {
         "score_distance_pearson_r": {
           "higher_is_better": false,
@@ -62,6 +62,7 @@
           "score_distance_pearson_r": -0.77,
           "target_rank": 6.63,
           "top_rank_distance": 2.9,
+          "target_top5_accuracy": 0.67,
           "control_gap_top_rank_distance": 17.95,
           "label_supervision_count": 0,
           "pretrained_decoder_count": 0
@@ -98,7 +99,7 @@
     "unsupervised_ranking_eegnet": {
       "description": "CURSOR ranks 60 random candidate face hypotheses using the released EEGNet embedding representation instead of windowed raw EEG. Paper reference is Appendix Table 2 EEGNet columns.",
       "weight": 0.35,
-      "primary_metric": "control_gap_top_rank_distance",
+      "primary_metric": "target_top5_accuracy",
       "metrics": {
         "score_distance_pearson_r": {
           "higher_is_better": false,
@@ -157,6 +158,7 @@
           "score_distance_pearson_r": -0.76,
           "target_rank": 6.21,
           "top_rank_distance": 2.66,
+          "target_top5_accuracy": 0.67,
           "control_gap_top_rank_distance": 18.41,
           "label_supervision_count": 0,
           "pretrained_decoder_count": 0
