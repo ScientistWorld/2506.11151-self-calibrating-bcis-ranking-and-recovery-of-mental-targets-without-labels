@@ -6,16 +6,17 @@
 - The released `all_data_sorted.npz` dataset is available locally under `data/downloads/`.
 - A local CURSOR implementation computes hypothesis-specific Euclidean distances, trains aligned and shuffled regressors over repeated held-out splits, and writes candidate scores.
 - The evaluator reads method outputs from `outputs/` and writes `scoring/scores.json` without importing from `method/`.
+- Scoring target, constraint, experiment, and research-direction files now match the implemented benchmark experiment.
 
 ## Results
 
-- No reproduced scores yet. A CPU test job is being submitted to run the first end-to-end ranking experiment.
+- No reproduced scores yet. A compact CPU test job is being submitted to run the first end-to-end ranking experiment.
 
 ## Remaining
 
 - Run the CPU job and inspect `scoring/scores.json`.
 - If the target-session scale is too small to support the claim, increase target count or observations, or switch to the upstream synthetic split generation protocol.
-- Fill final scoring guidance files once scores exist.
+- If the compact CPU test succeeds, compare `scoring/scores.json` against `scoring/reference.json` and decide whether the observed effect supports `method_runs` only or can justify a larger run toward `core_claim`.
 
 ## Issues
 
@@ -25,4 +26,4 @@
 ## Deviations from Paper
 
 - Paper setting: full ranking experiments use generated train/test candidate sets and report averages across 17 targets and repeated train splits.
-- Current first job: target-specific observed sessions, 3 targets, up to 500 observations per target. The CURSOR scoring algorithm itself is unchanged; only the scale/data split is reduced for a smoke test.
+- Current first job: target-specific observed sessions, 1 target, up to 300 observations per target. The CURSOR scoring algorithm itself is unchanged; only the scale/data split is reduced for a smoke test.

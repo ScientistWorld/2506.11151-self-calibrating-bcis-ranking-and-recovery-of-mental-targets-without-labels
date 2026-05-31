@@ -1,78 +1,45 @@
 # Scientist Constraints
 
-<!-- Do not edit this unless you decide to stop -->
-
-<!--
-A scientist agent will attempt to improve on your reproduced results.
-These constraints define what the scientist must hold fixed, so that
-any improvement reflects genuine methodological innovation — not just
-throwing more resources at the problem.
-
-CONTEXT: Your reproduction becomes a benchmark environment. The scientist
-gets your code, data, evaluation pipeline, and these constraints. They
-must beat your scores while respecting every constraint listed here.
-Without good constraints, a scientist can trivially "improve" by swapping
-in a larger model, using a richer dataset that is simply publicly avaliable, or more 
-— none of which demonstrate real scientific insight.
-
-Your job is to act as a judge: distinguish between flexible innovation
-and non-genuine improvement. Constraints should block trivial gains
-(e.g. just swapping in a bigger model) while leaving room for creative
-methodology (e.g. a clever augmentation strategy, a better loss
-function, a novel use of existing tools). When in doubt, ask: "does
-this require insight, or just more resources?" Lock down the resources,
-leave the insight open. Do not block innovation.
-
-For example, if a scientist downloads online IMDB reviews to supplement a
-sentiment dataset, that's resource scaling. But if they use an LLM to
-augment the existing training data, that's methodology — they designed
-that pipeline. This is just an example, but keep this kind of distinction 
-in mind when writing constraints.
-
-Be SPECIFIC to this paper. Generic constraints are useless. Name the
-exact model, the exact dataset, the exact splits. Explain the reasoning
-so the scientist understands the intent behind each constraint, not
-just the rule — this helps them judge edge cases on their own.
-
-Think about at least:
-- Model: architecture, size, pretrained weights
-- Data: which datasets, which splits, whether external data is allowed
-
-You may add other constraint categories if relevant to this paper
-(e.g. training procedure, evaluation protocol, problem formulation).
-
-Example for a sentiment analysis paper:
-
-## Model
-The scientist must use BERT-base-uncased (110M parameters, HuggingFace
-`bert-base-uncased`). The paper's contribution is a novel fine-tuning
-strategy, not architecture design. Switching to a larger model (e.g.
-DeBERTa-v3-large, 304M params) would improve accuracy but would not
-demonstrate any methodological insight. The scientist may modify the
-fine-tuning procedure, add adapter layers, change the classification
-head, or alter the training loop — but the base encoder must remain
-BERT-base-uncased with its standard pretrained weights.
-
 ## Data
-The scientist must use only the provided SST-2 binary sentiment
-dataset (67,349 training examples, 872 validation, 1,821 test).
-No external sentiment corpora or additional human-labeled data.
-The test split must not be used for training or validation.
 
-Delete this comment block and fill in your actual constraints below.
+Use only the released BCI face-embedding dataset fetched by
+`scripts/download.sh` into `data/downloads/all_data_sorted.npz`. Do not add
+external EEG datasets, face datasets, human labels, or manually curated target
+annotations. The paper's claim is about recovering target rankings from the
+unlabeled interaction records in this dataset, so extra labeled data would
+change the problem rather than improve the method.
 
-At the very end, write a compliance checklist for the scientist agent.
-Each item should be a concrete, verifiable condition the scientist can
-check off before submitting. These should mirror your constraints above
-but phrased as yes/no checks.
+## Evaluation Protocol
 
-Example checklist (for the sentiment analysis example above):
+Submit rankings through the artifact schema consumed by `scripts/evaluate.sh`.
+Each evaluated target must use the same candidate count and the same metrics as
+the benchmark experiment. The evaluator must remain independent of `method/`;
+method code may write artifacts, but it may not change metric definitions or
+read reference scores.
+
+## Supervision
+
+No method may train on labels that identify the intended target, candidate
+rank, or candidate distance-to-target for the evaluated target. No pretrained
+EEG-to-image, EEG-to-face, or EEG-to-embedding decoder may be introduced. The
+allowed input is the unlabeled set of EEG/stimulus observations and the
+candidate face embeddings.
+
+## Resource Scaling
+
+Do not improve scores by increasing the problem resources outside the benchmark:
+no additional candidate-generation source, no larger external face embedding
+model, and no ensemble over separately trained supervised decoders. Changes
+should improve the self-calibrating ranking procedure under the same data and
+evaluation interface.
 
 ## Compliance Checklist
-- [ ] Model is BERT-base-uncased (110M params), not a larger variant
-- [ ] No external sentiment datasets used beyond SST-2
-- [ ] Test split not used for training or validation
 
-ONLY WRITE ABOUT WHAT TO RESTRICT. NEVER WRITE ABOUT WHAT REMAINS OPEN.
-
--->
+- [ ] Uses `data/downloads/all_data_sorted.npz` as the only data source
+- [ ] Does not use target labels, candidate ranks, or candidate distances as
+      training labels for the evaluated target
+- [ ] Does not introduce a pretrained EEG decoder or additional labeled EEG data
+- [ ] Writes method artifacts for `scripts/evaluate.sh` without modifying eval
+      metric definitions
+- [ ] Keeps the benchmark candidate count and metric names compatible with
+      `scoring/reference.json`

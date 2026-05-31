@@ -13,4 +13,10 @@ set -e
 
 cd /home/user
 
+# Compact CPU smoke run. The full scripts remain externally configurable;
+# these defaults keep the first verification inside the test-node limit.
+export N_TARGETS="${N_TARGETS:-1}"
+export N_OBSERVATIONS="${N_OBSERVATIONS:-300}"
+export SEED="${SEED:-0}"
+
 bash scripts/method.sh
