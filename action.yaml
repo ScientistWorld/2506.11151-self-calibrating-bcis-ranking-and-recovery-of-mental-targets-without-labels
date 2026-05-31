@@ -3,6 +3,6 @@
 # only after your turn ends. Sleeping blocks the entire pipeline.
 action: submit
 gpus: 0
-test: true
-milestone: none
-notes: "CPU smoke job: install scientific Python deps, run compact CURSOR ranking on 1 target session, and write scoring/scores.json."
+test: false
+milestone: core_claim
+notes: "Expanded CPU run: evaluate CURSOR ranking on 5 target sessions with 500 observations each to test whether the core effect persists beyond the smoke case."
