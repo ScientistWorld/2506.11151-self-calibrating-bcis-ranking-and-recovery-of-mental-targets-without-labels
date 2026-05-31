@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Retry all-target synthetic-random CURSOR with 300 observations per target after the 500-observation run completed 14/17 targets before timeout."
+notes: "Reached core_claim_plus: CURSOR reproduced the core ranking advantage on five targets and completed an all-17-target scaled run with zero-supervision constraints."

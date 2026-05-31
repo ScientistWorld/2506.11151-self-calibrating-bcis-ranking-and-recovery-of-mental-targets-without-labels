@@ -1,33 +1,37 @@
 # Evaluation
-# Evaluation
 
-The main evaluation ranks a fixed candidate set of 60 face hypotheses for each
-target session. The evaluator reads candidate scores produced by a method and
-compares them with the true Euclidean distances from each candidate to the
-held-out target.
+The evaluation ranks a fixed candidate set of 60 face hypotheses for each target
+condition. The evaluator reads candidate scores produced by a solver and
+compares them with the true Euclidean distances from each candidate to the held
+out target. The target is used only by the evaluator after scores are written.
 
-Metrics:
+## Metrics
 
-- `score_distance_pearson_r`: Pearson correlation between method score and true
-  distance. More negative values indicate better similarity ranking.
+- `score_distance_pearson_r`: Pearson correlation between solver score and true
+  candidate distance. Lower is better because high scores should correspond to
+  nearby candidates.
 - `target_rank`: one-indexed rank of the exact target when candidates are sorted
   by descending score. Lower is better.
 - `top_rank_distance`: Euclidean distance between the top-ranked candidate and
   the true target. Lower is better.
-- `control_gap_top_rank_distance`: gap between the best control top-distance
-  and the proposed method top-distance. Higher is better.
-- `label_supervision_count` and `pretrained_decoder_count`: audit constraints;
-  both must remain zero.
-How success is measured. Describe only the metrics, targets, and evaluation procedure — do NOT describe the paper's method or how they achieved these results. Think of this as a general evaluation protocal for other scientists trying to solve the same problem, where they should not see this paper's solution.
-
-## Metrics
-
-<!-- What metrics are used? How are they computed? What does higher/lower mean? -->
+- `control_gap_top_rank_distance`: difference between the best control
+  top-ranked distance and the proposed solver's top-ranked distance. Higher is
+  better.
+- `label_supervision_count`: number of target labels used by the solver. Must
+  remain zero for the self-calibrating setting.
+- `pretrained_decoder_count`: number of pretrained EEG decoders used by the
+  solver. Must remain zero.
 
 ## Baselines and Targets
 
-<!-- What performance levels exist as reference points? Include the paper's reported numbers as targets, and any standard baselines. A scientist agent should know what "good" looks like. -->
+The paper reports linear regression as the main solver and compares it against a
+shuffled-control linear regression, a dummy regressor, and random ranking. The
+reference values in `scoring/reference.json` are the paper's reported Table 1
+ranking metrics for the random-candidate condition.
 
 ## Evaluation Protocol
 
-<!-- How should evaluation be run? What data split, what conditions? Any important details about how to compare fairly (e.g., fixed seeds, specific test sets, averaging over runs). -->
+Methods write a JSON artifact at `outputs/cursor_ranking.json` with candidate
+scores, true candidate distances, and audit metadata. `scripts/evaluate.sh`
+calls only code in `eval/` and writes `scoring/scores.json`, which mirrors the
+experiment and metric structure of `scoring/reference.json`.

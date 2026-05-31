@@ -38,4 +38,9 @@
 - The partial artifact confirms 14 completed target runs were written before timeout.
 - Retrying all 17 targets with 300 observations per target while preserving the 10-split CURSOR scoring protocol.
 
+### [2026-05-31 14:18] - core_claim_plus
+- The all-target 300-observation run completed successfully across all 17 targets.
+- LR retained a useful advantage over shuffled and dummy controls: `top_rank_distance=15.577` vs `29.974` and `27.101`, with `control_gap_top_rank_distance=11.524`.
+- Supervision and pretrained-decoder audit metrics remained zero.
+
 ## Stop Justification

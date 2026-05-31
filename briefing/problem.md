@@ -1,28 +1,26 @@
 # Problem Definition
-# Problem Definition
 
 The task is to recover a continuous mental target from an interaction session
-containing paired visual stimuli and EEG responses, without target labels during
-calibration. Each stimulus is represented by a 512-dimensional face latent vector
-and each response by an EEG feature vector. During a session the participant has
-one target face in mind, but the system only observes the stimulus vectors and
-the corresponding EEG responses.
-
-Success means assigning high scores to candidate target hypotheses that are
-close to the participant's true target in latent space. The evaluation uses the
-true target only after outputs have been produced.
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
+containing paired visual stimuli and EEG responses, without calibration labels.
+Each visual stimulus is represented by a face latent vector and each response by
+an EEG feature vector. During each session, the participant has one target face
+in mind, but the solver only receives the stimulus vectors and corresponding EEG
+responses.
 
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+Can a system rank candidate face targets so that candidates closer to the
+participant's intended mental target receive better scores, using only
+unlabeled interaction data from the session?
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+A successful solution would reduce or remove explicit labeled calibration for
+brain-computer interfaces that need to infer user intent over continuous target
+spaces.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+A good solver should rank near-target candidates above distant candidates,
+perform better than broken or random controls, and preserve the self-calibrating
+setting: no target labels and no pretrained EEG decoder.

@@ -1,20 +1,28 @@
 # Overview
-# Overview
 
 This reproduction implements CURSOR from “Self-Calibrating BCIs: Ranking and
-Recovery of Mental Targets Without Labels.” The method uses unlabeled EEG
-responses and face latent vectors to rank possible target faces. It evaluates
-whether aligned EEG predicts hypothesis-specific latent distances better than a
-shuffled control, then ranks hypotheses by that relative gain.
-- **Paper ID:** <!-- e.g. 1706.03762 -->
-- **Title:** <!-- e.g. Attention Is All You Need -->
-- **Domain:** <!-- e.g. Computer Vision / Object Detection -->
-- **TL;DR:** <!-- One sentence: what this paper does and why it matters -->
+Recovery of Mental Targets Without Labels.”
+
+- **Paper ID:** 2506.11151
+- **Title:** Self-Calibrating BCIs: Ranking and Recovery of Mental Targets
+  Without Labels
+- **Domain:** Brain-computer interfaces / EEG target recovery
+- **TL;DR:** The paper ranks possible mental targets from unlabeled
+  EEG-stimulus interactions by testing which candidate makes the observed brain
+  responses internally predictive of candidate-specific distances.
 
 ## Short Summary
 
-<!-- 3-5 sentences covering the problem, approach, and main findings -->
+The benchmark asks a solver to rank candidate face embeddings for an unknown
+mental target using only paired stimulus embeddings and EEG responses. CURSOR
+scores each candidate by comparing held-out regression error for aligned EEG
+against a shuffled control. This workspace reproduces the core ranking claim on
+the released dataset with paper-style synthetic training stimuli and random
+candidate hypotheses.
 
 ## Key Results
 
-<!-- 2-3 bullet points: main findings or numbers in bullet points -->
+- Five-target synthetic-random run: LR achieved `target_rank=1.4` and
+  `top_rank_distance=0.023`, far better than shuffled and dummy controls.
+- All 17 targets at 300 observations per target: LR retained a positive control
+  gap (`control_gap_top_rank_distance=11.524`) with zero label and decoder use.
