@@ -21,5 +21,9 @@
 - Job `5f2cbf4d-94d` regenerated the all-target EEGNet artifact under the same candidate-embedding contract.
 - `scoring/scores.json` now contains both raw-EEG and EEGNet experiments scored by `eval/`, with LR outperforming shuffled and dummy controls while preserving zero label supervision and zero pretrained decoder use.
 
+### [2026-05-31 17:13] - secondary_claims
+- Tightened the main evaluator so the reusable `scoring/scores.json` output includes the full ranking metric set already used by the train/test split evaluators.
+- Submitting a CPU validation job to regenerate all score files in the packaged environment and run `validate.py --compare`.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

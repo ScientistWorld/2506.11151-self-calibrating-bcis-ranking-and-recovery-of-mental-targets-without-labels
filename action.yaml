@@ -1,8 +1,8 @@
-# Split evaluation is complete.
+# Regenerate score files after evaluator metric-contract tightening.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: done
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: secondary_claims
-notes: "Packager audit complete: download.sh fetches the required all_data_sorted.npz from a resolving public URL and paths already line up."
+notes: "CPU validation job: regenerate scores.json/train/test with the corrected evaluator and run validate.py --compare."

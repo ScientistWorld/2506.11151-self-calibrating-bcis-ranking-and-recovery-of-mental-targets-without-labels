@@ -15,6 +15,20 @@ sys.path.append(str(WORKSPACE))
 from data.cursor_data import load_arrays, unique_targets  # noqa: E402
 
 
+CONTROL_METHODS = {"dummy", "random", "s_lr"}
+
+
+def _is_control_method(method: str) -> bool:
+    name = method.lower()
+    return (
+        name in CONTROL_METHODS
+        or name.endswith("_control")
+        or name.startswith("control_")
+        or "shuffle" in name
+        or "shuffled" in name
+    )
+
+
 def _rank_of_target(scores: np.ndarray, distances: np.ndarray) -> int:
     target_index = int(np.argmin(distances))
     order = np.argsort(-scores)
@@ -45,6 +59,11 @@ def _summarize_method(output: dict, method: str) -> dict[str, float]:
             continue
         distances = _target_distances(output, run)
         scores = np.asarray(run["scores"][method], dtype=float)
+        if len(scores) != len(distances):
+            raise ValueError(
+                f"Method {method} produced {len(scores)} scores for "
+                f"{len(distances)} candidates"
+            )
         if np.std(scores) == 0 or np.std(distances) == 0:
             r = 0.0
         else:
@@ -56,13 +75,35 @@ def _summarize_method(output: dict, method: str) -> dict[str, float]:
     if not pearsons:
         raise ValueError(f"No runs found for method {method}")
 
+    rank_array = np.asarray(ranks, dtype=float)
+    top_distance_array = np.asarray(top_distances, dtype=float)
     return {
         "score_distance_pearson_r": float(np.mean(pearsons)),
         "target_rank": float(np.mean(ranks)),
         "top_rank_distance": float(np.mean(top_distances)),
+        "target_top1_accuracy": float(np.mean(rank_array == 1)),
+        "target_top5_accuracy": float(np.mean(rank_array <= 5)),
+        "reciprocal_target_rank": float(np.mean(1.0 / rank_array)),
+        "near_target_top_rank_rate": float(np.mean(top_distance_array <= 5.0)),
         "label_supervision_count": float(audit["label_supervision_count"]),
         "pretrained_decoder_count": float(audit["pretrained_decoder_count"]),
     }
+
+
+def _add_control_gaps(results: dict[str, dict[str, float]]) -> None:
+    control_distances = [
+        method_result["top_rank_distance"]
+        for method, method_result in results.items()
+        if _is_control_method(method)
+    ]
+    best_control = min(control_distances) if control_distances else None
+    for method, method_result in results.items():
+        if best_control is None or _is_control_method(method):
+            method_result["control_gap_top_rank_distance"] = 0.0
+        else:
+            method_result["control_gap_top_rank_distance"] = float(
+                best_control - method_result["top_rank_distance"]
+            )
 
 
 def main() -> None:
@@ -86,18 +127,7 @@ def main() -> None:
         methods = sorted({name for run in output["runs"] for name in run["scores"]})
 
         results = {method: _summarize_method(output, method) for method in methods}
-        if "lr" in results:
-            controls = [
-                results[name]["top_rank_distance"]
-                for name in ("s_lr", "dummy")
-                if name in results
-            ]
-            if controls:
-                results["lr"]["control_gap_top_rank_distance"] = float(
-                    min(controls) - results["lr"]["top_rank_distance"]
-                )
-        for name in results:
-            results[name].setdefault("control_gap_top_rank_distance", 0.0)
+        _add_control_gaps(results)
         experiments[output.get("experiment", "unsupervised_ranking_target_sessions")] = {
             "results": results
         }

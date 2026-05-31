@@ -80,6 +80,11 @@
 
 ## Remaining
 
+- Submitted next validation job regenerates `scoring/scores.json`,
+  `scoring/scores_train.json`, and `scoring/scores_test.json` after tightening
+  the main evaluator to emit the full ranking metric set (`target_top1`,
+  `target_top5`, reciprocal rank, and near-target top-rank rate) listed in
+  `reference.json`.
 - Higher milestones would require adding more paper variants, such as diagonal
   candidate sets, SVR/MLP estimators, and downstream calibration/optimization
   experiments.
@@ -88,6 +93,9 @@
 
 - Actual reproduction compute was run through submitted jobs; login-node checks
   were limited to lightweight validation and artifact inspection.
+- The login-node Python environment does not have the container-only numerical
+  dependencies installed, so the corrected evaluator is being validated via a
+  CPU test job rather than a local `python eval/evaluate_cursor.py` run.
 - The completed five-target target-session run was too noisy and is retained only as a negative diagnostic; current code now uses the paper-style synthetic split protocol by default.
 
 ## Deviations from Paper
