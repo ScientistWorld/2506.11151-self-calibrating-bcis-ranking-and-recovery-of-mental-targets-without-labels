@@ -220,7 +220,7 @@ experiment and metric structure of `scoring/reference.json`.
 
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: core_claim**
 
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- Completed at milestone `core_claim`.
