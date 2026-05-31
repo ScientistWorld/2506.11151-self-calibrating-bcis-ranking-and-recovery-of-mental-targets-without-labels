@@ -1,8 +1,5 @@
-# Regenerate score files after evaluator metric-contract tightening.
-# Do NOT sleep, poll, or wait. The system reads this file
-# only after your turn ends.
-action: submit
+action: done
 gpus: 0
-test: true
+test: false
 milestone: secondary_claims
-notes: "CPU validation job: regenerate scores.json/train/test with the corrected evaluator and run validate.py --compare."
+notes: "Final verification passed after method-agnostic documentation and scoring-contract cleanup; workspace is ready as a secondary-claims gym."

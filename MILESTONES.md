@@ -25,5 +25,9 @@
 - Tightened the main evaluator so the reusable `scoring/scores.json` output includes the full ranking metric set already used by the train/test split evaluators.
 - Submitting a CPU validation job to regenerate all score files in the packaged environment and run `validate.py --compare`.
 
+### [2026-05-31 17:18] - secondary_claims
+- Final verification removed a method-specific phrase from the method-agnostic evaluation briefing and aligned `reference.json` primary metrics with the documented control-gap target.
+- Refreshed the top-level score contract so `scoring/scores.json` includes the same ranking metric set as the train/test split score files; `python validate.py --compare` passes.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

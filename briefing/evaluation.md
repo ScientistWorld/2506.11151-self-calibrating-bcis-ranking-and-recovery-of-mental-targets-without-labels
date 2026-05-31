@@ -24,12 +24,12 @@ out target. The target is used only by the evaluator after scores are written.
 
 ## Baselines and Targets
 
-The paper reports linear regression as the main solver and compares it against a
-shuffled-control linear regression, a dummy regressor, and random ranking. The
-reference values in `scoring/reference.json` are the paper's reported Table 1
-ranking metrics for the random-candidate condition. The absolute top-ranked
-distance is retained as a benefit metric, while the primary metric is the gap
-against controls because the scaled reproduction is designed to test the
+The reference values in `scoring/reference.json` are the paper's reported
+ranking metrics for the random-candidate condition. Evaluated artifacts may
+include solver variants and broken or random controls, but the evaluator only
+assumes that each method key provides one score per candidate. The absolute
+top-ranked distance is retained as a benefit metric, while the primary metric is
+the gap against controls because the scaled reproduction is designed to test the
 comparative self-calibrating claim.
 
 ## Evaluation Protocol
