@@ -15,5 +15,4 @@
 - Preserved the self-calibrating constraints: zero target labels and zero pretrained EEG decoder use.
 
 ## Stop Justification
-- Stopping at `secondary_claims`: core ranking and the secondary EEGNet
-  representation trend are both reproduced in the packaged environment.
+- Completed at milestone `secondary_claims`.
