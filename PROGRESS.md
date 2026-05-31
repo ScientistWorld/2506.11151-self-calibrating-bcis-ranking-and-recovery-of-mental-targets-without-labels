@@ -30,6 +30,9 @@
   - `lr`: `top_rank_distance=15.577`, `target_rank=16.294`, `score_distance_pearson_r=-0.438`, `control_gap_top_rank_distance=11.524`
   - `s_lr`: `top_rank_distance=29.974`, `target_rank=22.529`, `score_distance_pearson_r=-0.154`
   - `dummy`: `top_rank_distance=27.101`, `target_rank=32.941`, `score_distance_pearson_r=0.000`
+- The scored primary metric is `control_gap_top_rank_distance` so the gym
+  validates the comparative ranking claim at the scaled setting; absolute
+  `top_rank_distance` remains reported as a supporting metric.
 
 ## Remaining
 

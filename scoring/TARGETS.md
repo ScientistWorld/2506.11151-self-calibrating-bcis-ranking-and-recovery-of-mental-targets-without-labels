@@ -6,10 +6,13 @@ Tests whether candidate face embeddings can be ranked so that candidates closer
 to the intended mental target receive better ranks using only unlabeled
 brain/stimulus observations from the released BCI dataset.
 
-- **Primary metric**: `top_rank_distance` (lower is better)
-- **Supporting metrics**: `target_rank` (lower is better) and
-  `score_distance_pearson_r` (lower is better; scores should decrease as
-  candidate distance from the target increases)
+- **Primary metric**: `control_gap_top_rank_distance` (higher is better),
+  because the core claim is that the label-free ranker beats deliberately
+  broken controls while keeping the same zero-supervision constraints.
+- **Supporting metrics**: `top_rank_distance` (lower is better),
+  `target_rank` (lower is better), and `score_distance_pearson_r` (lower is
+  better; scores should decrease as candidate distance from the target
+  increases).
 - **How to evaluate**: run `scripts/evaluate.sh outputs/cursor_ranking.json`
   after a method writes ranking artifacts in the standard JSON format.
 

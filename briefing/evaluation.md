@@ -14,9 +14,9 @@ out target. The target is used only by the evaluator after scores are written.
   by descending score. Lower is better.
 - `top_rank_distance`: Euclidean distance between the top-ranked candidate and
   the true target. Lower is better.
-- `control_gap_top_rank_distance`: difference between the best control
-  top-ranked distance and the proposed solver's top-ranked distance. Higher is
-  better.
+- `control_gap_top_rank_distance`: the primary metric for this scaled gym.
+  It is the difference between the best control top-ranked distance and the
+  proposed solver's top-ranked distance. Higher is better.
 - `label_supervision_count`: number of target labels used by the solver. Must
   remain zero for the self-calibrating setting.
 - `pretrained_decoder_count`: number of pretrained EEG decoders used by the
@@ -27,7 +27,10 @@ out target. The target is used only by the evaluator after scores are written.
 The paper reports linear regression as the main solver and compares it against a
 shuffled-control linear regression, a dummy regressor, and random ranking. The
 reference values in `scoring/reference.json` are the paper's reported Table 1
-ranking metrics for the random-candidate condition.
+ranking metrics for the random-candidate condition. The absolute top-ranked
+distance is retained as a benefit metric, while the primary metric is the gap
+against controls because the scaled reproduction is designed to test the
+comparative self-calibrating claim.
 
 ## Evaluation Protocol
 
