@@ -22,4 +22,4 @@
 - `scoring/scores.json` now contains both raw-EEG and EEGNet experiments scored by `eval/`, with LR outperforming shuffled and dummy controls while preserving zero label supervision and zero pretrained decoder use.
 
 ## Stop Justification
-- Stopping at `secondary_claims`: the audited core and secondary representation claims are reproduced under the independent artifact contract. Higher milestones would require additional long-running estimator, optimization, or ablation experiments beyond the current validated gym.
+- Completed at milestone `secondary_claims`.
