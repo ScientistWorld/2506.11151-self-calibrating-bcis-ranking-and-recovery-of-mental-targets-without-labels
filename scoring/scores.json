@@ -27,6 +27,34 @@
           "control_gap_top_rank_distance": 0.0
         }
       }
+    },
+    "unsupervised_ranking_eegnet": {
+      "results": {
+        "dummy": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 32.94117647058823,
+          "top_rank_distance": 27.101173741472994,
+          "label_supervision_count": 0.0,
+          "pretrained_decoder_count": 0.0,
+          "control_gap_top_rank_distance": 0.0
+        },
+        "lr": {
+          "score_distance_pearson_r": -0.6221118725264148,
+          "target_rank": 6.176470588235294,
+          "top_rank_distance": 13.714447294379951,
+          "label_supervision_count": 0.0,
+          "pretrained_decoder_count": 0.0,
+          "control_gap_top_rank_distance": 13.386726447093043
+        },
+        "s_lr": {
+          "score_distance_pearson_r": -0.17418499084213734,
+          "target_rank": 22.823529411764707,
+          "top_rank_distance": 27.88297092239492,
+          "label_supervision_count": 0.0,
+          "pretrained_decoder_count": 0.0,
+          "control_gap_top_rank_distance": 0.0
+        }
+      }
     }
   }
 }
