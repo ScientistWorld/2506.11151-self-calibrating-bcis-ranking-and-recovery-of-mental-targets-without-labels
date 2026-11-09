@@ -21,9 +21,11 @@ REGISTRIES = {
         "better_cv100": SCORE + ["--estimator", "lr", "--n-splits", "100"],
         "better_smooth": SCORE + ["--estimator", "lr", "--smooth"],
         "better_cv100_smooth": SCORE + ["--estimator", "lr", "--n-splits", "100", "--smooth"],
+        "better_loo": SCORE + ["--estimator", "lr", "--cv", "loo", "--n-splits", "20"],
         "weaker_quarter_data": SCORE + ["--estimator", "lr", "--subsample", "0.25"],
     },
     "light_variants": {
+        "better_loo": SCORE + ["--estimator", "lr", "--cv", "loo", "--n-splits", "20"],
         "better_smooth": SCORE + ["--estimator", "lr", "--smooth"],
         "weaker_quarter_data": SCORE + ["--estimator", "lr", "--subsample", "0.25"],
     },

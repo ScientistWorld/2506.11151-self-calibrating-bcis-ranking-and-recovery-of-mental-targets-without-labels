@@ -20,7 +20,7 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(WORKSPACE))
 
 from data.cursor_data import read_session_dir  # noqa: E402
-from method.cursor import cursor_scores_fast, smooth_scores  # noqa: E402
+from method.cursor import cursor_scores_fast, cursor_scores_loo, smooth_scores  # noqa: E402
 
 
 def main() -> None:
@@ -34,6 +34,8 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--subsample", type=float, default=1.0,
                         help="Use only this fraction of each session's observations.")
+    parser.add_argument("--cv", choices=["shufflesplit", "loo"], default="shufflesplit",
+                        help="shufflesplit: paper's repeated 90/10 splits; loo: exact leave-one-out.")
     parser.add_argument("--smooth", action="store_true",
                         help="Kernel-average scores over neighbouring candidates.")
     args = parser.parse_args()
@@ -51,8 +53,11 @@ def main() -> None:
         if estimator == "s_lr":
             eeg = eeg[np.random.default_rng(args.seed + 3001).permutation(len(eeg))]
             estimator = "lr"
-        values = cursor_scores_fast(eeg, stimuli, candidates, n_splits=args.n_splits,
-                                    seed=args.seed, estimator=estimator)
+        if args.cv == "loo" and estimator == "lr":
+            values = cursor_scores_loo(eeg, stimuli, candidates, n_shuffles=args.n_splits, seed=args.seed)
+        else:
+            values = cursor_scores_fast(eeg, stimuli, candidates, n_splits=args.n_splits,
+                                        seed=args.seed, estimator=estimator)
         if args.smooth:
             values = smooth_scores(values, candidates)
         scores[session_id] = [float(v) for v in values]

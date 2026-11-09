@@ -7,7 +7,7 @@ set -uo pipefail
 cd /home/user
 H=redteam/hardening
 OUT=${OUT:-$H/results}
-DESIGNS=${DESIGNS:-"k2 k2_dense k3 k5"}
+DESIGNS=${DESIGNS:-"k2 k2_n6000 k2_dense k3 k5"}
 SMOKE_ARGS=${SMOKE_ARGS:-}
 PAPER_ARGS=${PAPER_ARGS:-}
 mkdir -p "$OUT"

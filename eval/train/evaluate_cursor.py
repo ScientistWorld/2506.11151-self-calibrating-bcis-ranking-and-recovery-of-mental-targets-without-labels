@@ -51,6 +51,7 @@ DESIGNS = {
     # n_observations: stimulus/EEG pairs per session.
     "k2": {"latent_dim": 2, "spread": 13.0, "n_observations": 3000},
     "k2_dense": {"latent_dim": 2, "spread": 9.0, "n_observations": 3000},
+    "k2_n6000": {"latent_dim": 2, "spread": 13.0, "n_observations": 6000},
     "k3": {"latent_dim": 3, "spread": 10.2, "n_observations": 3000},
     "k5": {"latent_dim": 5, "spread": 7.65, "n_observations": 3000},
 }
@@ -335,7 +336,8 @@ def main() -> None:
     parser.add_argument("--design", default=DEFAULT_DESIGN, choices=sorted(DESIGNS))
     parser.add_argument("--per-session-out", default=None,
                         help="Optional JSON file for per-session metrics (analysis only).")
-    parser.add_argument("--workdir", default=None, help="Scratch directory (default: system temp).")
+    parser.add_argument("--workdir", default=str(WORKSPACE / "outputs/.eval_scratch"),
+                        help="Scratch directory for session files (removed afterwards).")
     parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT)
     parser.add_argument("--export-sessions", default=None,
                         help="Write the visible train sessions (and their answers) to this "
@@ -358,6 +360,7 @@ def main() -> None:
     threshold = control_gate_threshold(args.n_control)
     n_obs = int(sessions[0]["obs"].shape[0])
 
+    Path(args.workdir).mkdir(parents=True, exist_ok=True)
     scratch = Path(tempfile.mkdtemp(prefix=f"cursor_{SLICE_NAME}_", dir=args.workdir))
     experiments: dict[str, dict] = {}
     per_session_dump: dict[str, dict] = {}

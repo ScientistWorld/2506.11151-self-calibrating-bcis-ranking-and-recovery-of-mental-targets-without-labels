@@ -194,3 +194,42 @@ def smooth_scores(scores: np.ndarray, candidates: np.ndarray, neighbor: int = 3)
         return np.asarray(scores, dtype=float)
     kernel = np.exp(-(pairwise**2) / (2 * bandwidth**2))
     return kernel @ np.asarray(scores, dtype=float) / kernel.sum(axis=1)
+
+
+def cursor_scores_loo(
+    eeg: np.ndarray,
+    observed_faces: np.ndarray,
+    candidates: np.ndarray,
+    n_shuffles: int = 10,
+    seed: int = 0,
+) -> np.ndarray:
+    """CURSOR ratio with exact leave-one-out (PRESS) errors instead of random folds.
+
+    Every observation is held out once (closed form for least squares), and the
+    shuffled-pairs error is averaged over several permutations.
+    """
+    targets = candidate_distance_targets(observed_faces, candidates)
+    eeg = np.asarray(eeg, dtype=float)
+    n = len(eeg)
+    scale = eeg.std(axis=0)
+    scale[scale == 0] = 1.0
+    design = np.hstack([np.ones((n, 1)), (eeg - eeg.mean(axis=0)) / scale])
+    gram = design.T @ design
+    eigval, eigvec = np.linalg.eigh(gram)
+    keep = eigval > 1e-10 * eigval[-1]
+    inv = np.zeros_like(eigval)
+    inv[keep] = 1.0 / eigval[keep]
+    gram_pinv = (eigvec * inv) @ eigvec.T
+    leverage = np.einsum("ij,jk,ik->i", design, gram_pinv, design)
+
+    def press_rmse(x: np.ndarray, lev: np.ndarray) -> np.ndarray:
+        residual = targets - x @ (gram_pinv @ (x.T @ targets))
+        return np.sqrt(np.mean((residual / (1.0 - lev)[:, None]) ** 2, axis=0))
+
+    aligned = press_rmse(design, leverage)
+    rng = np.random.default_rng(seed)
+    ratios = []
+    for _ in range(n_shuffles):
+        perm = rng.permutation(n)
+        ratios.append(press_rmse(design[perm], leverage[perm]) / aligned)
+    return np.mean(ratios, axis=0)
