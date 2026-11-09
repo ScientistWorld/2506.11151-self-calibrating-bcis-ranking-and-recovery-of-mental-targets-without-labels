@@ -1,0 +1,9 @@
+{
+  "kind": "shortcut_test_size",
+  "uses_hidden_inputs": false,
+  "reuses_reference_training": true,
+  "selected_run_ids": [
+    14,
+    8
+  ]
+}

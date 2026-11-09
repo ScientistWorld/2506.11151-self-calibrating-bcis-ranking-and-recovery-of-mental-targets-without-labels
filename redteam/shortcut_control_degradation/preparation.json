@@ -1,0 +1,5 @@
+{
+  "kind": "shortcut_control_degradation",
+  "uses_hidden_inputs": false,
+  "reuses_reference_training": true
+}

@@ -1,0 +1,8 @@
+{
+  "train_returncode": 0,
+  "test_returncode": 0,
+  "test_command": "bash scripts/evaluate_test.sh",
+  "test_arguments": [],
+  "environment_tampering": false,
+  "elapsed_seconds": 17.42268466949463
+}

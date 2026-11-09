@@ -1,0 +1,26 @@
+[
+  {
+    "eeg": "eeg_raw",
+    "estimator": "lr",
+    "max_abs_error": 1.2212453270876722e-15,
+    "rtol": 1e-09
+  },
+  {
+    "eeg": "eeg_raw",
+    "estimator": "dummy",
+    "max_abs_error": 0.0,
+    "rtol": 1e-09
+  },
+  {
+    "eeg": "eeg_net",
+    "estimator": "lr",
+    "max_abs_error": 2.61118940358962e-07,
+    "rtol": 1e-05
+  },
+  {
+    "eeg": "eeg_net",
+    "estimator": "dummy",
+    "max_abs_error": 0.0,
+    "rtol": 1e-05
+  }
+]

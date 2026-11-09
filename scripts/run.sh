@@ -2,24 +2,16 @@
 set -euo pipefail
 cd /home/user
 trap 'python redteam/audit.py restore' EXIT
-# This is an ordinary CPU job. No evaluator or Python-environment changes.
-python redteam/audit.py equivalence
-bash redteam/reference_seed0/run.sh > redteam/reference_seed0/training.log 2>&1
-bash redteam/reference_seed1/run.sh > redteam/reference_seed1/training.log 2>&1
-bash redteam/reference_seed2/run.sh > redteam/reference_seed2/training.log 2>&1
-bash redteam/better_more_data/run.sh > redteam/better_more_data/training.log 2>&1
-bash redteam/weaker_shuffled/run.sh > redteam/weaker_shuffled/training.log 2>&1
-bash redteam/shortcut_no_eeg_centroid/run.sh > redteam/shortcut_no_eeg_centroid/training.log 2>&1
-bash redteam/shortcut_label_oracle/run.sh > redteam/shortcut_label_oracle/training.log 2>&1
-bash redteam/shortcut_supervision_declared/run.sh > redteam/shortcut_supervision_declared/training.log 2>&1
-bash redteam/shortcut_bruteforce_catalogue/run.sh > redteam/shortcut_bruteforce_catalogue/training.log 2>&1
-bash redteam/shortcut_control_degradation/run.sh > redteam/shortcut_control_degradation/training.log 2>&1
-bash redteam/shortcut_negative_audits/run.sh > redteam/shortcut_negative_audits/training.log 2>&1
-bash redteam/shortcut_fixed_dataset/run.sh > redteam/shortcut_fixed_dataset/training.log 2>&1
-bash redteam/shortcut_candidate_collapse/run.sh > redteam/shortcut_candidate_collapse/training.log 2>&1
-bash redteam/shortcut_test_size/run.sh > redteam/shortcut_test_size/training.log 2>&1
-bash redteam/shortcut_scorefile_forgery/run.sh > redteam/shortcut_scorefile_forgery/training.log 2>&1
-bash redteam/shortcut_nonfinite/run.sh > redteam/shortcut_nonfinite/training.log 2>&1
-bash redteam/shortcut_null_audit/run.sh > redteam/shortcut_null_audit/training.log 2>&1
+if [ ! -f redteam/equivalence.json ]; then
+    python redteam/audit.py equivalence
+fi
+for name in reference_seed0 reference_seed1 reference_seed2 better_more_data weaker_shuffled shortcut_no_eeg_centroid shortcut_label_oracle shortcut_supervision_declared shortcut_bruteforce_catalogue shortcut_control_degradation shortcut_negative_audits shortcut_fixed_dataset shortcut_candidate_collapse shortcut_test_size shortcut_scorefile_forgery shortcut_nonfinite shortcut_null_audit; do
+    if [ -f "redteam/$name/status.json" ]; then
+        echo "Preserving completed audit: $name"
+        continue
+    fi
+    echo "Running audit: $name"
+    bash "redteam/$name/run.sh" > "redteam/$name/training.log" 2>&1
+    cat "redteam/$name/status.json"
+done
 python redteam/report.py
-python redteam/audit.py restore

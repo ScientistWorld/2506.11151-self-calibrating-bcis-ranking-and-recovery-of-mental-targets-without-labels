@@ -1,0 +1,5 @@
+{
+  "kind": "weaker_shuffled",
+  "uses_hidden_inputs": false,
+  "reuses_reference_training": true
+}

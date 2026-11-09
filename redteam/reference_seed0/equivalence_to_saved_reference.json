@@ -1,0 +1,14 @@
+[
+  {
+    "eeg": "eeg_raw",
+    "max_abs_error_vs_saved_reference": 2.886579864025407e-15,
+    "tolerance": 1e-08,
+    "candidate_order_changes": 0
+  },
+  {
+    "eeg": "eeg_net",
+    "max_abs_error_vs_saved_reference": 4.6545166565437057e-07,
+    "tolerance": 1e-05,
+    "candidate_order_changes": 0
+  }
+]

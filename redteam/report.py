@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import math
 from pathlib import Path
-import numpy as np
+from statistics import pstdev
 
 ROOT = Path(__file__).resolve().parents[1]
 RT = ROOT / 'redteam'
@@ -30,7 +30,7 @@ for experiment, contract in reference.items():
     scales[experiment] = {}
     for metric in contract['metrics']:
         values = [case['experiments'][experiment]['results']['lr'][metric] for case in cases.values()]
-        sd = float(np.std(values))
+        sd = pstdev(values)
         scales[experiment][metric] = sd if sd > 0 else 1.0
 
 
@@ -43,13 +43,14 @@ def rank(case, baseline=anchor, scales=scales):
         base = baseline['experiments'][experiment]['results']['lr']
         for metric, spec in contract['metrics'].items():
             direction = 1 if spec['higher_is_better'] else -1
-            contribution = contract['weight'] * abs(spec['coefficient']) * direction * (result[metric]-base[metric]) / scales[experiment][metric]
+            contribution = contract['weight'] * abs(spec['coefficient']) * direction * ((result[metric]-base[metric]) if abs(result[metric]-base[metric]) > 1e-6 else 0.0) / scales[experiment][metric]
             contributions[experiment][metric] = contribution
             total += contribution
     return float(total), contributions
 
 summary = {'normalization': 'population standard deviation across all completed finite lr audit attempts, including 3 reference seeds; zero std uses 1',
            'anchor': 'reference_seed0; reproduced scoring/scores_test.json, not paper-scale reference values',
+           'roundoff_tolerance': 'metric differences below 1e-6 are zeroed; raw saved metrics are unchanged',
            'coefficient_rule': 'abs(coefficient); direction only from higher_is_better; experiment weights 0.65/0.35',
            'scales': scales, 'cases': {}, 'invalid_or_failed': errors}
 for name, case in cases.items():
@@ -59,8 +60,9 @@ for name, case in cases.items():
         result = case['experiments'][experiment]['results']['lr']
         base = anchor['experiments'][experiment]['results']['lr']
         cmp.extend((1 if spec['higher_is_better'] else -1)*(result[metric]-base[metric]) for metric,spec in contract['metrics'].items())
-    summary['cases'][name] = {'normalized_gain': score,
-                            'pareto': 'equal' if all(abs(x)<1e-9 for x in cmp) else ('better' if all(x>=-1e-9 for x in cmp) else ('worse' if all(x<=1e-9 for x in cmp) else 'mixed')),
+    pair_scales = {e:{m:pstdev([case['experiments'][e]['results']['lr'][m],anchor['experiments'][e]['results']['lr'][m]]) or 1.0 for m in contract['metrics']} for e,contract in reference.items()}
+    summary['cases'][name] = {'normalized_gain': score, 'pairwise_normalized_gain': rank(case,scales=pair_scales)[0],
+                            'pareto': 'equal' if all(abs(x)<1e-6 for x in cmp) else ('better' if all(x>=-1e-6 for x in cmp) else ('worse' if all(x<=1e-6 for x in cmp) else 'mixed')),
                             'contributions': contributions,
                             'results': {e:b['results']['lr'] for e,b in case['experiments'].items()}}
 seed_scores = [summary['cases'][f'reference_seed{i}']['normalized_gain'] for i in range(3)]
@@ -68,7 +70,7 @@ summary['reference_seed_spread'] = {'scores': seed_scores, 'max_minus_min': max(
                                     'metric_spreads': {e:{m:max(cases[f'reference_seed{i}']['experiments'][e]['results']['lr'][m] for i in range(3))-min(cases[f'reference_seed{i}']['experiments'][e]['results']['lr'][m] for i in range(3)) for m in contract['metrics']} for e,contract in reference.items()}}
 # Honest-only normalization makes the seed comparison independent of shortcuts.
 honest_names = ['reference_seed0','reference_seed1','reference_seed2','better_more_data','weaker_shuffled']
-honest_scales = {e:{m:float(np.std([cases[n]['experiments'][e]['results']['lr'][m] for n in honest_names])) or 1.0 for m in contract['metrics']} for e,contract in reference.items()}
+honest_scales = {e:{m:pstdev([cases[n]['experiments'][e]['results']['lr'][m] for n in honest_names]) or 1.0 for m in contract['metrics']} for e,contract in reference.items()}
 summary['honest_only'] = {'names':honest_names, 'scales':honest_scales,
                           'gains':{n:rank(cases[n],scales=honest_scales)[0] for n in honest_names}}
 h = summary['honest_only']['gains']
