@@ -1,4 +1,3 @@
-action: submit
-gpus: 0
-test: false
-notes: "Final audit on default sphere design incl. low-data experiment: reference, better/weaker variants, shortcuts through train and hidden test; k2 geometry-prior probes; official reproduction; report"
+action: done
+milestone: secondary_claims
+notes: "Hardened gym: evaluator-owned hidden sessions on a target-independent sphere geometry, registered-solver interface, per-session EEG basis, validity and control-session gates, low-data experiment; better variant +3.70 (CI +2.73..+4.67, seed spread 0.86), weaker -6.37, all shortcuts at chance or failed (HARDENING.md)"

@@ -592,6 +592,58 @@ rank 60, maximal distance, and zero accuracies.
 
 </details>
 
+### Iteration 11: claude-opus-5-5 (hardener)
+- **Milestone**: `secondary_claims` | **Status**: done
+- **Working time**: 35m | **GPU**: 0.0h
+- **Jobs**: 4 total (3 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-05-31 15:42] - secondary_claims
+- Completed all-target raw-EEG CURSOR ranking and all-target EEGNet ranking with zero label supervision and zero pretrained decoder use.
+- LR outperformed shuffled and dummy controls on the scored control-gap metric in both experiments.
+- Tightened the artifact contract so evaluation recomputes candidate distances from emitted candidate embeddings instead of trusting method-supplied distances.
+
+### [2026-05-31 16:04] - core_claim_plus
+- Follow-up audit found the scored raw-EEG and EEGNet artifacts were produced before the candidate-embedding artifact contract was enforced.
+- Downgraded the active milestone to the reset `core_claim_plus` state until the all-target raw-EEG and EEGNet artifacts are regenerated and rescored under the independent evaluator.
+
+### [2026-05-31 16:48] - core_claim_plus
+- Job `f55aef50-ae1` regenerated the all-target raw-EEG artifact under the current artifact contract: 17 complete runs, candidate embeddings present, audit metadata present, and no method-supplied ground-truth distances.
+- Submitting the all-target EEGNet rerun next so the secondary representation claim can be restored with both scored artifacts evaluated together.
+
+### [2026-05-31 17:00] - secondary_claims
+- Job `5f2cbf4d-94d` regenerated the all-target EEGNet artifact under the same candidate-embedding contract.
+- `scoring/scores.json` now contains both raw-EEG and EEGNet experiments scored by `eval/`, with LR outperforming shuffled and dummy controls while preserving zero label supervision and zero pretrained decoder use.
+
+### [2026-05-31 17:13] - secondary_claims
+- Tightened the main evaluator so the reusable `scoring/scores.json` output includes the full ranking metric set already used by the train/test split evaluators.
+- Submitting a CPU validation job to regenerate all score files in the packaged environment and run `validate.py --compare`.
+
+### [2026-05-31 17:18] - secondary_claims
+- Final verification removed a method-specific phrase from the method-agnostic evaluation briefing and refreshed the top-level score contract.
+- Refreshed the top-level score contract so `scoring/scores.json` includes the same ranking metric set as the train/test split score files; `python validate.py --compare` passes.
+
+### [2026-05-31 17:23] - secondary_claims
+- Fixed post-design validation by keeping `target_top5_accuracy` as the formal primary metric for paper-consistency checks while retaining `control_gap_top_rank_distance` as a scored comparative metric.
+- `python validate.py --post-design --compare` passes with split-mode artifacts and paper-consistency checks enabled.
+
+### [2026-05-31 17:32] - secondary_claims
+- Renamed the raw ranking experiment from `unsupervised_ranking_target_sessions` to `unsupervised_ranking_synthetic_random` so the score contract matches the protocol used by the current artifacts.
+- Submitting a CPU validation job to regenerate score files under the corrected experiment key and rerun normal plus post-design validation inside the packaged environment.
+
+### [2026-05-31 17:41] - secondary_claims
+- Final verification corrected stale score-file experiment keys to match `scoring/reference.json`.
+- Verified normal and post-design validation pass, checked the download URL, and removed one unused ignored output artifact.
+
+### [2026-11-09 16:20] - secondary_claims
+- Hardened the gym: evaluator-owned hidden sessions with a target-independent (spherical) stimulus/candidate geometry, a registered-solver interface, a per-session EEG basis, gates for invalid output and for control-session leakage, and a low-data experiment (N = 1000).
+- On the hidden test, CURSOR-LR ranks the target at 2.69 / 2.52 / 14.94 (raw / EEGNet / low data) against chance 30.5 for S-LR and Dummy. Leave-one-out CURSOR scores +3.70 above the reference (paired 95% CI [+2.73, +4.67]; seed spread 0.86). Every red-team shortcut is at chance or failed (see HARDENING.md).
+- On the paper's own protocol at N = 9234, CURSOR-LR ranks the target first in all runs, but so does a no-EEG centroid ranking (rank 1.03).
+
+</details>
+
 
 ---
 
