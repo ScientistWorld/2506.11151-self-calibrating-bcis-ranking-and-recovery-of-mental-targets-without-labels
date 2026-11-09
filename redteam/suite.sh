@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd /home/user
+trap 'python redteam/audit.py restore' EXIT
 # This is an ordinary CPU job. No evaluator or Python-environment changes.
 python redteam/audit.py equivalence
 bash redteam/reference_seed0/run.sh > redteam/reference_seed0/training.log 2>&1
