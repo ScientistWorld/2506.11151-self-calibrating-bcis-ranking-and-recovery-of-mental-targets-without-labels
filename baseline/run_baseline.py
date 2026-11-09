@@ -1,37 +1,22 @@
+"""Register the paper's control conditions as solvers.
+
+s_lr: CURSOR with stimulus/EEG pairs shuffled before scoring (paper's S-LR).
+dummy: CURSOR with a mean predictor that ignores the EEG (paper's Dummy).
+Both run through method/score_sessions.py and are scored by eval/ exactly like
+any other solver.
+"""
 from __future__ import annotations
 
-import argparse
 from pathlib import Path
 import subprocess
-
+import sys
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run CURSOR control baselines.")
-    parser.add_argument("--output", default=str(WORKSPACE / "outputs/baseline_ranking.json"))
-    parser.add_argument("--n-targets", type=int, default=3)
-    parser.add_argument("--n-observations", type=int, default=500)
-    parser.add_argument("--seed", type=int, default=0)
-    args = parser.parse_args()
-
-    cmd = [
-        "python",
-        str(WORKSPACE / "method/run_cursor.py"),
-        "--methods",
-        "s_lr",
-        "dummy",
-        "--output",
-        args.output,
-        "--n-targets",
-        str(args.n_targets),
-        "--n-observations",
-        str(args.n_observations),
-        "--seed",
-        str(args.seed),
-    ]
-    subprocess.run(cmd, check=True)
+    names = sys.argv[1:] or ["s_lr", "dummy"]
+    subprocess.run([sys.executable, str(WORKSPACE / "method/register_solvers.py"), *names], check=True)
 
 
 if __name__ == "__main__":

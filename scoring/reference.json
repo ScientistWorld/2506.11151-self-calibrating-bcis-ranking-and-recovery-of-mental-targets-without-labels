@@ -1,194 +1,195 @@
 {
   "experiments": {
-    "unsupervised_ranking_synthetic_random": {
-      "description": "Ranks 60 random candidate face hypotheses for an unknown mental target using unlabeled EEG-response/stimulus pairs. Paper reference is the full windowed-EEG ranking task in Table 1; this environment evaluates the same quantities on a smaller synthetic-random generated-candidate subset.",
+    "unbiased_ranking_raw_eeg": {
+      "description": "Rank 60 candidate face latents for a hidden mental target from 3000 unlabeled stimulus/EEG pairs per session, using the windowed raw-EEG representation (29 channels x 7 windows = 203 features). Stimuli and candidates are target-independent, so only the EEG/stimulus pairing carries information about the target. Paper analogue: Table 1 (EEG windowing).",
       "weight": 0.65,
-      "primary_metric": "target_top5_accuracy",
+      "primary_metric": "top_rank_distance",
       "metrics": {
         "score_distance_pearson_r": {
           "higher_is_better": false,
           "coefficient": 1.0,
-          "description": "Mean Pearson correlation between candidate scores and true target distance; useful rankings should assign higher scores to nearer candidates."
+          "description": "Mean over sessions of the Pearson correlation between a solver's candidate scores and the candidates' true distances to the hidden target (constant scores count as 0). Lower is better: higher scores should go to nearer candidates."
         },
         "target_rank": {
           "higher_is_better": false,
           "coefficient": 1.0,
-          "description": "Mean rank position of the exact target candidate among the 60 hypotheses."
+          "description": "Mean rank of the hidden target among the 60 candidates (1 = best), expected value under uniformly random tie-breaking."
         },
         "top_rank_distance": {
           "higher_is_better": false,
           "coefficient": 1.5,
-          "description": "Mean Euclidean distance from the top-scored candidate to the true target embedding."
+          "description": "Mean latent distance from the top-scored candidate to the hidden target (ties at the top averaged). The paper's preferred, perceptually grounded metric."
         },
         "target_top1_accuracy": {
           "higher_is_better": true,
           "coefficient": 0.35,
-          "description": "Fraction of runs where the exact target candidate is ranked first."
+          "description": "Fraction of sessions in which the hidden target is ranked first (expected under random tie-breaking)."
         },
         "target_top5_accuracy": {
           "higher_is_better": true,
           "coefficient": 0.25,
-          "description": "Fraction of runs where the exact target candidate appears within the top five ranked hypotheses."
+          "description": "Fraction of sessions in which the hidden target is within the top five (expected under random tie-breaking)."
         },
         "reciprocal_target_rank": {
           "higher_is_better": true,
           "coefficient": 0.25,
-          "description": "Mean reciprocal rank of the exact target candidate, rewarding improvements near the top of the ranking."
+          "description": "Mean reciprocal rank of the hidden target (expected under random tie-breaking)."
         },
         "near_target_top_rank_rate": {
           "higher_is_better": true,
           "coefficient": 0.4,
-          "description": "Fraction of runs where the top-scored candidate is within distance 5.0 of the target embedding."
-        },
-        "control_gap_top_rank_distance": {
-          "higher_is_better": true,
-          "coefficient": 1.0,
-          "description": "Distance improvement of the method's top-ranked candidate over the best broken-control top-ranked candidate."
-        },
-        "label_supervision_count": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Audit count of target-label supervision used by the method; the self-calibrating claim requires this to remain zero."
-        },
-        "pretrained_decoder_count": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Audit count of pretrained EEG decoders used by the method; the self-calibrating claim requires this to remain zero."
+          "description": "Fraction of sessions whose top-scored candidate lies within latent distance 5.0 of the hidden target (ties at the top averaged)."
         }
       },
       "results": {
         "lr": {
-          "type": "proposed",
+          "type": "proposed"
+        },
+        "s_lr": {
+          "type": "baseline"
+        },
+        "dummy": {
+          "type": "baseline"
+        }
+      },
+      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect). The gym draws stimuli and candidates from one target-independent distribution (2-D affine subspace of the 512-D latent space, per-axis SD 13, so the expected target-candidate distance, 23.0, matches the paper's random baseline of 23.08), assigns each stimulus the recorded EEG row at the nearest recorded distance, uses N = 3000 observations per session, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
+      "_paper_results": {
+        "source": "Table 1 / Appendix Table 2 (EEG windowing), Table 3 (top-k), N = 9234, target-centred synthetic stimuli, uniform-distance candidates",
+        "lr": {
           "score_distance_pearson_r": -0.77,
           "target_rank": 6.63,
           "top_rank_distance": 2.9,
-          "target_top5_accuracy": 0.67,
-          "control_gap_top_rank_distance": 17.95,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "target_top1_accuracy": 0.171,
+          "target_top5_accuracy": 0.565
         },
         "s_lr": {
-          "type": "baseline",
           "score_distance_pearson_r": -0.01,
           "target_rank": 27.13,
-          "top_rank_distance": 20.85,
-          "control_gap_top_rank_distance": 0,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "top_rank_distance": 20.85
         },
         "dummy": {
-          "type": "baseline",
           "score_distance_pearson_r": 0.01,
           "target_rank": 27.91,
-          "top_rank_distance": 21.97,
-          "control_gap_top_rank_distance": 0,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "top_rank_distance": 21.97
         },
         "random": {
-          "type": "baseline",
-          "score_distance_pearson_r": 0,
-          "target_rank": 30,
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.0,
           "top_rank_distance": 23.08,
-          "control_gap_top_rank_distance": 0,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "target_top1_accuracy": 0.016,
+          "target_top5_accuracy": 0.081
+        },
+        "mlp": {
+          "score_distance_pearson_r": -0.32,
+          "target_rank": 21.68,
+          "top_rank_distance": 12.11
+        },
+        "svr": {
+          "score_distance_pearson_r": -0.69,
+          "target_rank": 16.04,
+          "top_rank_distance": 6.77
+        },
+        "best_mlp": {
+          "score_distance_pearson_r": -0.81,
+          "target_rank": 9.67,
+          "top_rank_distance": 4.3
+        },
+        "best_svr": {
+          "score_distance_pearson_r": -0.45,
+          "target_rank": 43.34,
+          "top_rank_distance": 12.6
         }
       }
     },
-    "unsupervised_ranking_eegnet": {
-      "description": "Ranks 60 random candidate face hypotheses using the released EEGNet embedding representation instead of windowed raw EEG. Paper reference is Appendix Table 2 EEGNet columns.",
+    "unbiased_ranking_eegnet": {
+      "description": "Same ranking task on the same sessions with the released 176-D EEGNet embedding of each EEG response instead of windowed raw EEG. Paper analogue: Appendix Table 2 (EEGNet columns).",
       "weight": 0.35,
-      "primary_metric": "target_top5_accuracy",
+      "primary_metric": "top_rank_distance",
       "metrics": {
         "score_distance_pearson_r": {
           "higher_is_better": false,
           "coefficient": 1.0,
-          "description": "Mean Pearson correlation between candidate scores and true target distance; useful rankings should assign higher scores to nearer candidates."
+          "description": "Mean over sessions of the Pearson correlation between a solver's candidate scores and the candidates' true distances to the hidden target (constant scores count as 0). Lower is better: higher scores should go to nearer candidates."
         },
         "target_rank": {
           "higher_is_better": false,
           "coefficient": 1.0,
-          "description": "Mean rank position of the exact target candidate among the 60 hypotheses."
+          "description": "Mean rank of the hidden target among the 60 candidates (1 = best), expected value under uniformly random tie-breaking."
         },
         "top_rank_distance": {
           "higher_is_better": false,
           "coefficient": 1.5,
-          "description": "Mean Euclidean distance from the top-scored candidate to the true target embedding."
+          "description": "Mean latent distance from the top-scored candidate to the hidden target (ties at the top averaged). The paper's preferred, perceptually grounded metric."
         },
         "target_top1_accuracy": {
           "higher_is_better": true,
           "coefficient": 0.35,
-          "description": "Fraction of runs where the exact target candidate is ranked first."
+          "description": "Fraction of sessions in which the hidden target is ranked first (expected under random tie-breaking)."
         },
         "target_top5_accuracy": {
           "higher_is_better": true,
           "coefficient": 0.25,
-          "description": "Fraction of runs where the exact target candidate appears within the top five ranked hypotheses."
+          "description": "Fraction of sessions in which the hidden target is within the top five (expected under random tie-breaking)."
         },
         "reciprocal_target_rank": {
           "higher_is_better": true,
           "coefficient": 0.25,
-          "description": "Mean reciprocal rank of the exact target candidate, rewarding improvements near the top of the ranking."
+          "description": "Mean reciprocal rank of the hidden target (expected under random tie-breaking)."
         },
         "near_target_top_rank_rate": {
           "higher_is_better": true,
           "coefficient": 0.4,
-          "description": "Fraction of runs where the top-scored candidate is within distance 5.0 of the target embedding."
-        },
-        "control_gap_top_rank_distance": {
-          "higher_is_better": true,
-          "coefficient": 1.0,
-          "description": "Distance improvement of the method's top-ranked candidate over the best broken-control top-ranked candidate."
-        },
-        "label_supervision_count": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Audit count of target-label supervision used by the method; the self-calibrating claim requires this to remain zero."
-        },
-        "pretrained_decoder_count": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Audit count of pretrained EEG decoders used by the method; the self-calibrating claim requires this to remain zero."
+          "description": "Fraction of sessions whose top-scored candidate lies within latent distance 5.0 of the hidden target (ties at the top averaged)."
         }
       },
       "results": {
         "lr": {
-          "type": "proposed",
-          "score_distance_pearson_r": -0.76,
-          "target_rank": 6.21,
-          "top_rank_distance": 2.66,
-          "target_top5_accuracy": 0.67,
-          "control_gap_top_rank_distance": 18.41,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "type": "proposed"
         },
         "s_lr": {
-          "type": "baseline",
-          "score_distance_pearson_r": -0.01,
-          "target_rank": 26.35,
-          "top_rank_distance": 21.07,
-          "control_gap_top_rank_distance": 0,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "type": "baseline"
         },
         "dummy": {
-          "type": "baseline",
+          "type": "baseline"
+        }
+      },
+      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect). The gym draws stimuli and candidates from one target-independent distribution (2-D affine subspace of the 512-D latent space, per-axis SD 13, so the expected target-candidate distance, 23.0, matches the paper's random baseline of 23.08), assigns each stimulus the recorded EEG row at the nearest recorded distance, uses N = 3000 observations per session, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
+      "_paper_results": {
+        "source": "Appendix Table 2 (EEGNet embeddings), N = 9234, target-centred synthetic stimuli, uniform-distance candidates",
+        "lr": {
+          "score_distance_pearson_r": -0.76,
+          "target_rank": 6.21,
+          "top_rank_distance": 2.66
+        },
+        "s_lr": {
+          "score_distance_pearson_r": -0.01,
+          "target_rank": 26.35,
+          "top_rank_distance": 21.07
+        },
+        "dummy": {
           "score_distance_pearson_r": -0.01,
           "target_rank": 27.73,
-          "top_rank_distance": 22.29,
-          "control_gap_top_rank_distance": 0,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+          "top_rank_distance": 22.29
         },
-        "random": {
-          "type": "baseline",
-          "score_distance_pearson_r": 0,
-          "target_rank": 30,
-          "top_rank_distance": 23.08,
-          "control_gap_top_rank_distance": 0,
-          "label_supervision_count": 0,
-          "pretrained_decoder_count": 0
+        "mlp": {
+          "score_distance_pearson_r": -0.31,
+          "target_rank": 19.85,
+          "top_rank_distance": 13.26
+        },
+        "svr": {
+          "score_distance_pearson_r": -0.69,
+          "target_rank": 15.65,
+          "top_rank_distance": 6.12
+        },
+        "best_mlp": {
+          "score_distance_pearson_r": -0.76,
+          "target_rank": 6.14,
+          "top_rank_distance": 3.91
+        },
+        "best_svr": {
+          "score_distance_pearson_r": -0.4,
+          "target_rank": 44.86,
+          "top_rank_distance": 13.17
         }
       }
     }

@@ -1,41 +1,20 @@
 #!/bin/bash
-# Reproduce the paper's results end-to-end.
+# Reproduce the gym reference end to end (CPU only, ~10 minutes).
 #
-# This script runs inside the compute container and should call
-# scripts/baseline.sh and scripts/method.sh to run baselines and
-# the paper's method, each of which calls scripts/evaluate.sh.
-#
-# Assumes:
-#   - Container is built (environment/container.sif)
-#   - Data and models are downloaded (via scripts/download.sh)
-#   - Working directory is /home/user
-#
-# This is the "gold standard" reproduction — 
-# You do not need to run this, but keep this in good shape
-# so other agents can easily run a full loop of reproduction and get the paper's numbers.
+#   1. register CURSOR-LR and the paper's S-LR / Dummy controls as solvers;
+#   2. score them on the visible train sessions (scores.json, scores_train.json);
+#   3. score them on the hidden test sessions (scores_test.json);
+#   4. run the paper's own simulation protocol at full scale as a
+#      reproduction diagnostic (outputs/paper_protocol_check.json).
 
 set -e
 
 cd /home/user
 
-PROTOCOL="${PROTOCOL:-synthetic_random}" \
-N_TARGETS="${N_TARGETS:-17}" \
-N_OBSERVATIONS="${N_OBSERVATIONS:-300}" \
-N_SPLITS="${N_SPLITS:-10}" \
-SEED="${SEED:-0}" \
-EEG=eeg_raw \
-OUTPUT=outputs/cursor_ranking.json \
-CONTINUE_EXISTING=1 \
-bash scripts/method.sh
-
-PROTOCOL="${PROTOCOL:-synthetic_random}" \
-N_TARGETS="${N_TARGETS:-17}" \
-N_OBSERVATIONS="${EEGNET_N_OBSERVATIONS:-500}" \
-N_SPLITS="${EEGNET_N_SPLITS:-5}" \
-SEED="${SEED:-0}" \
-EEG=eeg_net \
-OUTPUT=outputs/cursor_ranking_eegnet_n500.json \
-CONTINUE_EXISTING=1 \
-bash scripts/method.sh
-
-bash scripts/evaluate.sh outputs/cursor_ranking.json outputs/cursor_ranking_eegnet_n500.json
+rm -f outputs/solvers/*.json
+python method/register_solvers.py lr
+python baseline/run_baseline.py s_lr dummy
+bash scripts/evaluate.sh
+bash scripts/evaluate_train.sh
+bash scripts/evaluate_test.sh
+python method/paper_protocol_check.py --output outputs/paper_protocol_check.json

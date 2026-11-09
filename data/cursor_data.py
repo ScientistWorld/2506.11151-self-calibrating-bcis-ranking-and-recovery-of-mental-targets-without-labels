@@ -157,3 +157,20 @@ def random_candidate_set(
     true_distances = np.linalg.norm(candidates - target, axis=1)
     perm = rng.permutation(len(candidates))
     return candidates[perm], true_distances[perm]
+
+
+def read_session_dir(path: str | Path):
+    """Yield (session_id, {"stimuli", "eeg", "candidates"}) for an eval-written session dir.
+
+    Format ("cursor-sessions-v1"): ``index.json`` lists session ids; each
+    ``<id>.npz`` holds ``stimuli`` (N x 512 face latents), ``eeg`` (N x p EEG
+    features, row i recorded while stimulus i was shown) and ``candidates``
+    (60 x 512 hypothesis latents, exactly one of which is the hidden target).
+    """
+    import json
+
+    root = Path(path)
+    index = json.loads((root / "index.json").read_text())
+    for session_id in index["sessions"]:
+        with np.load(root / f"{session_id}.npz") as arrays:
+            yield session_id, {name: np.asarray(arrays[name]) for name in ("stimuli", "eeg", "candidates")}

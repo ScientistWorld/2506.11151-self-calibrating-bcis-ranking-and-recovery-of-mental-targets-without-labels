@@ -1,7 +1,10 @@
 #!/bin/bash
 # Run the paper's proposed method.
 #
-# This script trains/runs the paper's method using code in method/.
+# CURSOR needs no training: it scores each session's candidates from that
+# session's unlabeled stimulus/EEG pairs.  This script registers the CURSOR-LR
+# solver (outputs/solvers/lr.json), which the evaluators run on their own
+# sessions, and then scores the visible train sessions.
 #
 # Usage:
 #   bash scripts/method.sh
@@ -10,16 +13,5 @@ set -e
 
 cd /home/user
 
-python method/run_cursor.py \
-  --methods lr s_lr dummy \
-  --protocol "${PROTOCOL:-synthetic_random}" \
-  --eeg "${EEG:-eeg_raw}" \
-  --n-targets "${N_TARGETS:-3}" \
-  --n-observations "${N_OBSERVATIONS:-500}" \
-  --n-candidates 60 \
-  --n-splits "${N_SPLITS:-10}" \
-  --seed "${SEED:-0}" \
-  --output "${OUTPUT:-outputs/cursor_ranking.json}" \
-  ${CONTINUE_EXISTING:+--continue-existing}
-
-bash scripts/evaluate.sh "${OUTPUT:-outputs/cursor_ranking.json}"
+python method/register_solvers.py lr
+bash scripts/evaluate.sh

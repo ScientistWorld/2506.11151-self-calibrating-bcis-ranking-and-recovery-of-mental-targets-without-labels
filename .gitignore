@@ -232,3 +232,8 @@ tmp/
 protocol.md
 *.egg-info
 core.[0-9]*
+
+# Scratch and regenerated audit artifacts
+tmp/
+redteam/hardening/solvers/
+redteam/hardening/smoke/
