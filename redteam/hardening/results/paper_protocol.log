@@ -1,0 +1,191 @@
+[paper-protocol] eeg_raw repeat 0 done
+[paper-protocol] eeg_raw repeat 1 done
+[paper-protocol] eeg_net repeat 0 done
+[paper-protocol] eeg_net repeat 1 done
+{
+  "protocol": "paper Section 6.1: target-centred synthetic stimuli, uniform-distance candidates",
+  "n_observations": 9234,
+  "n_runs_per_method": 34,
+  "summary": {
+    "eeg_raw": {
+      "lr": {
+        "score_distance_pearson_r": {
+          "mean": -0.9728687498743296,
+          "sd": 0.006321921531420401
+        },
+        "target_rank": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "top_rank_distance": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "target_top1_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "target_top5_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        }
+      },
+      "s_lr": {
+        "score_distance_pearson_r": {
+          "mean": 0.14480767997078867,
+          "sd": 0.4969415588449233
+        },
+        "target_rank": {
+          "mean": 33.23529411764706,
+          "sd": 21.2866415215373
+        },
+        "top_rank_distance": {
+          "mean": 36.15114018189913,
+          "sd": 12.462685745840034
+        },
+        "target_top1_accuracy": {
+          "mean": 0.058823529411764705,
+          "sd": 0.23529411764705885
+        },
+        "target_top5_accuracy": {
+          "mean": 0.11764705882352941,
+          "sd": 0.32218973970892123
+        }
+      },
+      "dummy": {
+        "score_distance_pearson_r": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "target_rank": {
+          "mean": 30.5,
+          "sd": 0.0
+        },
+        "top_rank_distance": {
+          "mean": 22.339537476144837,
+          "sd": 1.9861720427817748
+        },
+        "target_top1_accuracy": {
+          "mean": 0.01666666666666667,
+          "sd": 3.469446951953614e-18
+        },
+        "target_top5_accuracy": {
+          "mean": 0.08333333333333334,
+          "sd": 1.3877787807814457e-17
+        }
+      },
+      "no_eeg_centroid": {
+        "score_distance_pearson_r": {
+          "mean": -0.9999972392836727,
+          "sd": 5.227410957419042e-07
+        },
+        "target_rank": {
+          "mean": 1.0294117647058822,
+          "sd": 0.16895772489817729
+        },
+        "top_rank_distance": {
+          "mean": 5.582066239220536e-05,
+          "sd": 0.0003206652920832731
+        },
+        "target_top1_accuracy": {
+          "mean": 0.9705882352941176,
+          "sd": 0.16895772489817729
+        },
+        "target_top5_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        }
+      }
+    },
+    "eeg_net": {
+      "lr": {
+        "score_distance_pearson_r": {
+          "mean": -0.9730953923322763,
+          "sd": 0.006200465326290138
+        },
+        "target_rank": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "top_rank_distance": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "target_top1_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "target_top5_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        }
+      },
+      "s_lr": {
+        "score_distance_pearson_r": {
+          "mean": 0.09290635807419878,
+          "sd": 0.48584647759630867
+        },
+        "target_rank": {
+          "mean": 33.205882352941174,
+          "sd": 24.421277381155466
+        },
+        "top_rank_distance": {
+          "mean": 34.964392400061925,
+          "sd": 13.687629206933366
+        },
+        "target_top1_accuracy": {
+          "mean": 0.11764705882352941,
+          "sd": 0.32218973970892123
+        },
+        "target_top5_accuracy": {
+          "mean": 0.20588235294117646,
+          "sd": 0.40434491426080943
+        }
+      },
+      "dummy": {
+        "score_distance_pearson_r": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "target_rank": {
+          "mean": 30.5,
+          "sd": 0.0
+        },
+        "top_rank_distance": {
+          "mean": 22.339537476144837,
+          "sd": 1.9861720427817748
+        },
+        "target_top1_accuracy": {
+          "mean": 0.01666666666666667,
+          "sd": 3.469446951953614e-18
+        },
+        "target_top5_accuracy": {
+          "mean": 0.08333333333333334,
+          "sd": 1.3877787807814457e-17
+        }
+      },
+      "no_eeg_centroid": {
+        "score_distance_pearson_r": {
+          "mean": -0.9999972392836727,
+          "sd": 5.227410957419042e-07
+        },
+        "target_rank": {
+          "mean": 1.0294117647058822,
+          "sd": 0.16895772489817729
+        },
+        "top_rank_distance": {
+          "mean": 5.582066239220536e-05,
+          "sd": 0.0003206652920832731
+        },
+        "target_top1_accuracy": {
+          "mean": 0.9705882352941176,
+          "sd": 0.16895772489817729
+        },
+        "target_top5_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        }
+      }
+    }
+  }
+}

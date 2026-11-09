@@ -1,0 +1,110 @@
+[train] solver better_loo finished in 31.7s (exit 0)
+[train] solver better_smooth finished in 16.2s (exit 0)
+[train] solver weaker_quarter_data finished in 12.4s (exit 0)
+[train] solver better_loo finished in 26.3s (exit 0)
+[train] solver better_smooth finished in 13.9s (exit 0)
+[train] solver weaker_quarter_data finished in 11.0s (exit 0)
+{
+  "_slice": "train",
+  "_design": "k5",
+  "experiments": {
+    "unbiased_ranking_raw_eeg": {
+      "slice": "train",
+      "design": "k5",
+      "eeg_representation": "eeg_raw",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 3000,
+      "n_candidates": 60,
+      "results": {
+        "better_loo": {
+          "score_distance_pearson_r": -0.5598054668508071,
+          "target_rank": 3.3541666666666665,
+          "top_rank_distance": 7.328198258398871,
+          "target_top1_accuracy": 0.6458333333333334,
+          "target_top5_accuracy": 0.9375,
+          "reciprocal_target_rank": 0.7753088924963926,
+          "near_target_top_rank_rate": 0.6666666666666666
+        },
+        "better_smooth": {
+          "score_distance_pearson_r": -0.2731803518492278,
+          "target_rank": 18.083333333333332,
+          "top_rank_distance": 23.288780416382355,
+          "target_top1_accuracy": 0.08333333333333333,
+          "target_top5_accuracy": 0.2708333333333333,
+          "reciprocal_target_rank": 0.19477229988482236,
+          "near_target_top_rank_rate": 0.08333333333333333
+        },
+        "weaker_quarter_data": {
+          "score_distance_pearson_r": -0.06712686512851675,
+          "target_rank": 28.020833333333332,
+          "top_rank_distance": 22.268945931922644,
+          "target_top1_accuracy": 0.041666666666666664,
+          "target_top5_accuracy": 0.16666666666666666,
+          "reciprocal_target_rank": 0.12830514386117658,
+          "near_target_top_rank_rate": 0.041666666666666664
+        }
+      },
+      "_status": {
+        "better_loo": "ok",
+        "better_smooth": "ok",
+        "weaker_quarter_data": "ok"
+      },
+      "_control_mean_target_rank": {
+        "better_loo": 27.6875,
+        "better_smooth": 29.5625,
+        "weaker_quarter_data": 28.0625
+      },
+      "_control_gate_threshold": 13.181897717513426
+    },
+    "unbiased_ranking_eegnet": {
+      "slice": "train",
+      "design": "k5",
+      "eeg_representation": "eeg_net",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 3000,
+      "n_candidates": 60,
+      "results": {
+        "better_loo": {
+          "score_distance_pearson_r": -0.5837235316532635,
+          "target_rank": 2.75,
+          "top_rank_distance": 7.12278737111686,
+          "target_top1_accuracy": 0.5833333333333334,
+          "target_top5_accuracy": 0.9583333333333334,
+          "reciprocal_target_rank": 0.7498970500149745,
+          "near_target_top_rank_rate": 0.5833333333333334
+        },
+        "better_smooth": {
+          "score_distance_pearson_r": -0.3143799956395566,
+          "target_rank": 15.1875,
+          "top_rank_distance": 21.688282281711263,
+          "target_top1_accuracy": 0.0625,
+          "target_top5_accuracy": 0.2916666666666667,
+          "reciprocal_target_rank": 0.19451856919392682,
+          "near_target_top_rank_rate": 0.0625
+        },
+        "weaker_quarter_data": {
+          "score_distance_pearson_r": -0.11221989062529247,
+          "target_rank": 21.416666666666668,
+          "top_rank_distance": 22.243100764708256,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.10416666666666667,
+          "reciprocal_target_rank": 0.08903422066302531,
+          "near_target_top_rank_rate": 0.0
+        }
+      },
+      "_status": {
+        "better_loo": "ok",
+        "better_smooth": "ok",
+        "weaker_quarter_data": "ok"
+      },
+      "_control_mean_target_rank": {
+        "better_loo": 27.1875,
+        "better_smooth": 19.8125,
+        "weaker_quarter_data": 32.0625
+      },
+      "_control_gate_threshold": 13.181897717513426
+    }
+  }
+}

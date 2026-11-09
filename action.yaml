@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
-test: true
-notes: "Smoke test of hardened evaluator (tiny audit pass) + full-size reference reproduction through train and hidden test"
+test: false
+notes: "Full hardening audit: equivalence, paper-protocol reproduction at N=9234, five session designs through train and hidden test (reference, better/weaker variants, shortcuts), official reproduction, report"

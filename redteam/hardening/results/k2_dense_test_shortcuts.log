@@ -1,0 +1,86 @@
+[test] solver shortcut_centroid finished in 2.6s (exit 0)
+[test] solver shortcut_density finished in 4.6s (exit 0)
+[test] solver shortcut_centroid finished in 2.5s (exit 0)
+[test] solver shortcut_density finished in 4.5s (exit 0)
+{
+  "_slice": "test",
+  "_design": "k2_dense",
+  "experiments": {
+    "unbiased_ranking_raw_eeg": {
+      "slice": "test",
+      "design": "k2_dense",
+      "eeg_representation": "eeg_raw",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 3000,
+      "n_candidates": 60,
+      "results": {
+        "shortcut_centroid": {
+          "score_distance_pearson_r": -0.5691833423833842,
+          "target_rank": 29.333333333333332,
+          "top_rank_distance": 10.952469789679759,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0625,
+          "reciprocal_target_rank": 0.06030200357940994,
+          "near_target_top_rank_rate": 0.125
+        },
+        "shortcut_density": {
+          "score_distance_pearson_r": -0.5135696558751669,
+          "target_rank": 29.645833333333332,
+          "top_rank_distance": 11.542322475423562,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.06584527656185674,
+          "near_target_top_rank_rate": 0.1875
+        }
+      },
+      "_status": {
+        "shortcut_centroid": "ok",
+        "shortcut_density": "ok"
+      },
+      "_control_mean_target_rank": {
+        "shortcut_centroid": 32.125,
+        "shortcut_density": 30.9375
+      },
+      "_control_gate_threshold": 13.181897717513426
+    },
+    "unbiased_ranking_eegnet": {
+      "slice": "test",
+      "design": "k2_dense",
+      "eeg_representation": "eeg_net",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 3000,
+      "n_candidates": 60,
+      "results": {
+        "shortcut_centroid": {
+          "score_distance_pearson_r": -0.5691833423833842,
+          "target_rank": 29.333333333333332,
+          "top_rank_distance": 10.952469789679759,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0625,
+          "reciprocal_target_rank": 0.06030200357940994,
+          "near_target_top_rank_rate": 0.125
+        },
+        "shortcut_density": {
+          "score_distance_pearson_r": -0.5135696558751669,
+          "target_rank": 29.645833333333332,
+          "top_rank_distance": 11.542322475423562,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.06584527656185674,
+          "near_target_top_rank_rate": 0.1875
+        }
+      },
+      "_status": {
+        "shortcut_centroid": "ok",
+        "shortcut_density": "ok"
+      },
+      "_control_mean_target_rank": {
+        "shortcut_centroid": 32.125,
+        "shortcut_density": 30.9375
+      },
+      "_control_gate_threshold": 13.181897717513426
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "eeg_raw": {
+    "candidates_checked": [
+      0,
+      7,
+      19,
+      33,
+      46,
+      59,
+      10
+    ],
+    "max_abs_diff_fast_vs_sklearn_lr": 8.881784197001252e-16,
+    "max_abs_diff_fast_vs_sklearn_dummy": 0.0,
+    "max_abs_diff_rotated_vs_unrotated_eeg": 3.3058171755584453e-09,
+    "order_identical_rotated_vs_unrotated": true,
+    "score_range": [
+      0.9959281078358462,
+      1.035321276700023
+    ]
+  },
+  "eeg_net": {
+    "candidates_checked": [
+      0,
+      7,
+      19,
+      33,
+      46,
+      59,
+      10
+    ],
+    "max_abs_diff_fast_vs_sklearn_lr": 6.661338147750939e-16,
+    "max_abs_diff_fast_vs_sklearn_dummy": 0.0,
+    "max_abs_diff_rotated_vs_unrotated_eeg": 1.3750907079668195e-09,
+    "order_identical_rotated_vs_unrotated": true,
+    "score_range": [
+      0.9909498343718088,
+      1.0289381600763234
+    ]
+  },
+  "passed": true
+}

@@ -1,0 +1,110 @@
+[train] solver better_loo finished in 66.1s (exit 0)
+[train] solver better_smooth finished in 32.2s (exit 0)
+[train] solver weaker_quarter_data finished in 17.7s (exit 0)
+[train] solver better_loo finished in 51.7s (exit 0)
+[train] solver better_smooth finished in 20.0s (exit 0)
+[train] solver weaker_quarter_data finished in 13.2s (exit 0)
+{
+  "_slice": "train",
+  "_design": "k2_n6000",
+  "experiments": {
+    "unbiased_ranking_raw_eeg": {
+      "slice": "train",
+      "design": "k2_n6000",
+      "eeg_representation": "eeg_raw",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 6000,
+      "n_candidates": 60,
+      "results": {
+        "better_loo": {
+          "score_distance_pearson_r": -0.6258767243441735,
+          "target_rank": 1.3333333333333333,
+          "top_rank_distance": 1.7880573791762628,
+          "target_top1_accuracy": 0.7916666666666666,
+          "target_top5_accuracy": 1.0,
+          "reciprocal_target_rank": 0.8791666666666668,
+          "near_target_top_rank_rate": 0.9375
+        },
+        "better_smooth": {
+          "score_distance_pearson_r": -0.629940293097928,
+          "target_rank": 3.2083333333333335,
+          "top_rank_distance": 6.452306864177554,
+          "target_top1_accuracy": 0.20833333333333334,
+          "target_top5_accuracy": 0.8541666666666666,
+          "reciprocal_target_rank": 0.46300505050505053,
+          "near_target_top_rank_rate": 0.5
+        },
+        "weaker_quarter_data": {
+          "score_distance_pearson_r": -0.4446739220704207,
+          "target_rank": 8.25,
+          "top_rank_distance": 11.083479549428695,
+          "target_top1_accuracy": 0.10416666666666667,
+          "target_top5_accuracy": 0.6458333333333334,
+          "reciprocal_target_rank": 0.31939836507124647,
+          "near_target_top_rank_rate": 0.375
+        }
+      },
+      "_status": {
+        "better_loo": "ok",
+        "better_smooth": "ok",
+        "weaker_quarter_data": "ok"
+      },
+      "_control_mean_target_rank": {
+        "better_loo": 30.0625,
+        "better_smooth": 33.6875,
+        "weaker_quarter_data": 27.9375
+      },
+      "_control_gate_threshold": 13.181897717513426
+    },
+    "unbiased_ranking_eegnet": {
+      "slice": "train",
+      "design": "k2_n6000",
+      "eeg_representation": "eeg_net",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 6000,
+      "n_candidates": 60,
+      "results": {
+        "better_loo": {
+          "score_distance_pearson_r": -0.6085878356465261,
+          "target_rank": 1.4375,
+          "top_rank_distance": 2.1015767640850043,
+          "target_top1_accuracy": 0.8125,
+          "target_top5_accuracy": 0.9583333333333334,
+          "reciprocal_target_rank": 0.8877314814814815,
+          "near_target_top_rank_rate": 0.9375
+        },
+        "better_smooth": {
+          "score_distance_pearson_r": -0.6471718707015202,
+          "target_rank": 3.0416666666666665,
+          "top_rank_distance": 6.878882978725154,
+          "target_top1_accuracy": 0.22916666666666666,
+          "target_top5_accuracy": 0.9375,
+          "reciprocal_target_rank": 0.48023313492063496,
+          "near_target_top_rank_rate": 0.5208333333333334
+        },
+        "weaker_quarter_data": {
+          "score_distance_pearson_r": -0.37146355985127855,
+          "target_rank": 10.604166666666666,
+          "top_rank_distance": 14.510833892377136,
+          "target_top1_accuracy": 0.125,
+          "target_top5_accuracy": 0.5416666666666666,
+          "reciprocal_target_rank": 0.31162393597893545,
+          "near_target_top_rank_rate": 0.3333333333333333
+        }
+      },
+      "_status": {
+        "better_loo": "ok",
+        "better_smooth": "ok",
+        "weaker_quarter_data": "ok"
+      },
+      "_control_mean_target_rank": {
+        "better_loo": 40.875,
+        "better_smooth": 30.0,
+        "weaker_quarter_data": 33.875
+      },
+      "_control_gate_threshold": 13.181897717513426
+    }
+  }
+}
