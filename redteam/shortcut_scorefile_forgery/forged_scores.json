@@ -1,0 +1,22 @@
+{
+  "experiments": {
+    "unsupervised_ranking_synthetic_random": {
+      "results": {
+        "lr": {
+          "target_rank": 1,
+          "top_rank_distance": 0,
+          "target_top5_accuracy": 1
+        }
+      }
+    },
+    "unsupervised_ranking_eegnet": {
+      "results": {
+        "lr": {
+          "target_rank": 1,
+          "top_rank_distance": 0,
+          "target_top5_accuracy": 1
+        }
+      }
+    }
+  }
+}
