@@ -41,5 +41,10 @@
 - Final verification corrected stale score-file experiment keys to match `scoring/reference.json`.
 - Verified normal and post-design validation pass, checked the download URL, and removed one unused ignored output artifact.
 
+### [2026-11-09 16:20] - secondary_claims
+- Hardened the gym: evaluator-owned hidden sessions with a target-independent (spherical) stimulus/candidate geometry, a registered-solver interface, a per-session EEG basis, gates for invalid output and for control-session leakage, and a low-data experiment (N = 1000).
+- On the hidden test, CURSOR-LR ranks the target at 2.69 / 2.52 / 14.94 (raw / EEGNet / low data) against chance 30.5 for S-LR and Dummy. Leave-one-out CURSOR scores +3.70 above the reference (paired 95% CI [+2.73, +4.67]; seed spread 0.86). Every red-team shortcut is at chance or failed (see HARDENING.md).
+- On the paper's own protocol at N = 9234, CURSOR-LR ranks the target first in all runs, but so does a no-EEG centroid ranking (rank 1.03).
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

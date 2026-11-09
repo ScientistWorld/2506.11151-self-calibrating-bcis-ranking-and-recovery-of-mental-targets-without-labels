@@ -1,37 +1,47 @@
 # Paper's Method
 
-CURSOR scores a hypothetical mental target by constructing labels internally
-from that hypothesis. For a candidate latent vector `h`, each observed stimulus
-embedding `z_i` is mapped to a hypothetical distance `||h - z_i||_2`. A
-regressor is trained to predict these distances from paired EEG features, and
-the same task is repeated after deliberately misaligning EEG responses and
-stimuli.
+CURSOR (Consistency-based Unsupervised Regression for Similarity-based
+Optimization and Ranking) scores a hypothetical mental target by constructing
+labels internally from that hypothesis. For a candidate latent `h`, each
+observed stimulus `z_i` is mapped to a hypothetical distance `||h - z_i||_2`
+(standardised). A regressor is trained to predict these distances from the
+paired EEG features, and the same task is repeated after deliberately
+misaligning EEG responses and stimuli (a fixed random permutation).
 
-The released Table 1 analysis computes the candidate score as the held-out
-shuffled/aligned RMSE ratio, averaged over repeated 90/10 random splits. If the
-candidate matches the user's true mental target, aligned EEG should predict
-candidate distances better than shuffled EEG and produce a ratio above chance.
-Ranking candidates by this score recovers the target without using target
-labels or a pretrained EEG decoder.
+The score `S(h)` is the held-out shuffled/aligned RMSE ratio averaged over 10
+random 90/10 ShuffleSplit folds (aligned and shuffled errors are computed on
+the identical held-out fold). If `h` is the participant's target, aligned EEG
+predicts the hypothesis distances better than shuffled EEG and `S(h)` is
+larger. Candidates are ranked by `S(h)`; no target labels and no pretrained
+EEG decoder are used.
 
-For the main ranking experiment, the released setup generates synthetic train
-stimulus embeddings around each true target at the same distance distribution
-as the recorded stimulus-target pairs. Main ranking test candidates are sampled
-at uniformly random distances from the true target with the exact target
-included among the candidate hypotheses. The paper reports ranking quality for
-60 candidates per target using LR, shuffled LR, dummy, SVR, and MLP estimators.
+## Implementation in this gym
+
+- `method/cursor.py`: `cursor_score` is the scalar scikit-learn version
+  (`StandardScaler` + `LinearRegression` per candidate); `cursor_scores_fast`
+  runs the identical procedure for all 60 candidates at once (shared folds,
+  normal equations). They agree to 7e-16 (`redteam/hardening/equivalence.json`).
+  OLS with an intercept is invariant to the evaluator's per-session EEG basis.
+- `method/score_sessions.py`: the solver (`--estimator lr|s_lr|dummy`).
+  `s_lr` (shuffled pairs) and `dummy` (mean predictor) are the paper's
+  control conditions; `baseline/run_baseline.py` registers them.
+- `method/register_solvers.py`: writes `outputs/solvers/{lr,s_lr,dummy}.json`.
+- `method/paper_protocol_check.py`: runs CURSOR on the paper's own
+  simulation protocol (target-centred stimuli, uniform-distance candidates,
+  N = 9234) as a reproduction diagnostic; not scored.
 
 ## Key Contribution
 
-The key contribution is a self-calibrating score for continuous mental-target
-recovery: the method evaluates whether unlabeled EEG/stimulus observations are
-more internally consistent for one candidate target than for alternatives.
+A self-calibrating score for continuous mental-target recovery: the method
+asks which candidate makes the unlabeled EEG responses most internally
+predictive of candidate-specific stimulus distances.
 
 ## Main Claims
 
 - CURSOR ranks hypotheses by similarity to the unknown mental target without
-  calibration labels.
-- Effective estimators such as linear regression outperform shuffled and dummy
-  controls, showing that the signal comes from EEG/stimulus alignment.
-- The recovered target distances are useful as labels for downstream
-  calibration-style tasks.
+  calibration labels (Table 1: LR R = -0.77, rank 6.63/60, top-rank distance
+  2.90 at N = 9234).
+- Linear regression outperforms the shuffled (S-LR) and Dummy controls, so the
+  signal comes from EEG/stimulus alignment.
+- The result holds for EEGNet embeddings (Appendix Table 2) and degrades as the
+  number of observations shrinks (Figure 3).

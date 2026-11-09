@@ -1,3 +1,5 @@
+> Superseded: this verification predates the hardening iteration. See `HARDENING.md` for the current gym and its checks.
+
 # Verification Report
 
 ## Initial Assessment

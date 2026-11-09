@@ -43,13 +43,34 @@
       },
       "results": {
         "lr": {
-          "type": "proposed"
+          "type": "proposed",
+          "score_distance_pearson_r": -0.3285,
+          "target_rank": 2.6875,
+          "top_rank_distance": 3.8942,
+          "target_top1_accuracy": 0.4792,
+          "target_top5_accuracy": 0.8958,
+          "reciprocal_target_rank": 0.6616,
+          "near_target_top_rank_rate": 0.6667
         },
         "s_lr": {
-          "type": "baseline"
+          "type": "baseline",
+          "score_distance_pearson_r": 0.005,
+          "target_rank": 31.1667,
+          "top_rank_distance": 22.8663,
+          "target_top1_accuracy": 0.0208,
+          "target_top5_accuracy": 0.125,
+          "reciprocal_target_rank": 0.0842,
+          "near_target_top_rank_rate": 0.0208
         },
         "dummy": {
-          "type": "baseline"
+          "type": "baseline",
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.5322,
+          "target_top1_accuracy": 0.0167,
+          "target_top5_accuracy": 0.0833,
+          "reciprocal_target_rank": 0.078,
+          "near_target_top_rank_rate": 0.0372
         }
       },
       "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect on that protocol, see redteam/hardening/results/paper_protocol_check.json). The gym draws stimuli and candidates from one target-independent, homogeneous distribution (uniform on a 2-sphere of radius 17.3 in a random 3-D subspace of the 512-D latent space; expected target-candidate distance 23.07 vs the paper's random baseline 23.08), assigns each stimulus a recorded EEG row at the nearest recorded distance, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
@@ -144,13 +165,34 @@
       },
       "results": {
         "lr": {
-          "type": "proposed"
+          "type": "proposed",
+          "score_distance_pearson_r": -0.3106,
+          "target_rank": 2.5208,
+          "top_rank_distance": 6.0555,
+          "target_top1_accuracy": 0.4167,
+          "target_top5_accuracy": 0.8958,
+          "reciprocal_target_rank": 0.627,
+          "near_target_top_rank_rate": 0.6667
         },
         "s_lr": {
-          "type": "baseline"
+          "type": "baseline",
+          "score_distance_pearson_r": 0.0008,
+          "target_rank": 29.4167,
+          "top_rank_distance": 23.5592,
+          "target_top1_accuracy": 0.0417,
+          "target_top5_accuracy": 0.0833,
+          "reciprocal_target_rank": 0.0923,
+          "near_target_top_rank_rate": 0.0417
         },
         "dummy": {
-          "type": "baseline"
+          "type": "baseline",
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.5322,
+          "target_top1_accuracy": 0.0167,
+          "target_top5_accuracy": 0.0833,
+          "reciprocal_target_rank": 0.078,
+          "near_target_top_rank_rate": 0.0372
         }
       },
       "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect on that protocol, see redteam/hardening/results/paper_protocol_check.json). The gym draws stimuli and candidates from one target-independent, homogeneous distribution (uniform on a 2-sphere of radius 17.3 in a random 3-D subspace of the 512-D latent space; expected target-candidate distance 23.07 vs the paper's random baseline 23.08), assigns each stimulus a recorded EEG row at the nearest recorded distance, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
@@ -236,13 +278,34 @@
       },
       "results": {
         "lr": {
-          "type": "proposed"
+          "type": "proposed",
+          "score_distance_pearson_r": -0.1511,
+          "target_rank": 14.9375,
+          "top_rank_distance": 15.3944,
+          "target_top1_accuracy": 0.0833,
+          "target_top5_accuracy": 0.3958,
+          "reciprocal_target_rank": 0.2443,
+          "near_target_top_rank_rate": 0.1875
         },
         "s_lr": {
-          "type": "baseline"
+          "type": "baseline",
+          "score_distance_pearson_r": -0.0009,
+          "target_rank": 29.9167,
+          "top_rank_distance": 20.9598,
+          "target_top1_accuracy": 0.0417,
+          "target_top5_accuracy": 0.125,
+          "reciprocal_target_rank": 0.1062,
+          "near_target_top_rank_rate": 0.0625
         },
         "dummy": {
-          "type": "baseline"
+          "type": "baseline",
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.7537,
+          "target_top1_accuracy": 0.0167,
+          "target_top5_accuracy": 0.0833,
+          "reciprocal_target_rank": 0.078,
+          "near_target_top_rank_rate": 0.0361
         }
       },
       "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect on that protocol, see redteam/hardening/results/paper_protocol_check.json). The gym draws stimuli and candidates from one target-independent, homogeneous distribution (uniform on a 2-sphere of radius 17.3 in a random 3-D subspace of the 512-D latent space; expected target-candidate distance 23.07 vs the paper's random baseline 23.08), assigns each stimulus a recorded EEG row at the nearest recorded distance, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",

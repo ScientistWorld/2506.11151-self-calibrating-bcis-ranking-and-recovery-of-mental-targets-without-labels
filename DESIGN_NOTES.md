@@ -1,3 +1,5 @@
+> Superseded: these notes describe the pre-hardening artifact interface. See `HARDENING.md` for the current evaluator-owned design.
+
 # Design Notes
 
 ## Checked

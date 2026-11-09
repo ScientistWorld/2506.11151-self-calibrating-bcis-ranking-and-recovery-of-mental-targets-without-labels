@@ -2,46 +2,51 @@
 
 ## Data
 
-Use only the released BCI face-embedding dataset fetched by
-`scripts/download.sh` into `data/downloads/all_data_sorted.npz`. Do not add
-external EEG datasets, face datasets, human labels, or manually curated target
-annotations. The paper's claim is about recovering target rankings from the
-unlabeled interaction records in this dataset, so extra labeled data would
-change the problem rather than improve the method.
+The only data source is the released BCI dataset that `scripts/download.sh`
+fetches into `data/downloads/all_data_sorted.npz`, as presented to your solver
+through the evaluator's sessions.
+
+- Do not add external EEG datasets, face datasets, human labels, or target
+  annotations.
+- The released file contains the recorded stimulus-target distance of every
+  EEG row. Using those distances, or any other label, to decode or look up the
+  EEG of a session is supervision, and is out of bounds.
 
 ## Evaluation Protocol
 
-Submit rankings through the artifact schema consumed by `scripts/evaluate.sh`.
-Each evaluated target must use the same candidate count and the same metrics as
-the benchmark experiment. For the EEGNet experiment, methods must use the
-released `eeg_net` array from the same dataset rather than training a new EEG
-embedding model. The evaluator must remain independent of `method/`; method
-code may write artifacts, but it may not change metric definitions or read
-reference scores.
+- Submit a solver as a manifest in `outputs/solvers/<name>.json` whose command
+  reads a session directory and writes one finite score per candidate per
+  session. The evaluator runs it on the visible train sessions and on the
+  hidden test sessions.
+- Do not read, import, or reproduce anything from `eval/test/`.
+- Do not change the session generator, the metrics or the gates in `eval/`.
+- Your solver must not depend on knowing which sessions are controls.
 
 ## Supervision
 
-No method may train on labels that identify the intended target, candidate
-rank, or candidate distance-to-target for the evaluated target. No pretrained
-EEG-to-image, EEG-to-face, or EEG-to-embedding decoder may be introduced. The
-allowed input is the unlabeled set of EEG/stimulus observations and the
-candidate face embeddings.
+- No training on labels that identify the target, candidate ranks, or
+  candidate distances.
+- No pretrained EEG-to-distance, EEG-to-face or EEG-to-embedding decoder.
+- The visible train sessions and their exported answers are for development
+  only. Your solver must not use them as training labels for a decoder that
+  it then applies to new sessions.
+- Each session must be calibrated from its own unlabeled stimulus/EEG pairs
+  and candidates.
 
 ## Resource Scaling
 
-Do not improve scores by increasing the problem resources outside the benchmark:
-no additional candidate-generation source, no larger external face embedding
-model, and no ensemble over separately trained supervised decoders. Changes
-should improve the self-calibrating ranking procedure under the same data and
-evaluation interface.
+The solver runs inside the hidden test.
+
+- Keep it under the evaluator timeout of 3 hours per experiment on one CPU.
+- Do not improve scores by adding candidate-generation sources or external
+  models.
+- More computation per session (more cross-validation, better estimators,
+  search over candidates) is in scope.
 
 ## Compliance Checklist
 
-- [ ] Uses `data/downloads/all_data_sorted.npz` as the only data source
-- [ ] Does not use target labels, candidate ranks, or candidate distances as
-      training labels for the evaluated target
+- [ ] Uses only the evaluator-provided session inputs at scoring time
+- [ ] Does not use recorded distances or other labels to decode EEG
 - [ ] Does not introduce a pretrained EEG decoder or additional labeled EEG data
-- [ ] Writes method artifacts for `scripts/evaluate.sh` without modifying eval
-      metric definitions
-- [ ] Keeps the benchmark candidate count and metric names compatible with
-      `scoring/reference.json`
+- [ ] Does not read or reproduce `eval/test/`
+- [ ] Produces 60 finite scores for every session within the timeout
