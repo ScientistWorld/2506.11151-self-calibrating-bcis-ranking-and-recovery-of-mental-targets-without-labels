@@ -1,0 +1,150 @@
+
+=== k2 / test ===
+better_cv100                 gain  +1.446 CI[+0.840,+2.152] [ok] | raw_eeg: rank 1.85 d 1.98 r -0.619 top1 0.750 | eegnet: rank 2.21 d 2.85 r -0.610 top1 0.708
+better_loo                   gain  +1.393 CI[+0.794,+2.073] [ok] | raw_eeg: rank 1.67 d 2.82 r -0.631 top1 0.771 | eegnet: rank 1.46 d 3.69 r -0.618 top1 0.708
+shortcut_lr_plus_centrality_w03 gain  +0.501 CI[+0.147,+0.869] [ok] | raw_eeg: rank 4.83 d 5.50 r -0.672 top1 0.562 | eegnet: rank 3.62 d 5.45 r -0.677 top1 0.438 | raw_eeg_low_data: rank 10.48 d 11.63 r -0.571 top1 0.104
+lr_seed1                     gain  +0.187 CI[-0.421,+0.845] [ok] | raw_eeg: rank 2.65 d 5.61 r -0.576 top1 0.479 | eegnet: rank 2.92 d 6.81 r -0.584 top1 0.375
+lr_seed2                     gain  +0.020 CI[-0.575,+0.608] [ok] | raw_eeg: rank 2.71 d 5.43 r -0.556 top1 0.438 | eegnet: rank 3.96 d 6.70 r -0.523 top1 0.438
+lr                           gain  +0.000 [ok] | raw_eeg: rank 3.56 d 5.65 r -0.545 top1 0.479 | eegnet: rank 2.83 d 6.66 r -0.555 top1 0.375
+shortcut_lr_plus_centrality_w10 gain  -0.199 CI[-0.811,+0.383] [ok] | raw_eeg: rank 7.88 d 7.37 r -0.776 top1 0.354 | eegnet: rank 7.92 d 6.89 r -0.774 top1 0.250 | raw_eeg_low_data: rank 14.94 d 12.24 r -0.687 top1 0.083
+better_cv100_smooth          gain  -0.232 CI[-0.977,+0.632] [ok] | raw_eeg: rank 3.33 d 5.77 r -0.648 top1 0.250 | eegnet: rank 3.67 d 6.96 r -0.639 top1 0.250
+better_smooth                gain  -1.334 CI[-1.830,-0.886] [ok] | raw_eeg: rank 5.21 d 9.89 r -0.567 top1 0.188 | eegnet: rank 4.15 d 9.22 r -0.579 top1 0.208
+weaker_quarter_data          gain  -4.317 CI[-5.389,-3.256] [ok] | raw_eeg: rank 15.75 d 15.55 r -0.324 top1 0.146 | eegnet: rank 16.73 d 18.71 r -0.234 top1 0.042
+shortcut_catalogue           gain  -4.680 [ok] | raw_eeg: rank 29.25 d 15.68 r -0.578 top1 0.021 | eegnet: rank 29.25 d 15.68 r -0.578 top1 0.021
+shortcut_centrality          gain  -4.684 CI[-5.458,-3.915] [ok] | raw_eeg: rank 29.98 d 15.99 r -0.577 top1 0.021 | eegnet: rank 29.98 d 15.99 r -0.577 top1 0.021 | raw_eeg_low_data: rank 31.88 d 15.95 r -0.550 top1 0.000
+shortcut_centroid            gain  -4.856 [ok] | raw_eeg: rank 29.85 d 16.39 r -0.557 top1 0.021 | eegnet: rank 29.85 d 16.39 r -0.557 top1 0.021
+shortcut_density             gain  -5.145 [ok] | raw_eeg: rank 29.65 d 17.47 r -0.514 top1 0.000 | eegnet: rank 29.65 d 17.47 r -0.514 top1 0.000
+s_lr                         gain  -7.281 CI[-8.400,-6.101] [ok] | raw_eeg: rank 27.81 d 23.68 r -0.026 top1 0.000 | eegnet: rank 27.33 d 23.72 r -0.066 top1 0.000
+dummy                        gain  -7.351 CI[-8.023,-6.540] [ok] | raw_eeg: rank 30.50 d 22.65 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.65 r 0.000 top1 0.017
+shortcut_constant            gain  -7.351 [ok] | raw_eeg: rank 30.50 d 22.65 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.65 r 0.000 top1 0.017
+shortcut_scorefile_forgery   gain  -7.351 [ok] | raw_eeg: rank 30.50 d 22.65 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.65 r 0.000 top1 0.017
+shortcut_eeg_lookup          gain  -7.641 [ok] | raw_eeg: rank 28.88 d 26.79 r -0.032 top1 0.083 | eegnet: rank 28.69 d 28.14 r -0.054 top1 0.021
+shortcut_hidden_oracle       gain -15.993 [FAILED] | raw_eeg: rank 60.00 d 49.88 r 1.000 top1 0.000 | eegnet: rank 60.00 d 49.88 r 1.000 top1 0.000
+shortcut_missing             gain -15.993 [FAILED] | raw_eeg: rank 60.00 d 49.88 r 1.000 top1 0.000 | eegnet: rank 60.00 d 49.88 r 1.000 top1 0.000
+shortcut_nan                 gain -15.993 [FAILED] | raw_eeg: rank 60.00 d 49.88 r 1.000 top1 0.000 | eegnet: rank 60.00 d 49.88 r 1.000 top1 0.000
+seed gain spread: 0.187
+
+=== k2 / train ===
+better_loo                   gain  +1.662 CI[+1.039,+2.305] [ok] | raw_eeg: rank 2.04 d 2.75 r -0.548 top1 0.771 | eegnet: rank 1.90 d 2.54 r -0.546 top1 0.708
+better_cv100                 gain  +0.990 CI[+0.400,+1.616] [ok] | raw_eeg: rank 3.06 d 4.17 r -0.529 top1 0.604 | eegnet: rank 2.90 d 4.42 r -0.511 top1 0.625
+lr_seed1                     gain  +0.358 CI[-0.350,+1.134] [ok] | raw_eeg: rank 3.35 d 5.65 r -0.501 top1 0.479 | eegnet: rank 3.29 d 4.74 r -0.513 top1 0.396
+lr_seed2                     gain  +0.343 CI[-0.372,+1.145] [ok] | raw_eeg: rank 2.79 d 5.62 r -0.538 top1 0.500 | eegnet: rank 2.81 d 7.14 r -0.459 top1 0.417
+lr                           gain  +0.000 [ok] | raw_eeg: rank 3.44 d 6.23 r -0.459 top1 0.458 | eegnet: rank 3.42 d 8.70 r -0.505 top1 0.438
+better_cv100_smooth          gain  -0.861 CI[-1.503,-0.144] [ok] | raw_eeg: rank 4.56 d 8.52 r -0.557 top1 0.146 | eegnet: rank 4.06 d 10.59 r -0.537 top1 0.104
+better_smooth                gain  -1.641 CI[-2.205,-1.088] [ok] | raw_eeg: rank 4.92 d 11.04 r -0.481 top1 0.083 | eegnet: rank 4.88 d 12.42 r -0.531 top1 0.104
+weaker_quarter_data          gain  -5.509 CI[-6.788,-4.138] [ok] | raw_eeg: rank 16.46 d 23.03 r -0.188 top1 0.062 | eegnet: rank 16.27 d 18.65 r -0.184 top1 0.083
+dummy                        gain  -7.759 CI[-8.501,-6.915] [ok] | raw_eeg: rank 30.50 d 23.50 r 0.000 top1 0.017 | eegnet: rank 30.50 d 23.50 r 0.000 top1 0.017
+s_lr                         gain  -7.815 CI[-9.161,-6.429] [ok] | raw_eeg: rank 28.75 d 24.60 r -0.043 top1 0.042 | eegnet: rank 30.67 d 26.34 r 0.013 top1 0.021
+seed gain spread: 0.358
+
+=== k2_dense / test ===
+better_loo                   gain  +1.117 CI[+0.675,+1.593] [ok] | raw_eeg: rank 1.31 d 0.74 r -0.637 top1 0.750 | eegnet: rank 1.69 d 1.15 r -0.619 top1 0.562
+lr                           gain  +0.000 [ok] | raw_eeg: rank 2.50 d 2.40 r -0.576 top1 0.479 | eegnet: rank 3.04 d 3.01 r -0.597 top1 0.312
+better_smooth                gain  -1.006 CI[-1.509,-0.489] [ok] | raw_eeg: rank 4.08 d 4.32 r -0.612 top1 0.229 | eegnet: rank 4.27 d 5.00 r -0.629 top1 0.125
+shortcut_centroid            gain  -5.205 [ok] | raw_eeg: rank 29.33 d 10.95 r -0.569 top1 0.000 | eegnet: rank 29.33 d 10.95 r -0.569 top1 0.000
+shortcut_density             gain  -5.436 [ok] | raw_eeg: rank 29.65 d 11.54 r -0.514 top1 0.000 | eegnet: rank 29.65 d 11.54 r -0.514 top1 0.000
+weaker_quarter_data          gain  -5.561 CI[-6.586,-4.464] [ok] | raw_eeg: rank 17.44 d 12.18 r -0.231 top1 0.062 | eegnet: rank 18.23 d 13.54 r -0.158 top1 0.104
+dummy                        gain  -7.780 CI[-8.140,-7.375] [ok] | raw_eeg: rank 30.50 d 15.26 r 0.000 top1 0.017 | eegnet: rank 30.50 d 15.26 r 0.000 top1 0.017
+s_lr                         gain  -8.075 CI[-9.032,-7.027] [ok] | raw_eeg: rank 28.62 d 17.07 r -0.000 top1 0.021 | eegnet: rank 29.52 d 16.87 r 0.006 top1 0.021
+
+=== k2_dense / train ===
+better_loo                   gain  +1.813 CI[+1.144,+2.631] [ok] | raw_eeg: rank 1.42 d 0.62 r -0.606 top1 0.750 | eegnet: rank 1.38 d 0.73 r -0.620 top1 0.729
+lr                           gain  +0.000 [ok] | raw_eeg: rank 3.10 d 5.02 r -0.514 top1 0.458 | eegnet: rank 3.44 d 4.01 r -0.553 top1 0.396
+better_smooth                gain  -1.165 CI[-1.747,-0.677] [ok] | raw_eeg: rank 4.56 d 7.51 r -0.535 top1 0.167 | eegnet: rank 4.50 d 7.17 r -0.583 top1 0.208
+weaker_quarter_data          gain  -5.145 CI[-6.180,-4.061] [ok] | raw_eeg: rank 16.69 d 16.02 r -0.175 top1 0.083 | eegnet: rank 19.44 d 12.82 r -0.167 top1 0.104
+dummy                        gain  -7.000 CI[-7.716,-6.161] [ok] | raw_eeg: rank 30.50 d 15.92 r 0.000 top1 0.017 | eegnet: rank 30.50 d 15.92 r 0.000 top1 0.017
+s_lr                         gain  -7.045 CI[-8.144,-5.890] [ok] | raw_eeg: rank 31.38 d 15.13 r -0.003 top1 0.000 | eegnet: rank 30.92 d 17.13 r 0.014 top1 0.021
+
+=== k2_n6000 / test ===
+better_loo                   gain  +0.614 CI[+0.222,+1.051] [ok] | raw_eeg: rank 1.40 d 3.32 r -0.584 top1 0.792 | eegnet: rank 2.65 d 5.88 r -0.568 top1 0.812
+lr                           gain  +0.000 [ok] | raw_eeg: rank 3.23 d 5.72 r -0.600 top1 0.625 | eegnet: rank 4.06 d 5.22 r -0.582 top1 0.604
+better_smooth                gain  -1.516 CI[-2.081,-0.971] [ok] | raw_eeg: rank 4.71 d 9.96 r -0.630 top1 0.188 | eegnet: rank 5.44 d 7.88 r -0.614 top1 0.229
+weaker_quarter_data          gain  -4.158 CI[-5.203,-3.105] [ok] | raw_eeg: rank 12.02 d 13.84 r -0.386 top1 0.062 | eegnet: rank 11.62 d 15.74 r -0.353 top1 0.042
+shortcut_centroid            gain  -5.668 [ok] | raw_eeg: rank 30.85 d 16.89 r -0.513 top1 0.021 | eegnet: rank 30.85 d 16.89 r -0.513 top1 0.021
+shortcut_density             gain  -6.066 [ok] | raw_eeg: rank 31.40 d 18.09 r -0.466 top1 0.021 | eegnet: rank 31.40 d 18.09 r -0.466 top1 0.021
+s_lr                         gain  -8.333 CI[-9.525,-7.069] [ok] | raw_eeg: rank 29.02 d 23.74 r -0.045 top1 0.000 | eegnet: rank 29.23 d 22.63 r 0.014 top1 0.000
+dummy                        gain  -8.387 CI[-9.130,-7.534] [ok] | raw_eeg: rank 30.50 d 23.13 r 0.000 top1 0.017 | eegnet: rank 30.50 d 23.13 r 0.000 top1 0.017
+
+=== k2_n6000 / train ===
+better_loo                   gain  +0.528 CI[-0.084,+1.074] [ok] | raw_eeg: rank 1.33 d 1.79 r -0.626 top1 0.792 | eegnet: rank 1.44 d 2.10 r -0.609 top1 0.812
+lr                           gain  +0.000 [ok] | raw_eeg: rank 1.75 d 2.83 r -0.600 top1 0.562 | eegnet: rank 1.85 d 3.23 r -0.621 top1 0.625
+better_smooth                gain  -1.303 CI[-1.726,-0.878] [ok] | raw_eeg: rank 3.21 d 6.45 r -0.630 top1 0.208 | eegnet: rank 3.04 d 6.88 r -0.647 top1 0.229
+weaker_quarter_data          gain  -3.401 CI[-4.262,-2.607] [ok] | raw_eeg: rank 8.25 d 11.08 r -0.445 top1 0.104 | eegnet: rank 10.60 d 14.51 r -0.371 top1 0.125
+dummy                        gain  -7.775 CI[-8.194,-7.254] [ok] | raw_eeg: rank 30.50 d 22.27 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.27 r 0.000 top1 0.017
+s_lr                         gain  -8.051 CI[-8.975,-7.080] [ok] | raw_eeg: rank 33.90 d 25.46 r -0.007 top1 0.021 | eegnet: rank 28.21 d 21.44 r -0.083 top1 0.000
+
+=== k3 / test ===
+better_loo                   gain  +2.054 CI[+1.294,+2.853] [ok] | raw_eeg: rank 2.88 d 3.81 r -0.612 top1 0.750 | eegnet: rank 1.71 d 2.02 r -0.623 top1 0.875
+lr                           gain  +0.000 [ok] | raw_eeg: rank 3.88 d 5.76 r -0.460 top1 0.479 | eegnet: rank 4.29 d 9.97 r -0.448 top1 0.417
+better_smooth                gain  -2.339 CI[-3.131,-1.553] [ok] | raw_eeg: rank 5.81 d 14.59 r -0.515 top1 0.167 | eegnet: rank 6.73 d 17.73 r -0.482 top1 0.104
+shortcut_density             gain  -4.684 [ok] | raw_eeg: rank 29.96 d 16.97 r -0.493 top1 0.042 | eegnet: rank 29.96 d 16.97 r -0.493 top1 0.042
+shortcut_centroid            gain  -5.004 [ok] | raw_eeg: rank 32.00 d 17.63 r -0.514 top1 0.000 | eegnet: rank 32.00 d 17.63 r -0.514 top1 0.000
+weaker_quarter_data          gain  -5.387 CI[-6.630,-4.153] [ok] | raw_eeg: rank 20.35 d 19.39 r -0.204 top1 0.062 | eegnet: rank 21.69 d 20.38 r -0.144 top1 0.042
+dummy                        gain  -7.406 CI[-8.112,-6.662] [ok] | raw_eeg: rank 30.50 d 23.61 r 0.000 top1 0.017 | eegnet: rank 30.50 d 23.61 r 0.000 top1 0.017
+s_lr                         gain  -7.727 CI[-8.829,-6.620] [ok] | raw_eeg: rank 32.38 d 24.76 r 0.070 top1 0.000 | eegnet: rank 31.42 d 23.42 r -0.035 top1 0.021
+
+=== k3 / train ===
+better_loo                   gain  +2.122 CI[+1.517,+2.724] [ok] | raw_eeg: rank 2.02 d 4.70 r -0.558 top1 0.771 | eegnet: rank 1.94 d 3.75 r -0.606 top1 0.792
+lr                           gain  +0.000 [ok] | raw_eeg: rank 5.15 d 8.07 r -0.476 top1 0.438 | eegnet: rank 4.15 d 10.25 r -0.473 top1 0.375
+better_smooth                gain  -2.157 CI[-2.825,-1.476] [ok] | raw_eeg: rank 8.17 d 16.69 r -0.508 top1 0.104 | eegnet: rank 6.35 d 15.69 r -0.499 top1 0.167
+weaker_quarter_data          gain  -5.785 CI[-6.823,-4.758] [ok] | raw_eeg: rank 25.38 d 23.40 r -0.105 top1 0.000 | eegnet: rank 19.92 d 19.70 r -0.213 top1 0.083
+s_lr                         gain  -6.361 CI[-7.612,-5.022] [ok] | raw_eeg: rank 29.83 d 21.98 r -0.031 top1 0.021 | eegnet: rank 23.98 d 23.19 r -0.090 top1 0.062
+dummy                        gain  -6.997 CI[-7.813,-6.123] [ok] | raw_eeg: rank 30.50 d 23.39 r 0.000 top1 0.017 | eegnet: rank 30.50 d 23.39 r 0.000 top1 0.017
+
+=== k5 / test ===
+better_loo                   gain  +5.156 CI[+4.067,+6.237] [ok] | raw_eeg: rank 1.85 d 4.59 r -0.567 top1 0.688 | eegnet: rank 1.33 d 2.16 r -0.613 top1 0.854
+lr                           gain  +0.000 [ok] | raw_eeg: rank 10.38 d 15.24 r -0.341 top1 0.250 | eegnet: rank 6.27 d 14.06 r -0.379 top1 0.250
+better_smooth                gain  -1.473 CI[-2.316,-0.630] [ok] | raw_eeg: rank 12.23 d 21.75 r -0.384 top1 0.083 | eegnet: rank 9.38 d 15.86 r -0.443 top1 0.188
+shortcut_density             gain  -2.533 [ok] | raw_eeg: rank 30.44 d 17.21 r -0.481 top1 0.021 | eegnet: rank 30.44 d 17.21 r -0.481 top1 0.021
+shortcut_centroid            gain  -2.618 [ok] | raw_eeg: rank 30.81 d 17.17 r -0.495 top1 0.000 | eegnet: rank 30.81 d 17.17 r -0.495 top1 0.000
+weaker_quarter_data          gain  -4.151 CI[-5.630,-2.674] [ok] | raw_eeg: rank 23.27 d 21.81 r -0.089 top1 0.062 | eegnet: rank 24.10 d 22.80 r -0.122 top1 0.042
+s_lr                         gain  -5.035 CI[-6.582,-3.463] [ok] | raw_eeg: rank 27.94 d 22.77 r -0.045 top1 0.021 | eegnet: rank 31.85 d 22.65 r 0.001 top1 0.000
+dummy                        gain  -5.232 CI[-6.393,-4.130] [ok] | raw_eeg: rank 30.50 d 22.45 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.45 r 0.000 top1 0.017
+
+=== k5 / train ===
+better_loo                   gain  +5.792 CI[+4.672,+6.906] [ok] | raw_eeg: rank 3.35 d 7.33 r -0.560 top1 0.646 | eegnet: rank 2.75 d 7.12 r -0.584 top1 0.583
+lr                           gain  +0.000 [ok] | raw_eeg: rank 13.81 d 17.36 r -0.253 top1 0.167 | eegnet: rank 13.44 d 19.07 r -0.285 top1 0.104
+better_smooth                gain  -1.387 CI[-2.356,-0.405] [ok] | raw_eeg: rank 18.08 d 23.29 r -0.273 top1 0.083 | eegnet: rank 15.19 d 21.69 r -0.314 top1 0.062
+weaker_quarter_data          gain  -2.908 CI[-4.195,-1.562] [ok] | raw_eeg: rank 28.02 d 22.27 r -0.067 top1 0.042 | eegnet: rank 21.42 d 22.24 r -0.112 top1 0.000
+dummy                        gain  -3.765 CI[-4.902,-2.634] [ok] | raw_eeg: rank 30.50 d 22.99 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.99 r 0.000 top1 0.017
+s_lr                         gain  -4.619 CI[-6.092,-3.054] [ok] | raw_eeg: rank 34.98 d 25.32 r 0.061 top1 0.021 | eegnet: rank 33.33 d 24.29 r 0.012 top1 0.000
+
+=== s2 / test ===
+better_loo                   gain  +3.703 CI[+2.725,+4.671] [ok] | raw_eeg: rank 1.10 d 0.38 r -0.397 top1 0.896 | eegnet: rank 1.35 d 0.86 r -0.382 top1 0.708 | raw_eeg_low_data: rank 4.23 d 8.66 r -0.270 top1 0.333
+better_cv100                 gain  +2.189 CI[+1.442,+2.908] [ok] | raw_eeg: rank 1.38 d 1.24 r -0.375 top1 0.729 | eegnet: rank 1.65 d 2.20 r -0.350 top1 0.562 | raw_eeg_low_data: rank 10.25 d 10.89 r -0.201 top1 0.229
+better_cv100_smooth          gain  +1.938 CI[+1.032,+2.796] [ok] | raw_eeg: rank 1.40 d 1.29 r -0.437 top1 0.729 | eegnet: rank 1.83 d 2.39 r -0.403 top1 0.562 | raw_eeg_low_data: rank 11.35 d 14.82 r -0.231 top1 0.167
+lr_seed1                     gain  +0.751 CI[-0.371,+1.871] [ok] | raw_eeg: rank 2.58 d 3.76 r -0.304 top1 0.562 | eegnet: rank 2.19 d 2.56 r -0.298 top1 0.500 | raw_eeg_low_data: rank 10.04 d 13.88 r -0.204 top1 0.083
+lr                           gain  +0.000 [ok] | raw_eeg: rank 2.69 d 3.89 r -0.328 top1 0.479 | eegnet: rank 2.52 d 6.06 r -0.311 top1 0.417 | raw_eeg_low_data: rank 14.94 d 15.39 r -0.151 top1 0.083
+lr_seed2                     gain  -0.105 CI[-1.173,+0.999] [ok] | raw_eeg: rank 1.75 d 4.08 r -0.343 top1 0.562 | eegnet: rank 3.56 d 4.28 r -0.305 top1 0.396 | raw_eeg_low_data: rank 15.60 d 18.00 r -0.101 top1 0.104
+better_smooth                gain  -0.240 CI[-0.734,+0.209] [ok] | raw_eeg: rank 3.00 d 5.91 r -0.387 top1 0.312 | eegnet: rank 3.02 d 8.10 r -0.357 top1 0.333 | raw_eeg_low_data: rank 15.46 d 15.94 r -0.176 top1 0.125
+shortcut_lr_plus_centrality_w03 gain  -0.323 CI[-1.079,+0.368] [ok] | raw_eeg: rank 3.21 d 5.75 r -0.358 top1 0.354 | eegnet: rank 2.85 d 6.12 r -0.341 top1 0.417 | raw_eeg_low_data: rank 15.79 d 15.83 r -0.164 top1 0.083
+shortcut_lr_plus_centrality_w10 gain  -2.357 CI[-3.764,-0.985] [ok] | raw_eeg: rank 6.04 d 12.02 r -0.339 top1 0.188 | eegnet: rank 6.06 d 11.52 r -0.333 top1 0.250 | raw_eeg_low_data: rank 19.40 d 19.22 r -0.151 top1 0.042
+weaker_quarter_data          gain  -6.366 CI[-7.618,-5.068] [ok] | raw_eeg: rank 20.10 d 19.87 r -0.085 top1 0.042 | eegnet: rank 20.31 d 19.63 r -0.109 top1 0.042 | raw_eeg_low_data: rank 24.27 d 19.84 r -0.077 top1 0.062
+shortcut_centrality          gain  -7.066 [ok] | raw_eeg: rank 27.44 d 19.75 r -0.181 top1 0.021 | eegnet: rank 27.44 d 19.75 r -0.181 top1 0.021 | raw_eeg_low_data: rank 31.92 d 21.53 r -0.075 top1 0.021
+shortcut_eeg_lookup          gain  -7.715 [ok] | raw_eeg: rank 29.35 d 21.11 r -0.028 top1 0.042 | eegnet: rank 28.17 d 21.09 r -0.072 top1 0.062 | raw_eeg_low_data: rank 26.88 d 21.84 r -0.072 top1 0.021
+s_lr                         gain  -8.552 CI[-9.685,-7.419] [ok] | raw_eeg: rank 31.17 d 22.87 r 0.005 top1 0.021 | eegnet: rank 29.42 d 23.56 r 0.001 top1 0.042 | raw_eeg_low_data: rank 29.92 d 20.96 r -0.001 top1 0.042
+dummy                        gain  -8.728 CI[-9.554,-7.930] [ok] | raw_eeg: rank 30.50 d 22.53 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.53 r 0.000 top1 0.017 | raw_eeg_low_data: rank 30.50 d 22.75 r 0.000 top1 0.017
+shortcut_constant            gain  -8.728 [ok] | raw_eeg: rank 30.50 d 22.53 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.53 r 0.000 top1 0.017 | raw_eeg_low_data: rank 30.50 d 22.75 r 0.000 top1 0.017
+shortcut_scorefile_forgery   gain  -8.728 [ok] | raw_eeg: rank 30.50 d 22.53 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.53 r 0.000 top1 0.017 | raw_eeg_low_data: rank 30.50 d 22.75 r 0.000 top1 0.017
+shortcut_centroid            gain  -8.827 [ok] | raw_eeg: rank 30.42 d 23.08 r 0.013 top1 0.000 | eegnet: rank 30.42 d 23.08 r 0.013 top1 0.000 | raw_eeg_low_data: rank 30.23 d 23.05 r -0.021 top1 0.021
+shortcut_catalogue           gain  -8.880 [ok] | raw_eeg: rank 29.90 d 23.19 r -0.031 top1 0.000 | eegnet: rank 29.90 d 23.19 r -0.031 top1 0.000 | raw_eeg_low_data: rank 30.85 d 24.07 r 0.009 top1 0.021
+shortcut_density             gain  -8.914 [ok] | raw_eeg: rank 27.77 d 22.32 r 0.026 top1 0.000 | eegnet: rank 27.77 d 22.32 r 0.026 top1 0.000 | raw_eeg_low_data: rank 34.21 d 23.51 r -0.006 top1 0.000
+shortcut_hidden_oracle       gain -21.083 [FAILED] | raw_eeg: rank 60.00 d 34.28 r 1.000 top1 0.000 | eegnet: rank 60.00 d 34.28 r 1.000 top1 0.000 | raw_eeg_low_data: rank 60.00 d 34.29 r 1.000 top1 0.000
+shortcut_missing             gain -21.083 [FAILED] | raw_eeg: rank 60.00 d 34.28 r 1.000 top1 0.000 | eegnet: rank 60.00 d 34.28 r 1.000 top1 0.000 | raw_eeg_low_data: rank 60.00 d 34.29 r 1.000 top1 0.000
+shortcut_nan                 gain -21.083 [FAILED] | raw_eeg: rank 60.00 d 34.28 r 1.000 top1 0.000 | eegnet: rank 60.00 d 34.28 r 1.000 top1 0.000 | raw_eeg_low_data: rank 60.00 d 34.29 r 1.000 top1 0.000
+seed gain spread: 0.856
+
+=== s2 / train ===
+better_loo                   gain  +4.241 CI[+3.314,+5.193] [ok] | raw_eeg: rank 1.29 d 0.88 r -0.399 top1 0.729 | eegnet: rank 1.40 d 1.17 r -0.375 top1 0.708 | raw_eeg_low_data: rank 5.06 d 8.11 r -0.290 top1 0.375
+better_cv100                 gain  +2.995 CI[+2.215,+3.817] [ok] | raw_eeg: rank 1.46 d 1.61 r -0.384 top1 0.646 | eegnet: rank 1.73 d 2.17 r -0.358 top1 0.562 | raw_eeg_low_data: rank 8.65 d 11.30 r -0.232 top1 0.333
+better_cv100_smooth          gain  +2.755 CI[+1.938,+3.607] [ok] | raw_eeg: rank 1.67 d 2.79 r -0.434 top1 0.562 | eegnet: rank 1.96 d 3.70 r -0.408 top1 0.542 | raw_eeg_low_data: rank 9.23 d 12.62 r -0.277 top1 0.229
+lr_seed1                     gain  +0.856 CI[-0.389,+2.099] [ok] | raw_eeg: rank 2.85 d 2.99 r -0.335 top1 0.583 | eegnet: rank 3.21 d 5.46 r -0.319 top1 0.438 | raw_eeg_low_data: rank 15.08 d 15.59 r -0.126 top1 0.146
+lr_seed2                     gain  +0.659 CI[-0.341,+1.675] [ok] | raw_eeg: rank 2.12 d 2.73 r -0.310 top1 0.458 | eegnet: rank 2.42 d 5.03 r -0.293 top1 0.604 | raw_eeg_low_data: rank 15.46 d 16.45 r -0.137 top1 0.146
+lr                           gain  +0.000 [ok] | raw_eeg: rank 2.56 d 6.09 r -0.301 top1 0.333 | eegnet: rank 3.40 d 8.67 r -0.274 top1 0.292 | raw_eeg_low_data: rank 13.85 d 13.49 r -0.164 top1 0.146
+better_smooth                gain  -0.516 CI[-1.157,+0.106] [ok] | raw_eeg: rank 3.92 d 6.92 r -0.341 top1 0.333 | eegnet: rank 4.92 d 11.05 r -0.304 top1 0.167 | raw_eeg_low_data: rank 15.48 d 15.18 r -0.193 top1 0.042
+shortcut_lr_plus_centrality_w03 gain  -0.963 CI[-1.724,-0.204] [ok] | raw_eeg: rank 3.50 d 8.10 r -0.299 top1 0.354 | eegnet: rank 4.19 d 10.08 r -0.272 top1 0.208 | raw_eeg_low_data: rank 14.92 d 17.93 r -0.171 top1 0.083
+shortcut_lr_plus_centrality_w10 gain  -4.198 CI[-5.655,-2.754] [ok] | raw_eeg: rank 8.60 d 16.63 r -0.237 top1 0.125 | eegnet: rank 9.81 d 17.46 r -0.215 top1 0.062 | raw_eeg_low_data: rank 20.42 d 21.05 r -0.149 top1 0.062
+weaker_quarter_data          gain  -7.432 CI[-8.645,-6.047] [ok] | raw_eeg: rank 19.25 d 21.35 r -0.110 top1 0.021 | eegnet: rank 20.40 d 19.29 r -0.074 top1 0.042 | raw_eeg_low_data: rank 25.15 d 22.49 r -0.025 top1 0.000
+s_lr                         gain  -9.212 CI[-10.331,-8.070] [ok] | raw_eeg: rank 28.81 d 22.20 r -0.064 top1 0.000 | eegnet: rank 29.58 d 24.88 r -0.008 top1 0.000 | raw_eeg_low_data: rank 29.69 d 22.23 r 0.027 top1 0.042
+dummy                        gain  -9.485 CI[-10.363,-8.580] [ok] | raw_eeg: rank 30.50 d 22.66 r 0.000 top1 0.017 | eegnet: rank 30.50 d 22.66 r 0.000 top1 0.017 | raw_eeg_low_data: rank 30.50 d 22.69 r 0.000 top1 0.017
+seed gain spread: 0.856

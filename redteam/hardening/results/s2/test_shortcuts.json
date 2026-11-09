@@ -1,0 +1,378 @@
+{
+  "_slice": "test",
+  "_design": "s2",
+  "experiments": {
+    "unbiased_ranking_raw_eeg": {
+      "slice": "test",
+      "design": "s2",
+      "eeg_representation": "eeg_raw",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 3000,
+      "n_candidates": 60,
+      "results": {
+        "shortcut_catalogue": {
+          "score_distance_pearson_r": -0.030916406868451988,
+          "target_rank": 29.895833333333332,
+          "top_rank_distance": 23.193342784601413,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.041666666666666664,
+          "reciprocal_target_rank": 0.057918731252472024,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_centrality": {
+          "score_distance_pearson_r": -0.18145202262188817,
+          "target_rank": 27.4375,
+          "top_rank_distance": 19.74769246530228,
+          "target_top1_accuracy": 0.020833333333333332,
+          "target_top5_accuracy": 0.125,
+          "reciprocal_target_rank": 0.09590993372786076,
+          "near_target_top_rank_rate": 0.08333333333333333
+        },
+        "shortcut_centroid": {
+          "score_distance_pearson_r": 0.013153153111361096,
+          "target_rank": 30.416666666666668,
+          "top_rank_distance": 23.080460859425372,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.041666666666666664,
+          "reciprocal_target_rank": 0.0511307992117346,
+          "near_target_top_rank_rate": 0.020833333333333332
+        },
+        "shortcut_constant": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.532176205646056,
+          "target_top1_accuracy": 0.016666666666666666,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.0779978402158623,
+          "near_target_top_rank_rate": 0.03715277777777778
+        },
+        "shortcut_density": {
+          "score_distance_pearson_r": 0.025541919017059465,
+          "target_rank": 27.770833333333332,
+          "top_rank_distance": 22.3173681831681,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.10416666666666667,
+          "reciprocal_target_rank": 0.08709446267525789,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_eeg_lookup": {
+          "score_distance_pearson_r": -0.027857480660453987,
+          "target_rank": 29.354166666666668,
+          "top_rank_distance": 21.10768775081512,
+          "target_top1_accuracy": 0.041666666666666664,
+          "target_top5_accuracy": 0.10416666666666667,
+          "reciprocal_target_rank": 0.09533475203655434,
+          "near_target_top_rank_rate": 0.0625
+        },
+        "shortcut_hidden_oracle": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28261262838464,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_missing": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28261262838464,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_nan": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28261262838464,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_scorefile_forgery": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.532176205646056,
+          "target_top1_accuracy": 0.016666666666666666,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.0779978402158623,
+          "near_target_top_rank_rate": 0.03715277777777778
+        }
+      },
+      "_status": {
+        "shortcut_catalogue": "ok",
+        "shortcut_centrality": "ok",
+        "shortcut_centroid": "ok",
+        "shortcut_constant": "ok",
+        "shortcut_density": "ok",
+        "shortcut_eeg_lookup": "ok",
+        "shortcut_hidden_oracle": "failed: control sessions ranked at 1.00 < 13.18: ranking signal does not come from the EEG/stimulus pairing",
+        "shortcut_missing": "failed: missing scores for session sd9188f492e36",
+        "shortcut_nan": "failed: non-finite scores for session s6ce90cf20cb8",
+        "shortcut_scorefile_forgery": "ok"
+      },
+      "_control_mean_target_rank": {
+        "shortcut_catalogue": 35.1875,
+        "shortcut_centrality": 32.5,
+        "shortcut_centroid": 29.375,
+        "shortcut_constant": 30.5,
+        "shortcut_density": 36.3125,
+        "shortcut_eeg_lookup": 27.125,
+        "shortcut_hidden_oracle": 1.0,
+        "shortcut_scorefile_forgery": 30.5
+      },
+      "_control_gate_threshold": 13.181897717513426
+    },
+    "unbiased_ranking_eegnet": {
+      "slice": "test",
+      "design": "s2",
+      "eeg_representation": "eeg_net",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 3000,
+      "n_candidates": 60,
+      "results": {
+        "shortcut_catalogue": {
+          "score_distance_pearson_r": -0.030916406868451988,
+          "target_rank": 29.895833333333332,
+          "top_rank_distance": 23.193342784601413,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.041666666666666664,
+          "reciprocal_target_rank": 0.057918731252472024,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_centrality": {
+          "score_distance_pearson_r": -0.18145202262188817,
+          "target_rank": 27.4375,
+          "top_rank_distance": 19.74769246530228,
+          "target_top1_accuracy": 0.020833333333333332,
+          "target_top5_accuracy": 0.125,
+          "reciprocal_target_rank": 0.09590993372786076,
+          "near_target_top_rank_rate": 0.08333333333333333
+        },
+        "shortcut_centroid": {
+          "score_distance_pearson_r": 0.013153153111361096,
+          "target_rank": 30.416666666666668,
+          "top_rank_distance": 23.080460859425372,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.041666666666666664,
+          "reciprocal_target_rank": 0.0511307992117346,
+          "near_target_top_rank_rate": 0.020833333333333332
+        },
+        "shortcut_constant": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.532176205646056,
+          "target_top1_accuracy": 0.016666666666666666,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.0779978402158623,
+          "near_target_top_rank_rate": 0.03715277777777778
+        },
+        "shortcut_density": {
+          "score_distance_pearson_r": 0.025541919017059465,
+          "target_rank": 27.770833333333332,
+          "top_rank_distance": 22.3173681831681,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.10416666666666667,
+          "reciprocal_target_rank": 0.08709446267525789,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_eeg_lookup": {
+          "score_distance_pearson_r": -0.07202478696400838,
+          "target_rank": 28.166666666666668,
+          "top_rank_distance": 21.08763049930902,
+          "target_top1_accuracy": 0.0625,
+          "target_top5_accuracy": 0.16666666666666666,
+          "reciprocal_target_rank": 0.12935129108028048,
+          "near_target_top_rank_rate": 0.08333333333333333
+        },
+        "shortcut_hidden_oracle": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28261262838464,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_missing": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28261262838464,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_nan": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28261262838464,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_scorefile_forgery": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.532176205646056,
+          "target_top1_accuracy": 0.016666666666666666,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.0779978402158623,
+          "near_target_top_rank_rate": 0.03715277777777778
+        }
+      },
+      "_status": {
+        "shortcut_catalogue": "ok",
+        "shortcut_centrality": "ok",
+        "shortcut_centroid": "ok",
+        "shortcut_constant": "ok",
+        "shortcut_density": "ok",
+        "shortcut_eeg_lookup": "ok",
+        "shortcut_hidden_oracle": "failed: control sessions ranked at 1.00 < 13.18: ranking signal does not come from the EEG/stimulus pairing",
+        "shortcut_missing": "failed: missing scores for session sd9188f492e36",
+        "shortcut_nan": "failed: non-finite scores for session s6ce90cf20cb8",
+        "shortcut_scorefile_forgery": "ok"
+      },
+      "_control_mean_target_rank": {
+        "shortcut_catalogue": 35.1875,
+        "shortcut_centrality": 32.5,
+        "shortcut_centroid": 29.375,
+        "shortcut_constant": 30.5,
+        "shortcut_density": 36.3125,
+        "shortcut_eeg_lookup": 23.9375,
+        "shortcut_hidden_oracle": 1.0,
+        "shortcut_scorefile_forgery": 30.5
+      },
+      "_control_gate_threshold": 13.181897717513426
+    },
+    "unbiased_ranking_raw_eeg_low_data": {
+      "slice": "test",
+      "design": "s2",
+      "eeg_representation": "eeg_raw",
+      "n_sessions": 48,
+      "n_control_sessions": 16,
+      "n_observations": 1000,
+      "n_candidates": 60,
+      "results": {
+        "shortcut_catalogue": {
+          "score_distance_pearson_r": 0.009245169596496322,
+          "target_rank": 30.854166666666668,
+          "top_rank_distance": 24.07356111399044,
+          "target_top1_accuracy": 0.020833333333333332,
+          "target_top5_accuracy": 0.0625,
+          "reciprocal_target_rank": 0.07693510165403326,
+          "near_target_top_rank_rate": 0.020833333333333332
+        },
+        "shortcut_centrality": {
+          "score_distance_pearson_r": -0.07508113012043285,
+          "target_rank": 31.916666666666668,
+          "top_rank_distance": 21.532617826385234,
+          "target_top1_accuracy": 0.020833333333333332,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.08273345387457333,
+          "near_target_top_rank_rate": 0.020833333333333332
+        },
+        "shortcut_centroid": {
+          "score_distance_pearson_r": -0.020608831315016462,
+          "target_rank": 30.229166666666668,
+          "top_rank_distance": 23.053026407169806,
+          "target_top1_accuracy": 0.020833333333333332,
+          "target_top5_accuracy": 0.125,
+          "reciprocal_target_rank": 0.09765258079948369,
+          "near_target_top_rank_rate": 0.0625
+        },
+        "shortcut_constant": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.753732050163535,
+          "target_top1_accuracy": 0.016666666666666666,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.0779978402158623,
+          "near_target_top_rank_rate": 0.036111111111111115
+        },
+        "shortcut_density": {
+          "score_distance_pearson_r": -0.005655788257574933,
+          "target_rank": 34.208333333333336,
+          "top_rank_distance": 23.510260778110858,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.041666666666666664,
+          "reciprocal_target_rank": 0.04934294179402407,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_eeg_lookup": {
+          "score_distance_pearson_r": -0.07151590391446602,
+          "target_rank": 26.875,
+          "top_rank_distance": 21.840541016904712,
+          "target_top1_accuracy": 0.020833333333333332,
+          "target_top5_accuracy": 0.25,
+          "reciprocal_target_rank": 0.11826703908419826,
+          "near_target_top_rank_rate": 0.041666666666666664
+        },
+        "shortcut_hidden_oracle": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28734461487408,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_missing": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28734461487408,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_nan": {
+          "score_distance_pearson_r": 1.0,
+          "target_rank": 60.0,
+          "top_rank_distance": 34.28734461487408,
+          "target_top1_accuracy": 0.0,
+          "target_top5_accuracy": 0.0,
+          "reciprocal_target_rank": 0.016666666666666666,
+          "near_target_top_rank_rate": 0.0
+        },
+        "shortcut_scorefile_forgery": {
+          "score_distance_pearson_r": 0.0,
+          "target_rank": 30.5,
+          "top_rank_distance": 22.753732050163535,
+          "target_top1_accuracy": 0.016666666666666666,
+          "target_top5_accuracy": 0.08333333333333333,
+          "reciprocal_target_rank": 0.0779978402158623,
+          "near_target_top_rank_rate": 0.036111111111111115
+        }
+      },
+      "_status": {
+        "shortcut_catalogue": "ok",
+        "shortcut_centrality": "ok",
+        "shortcut_centroid": "ok",
+        "shortcut_constant": "ok",
+        "shortcut_density": "ok",
+        "shortcut_eeg_lookup": "ok",
+        "shortcut_hidden_oracle": "failed: control sessions ranked at 1.00 < 13.18: ranking signal does not come from the EEG/stimulus pairing",
+        "shortcut_missing": "failed: missing scores for session s88cb3c150265",
+        "shortcut_nan": "failed: non-finite scores for session s88cb3c150265",
+        "shortcut_scorefile_forgery": "ok"
+      },
+      "_control_mean_target_rank": {
+        "shortcut_catalogue": 33.5,
+        "shortcut_centrality": 32.75,
+        "shortcut_centroid": 29.9375,
+        "shortcut_constant": 30.5,
+        "shortcut_density": 31.8125,
+        "shortcut_eeg_lookup": 28.4375,
+        "shortcut_hidden_oracle": 1.0,
+        "shortcut_scorefile_forgery": 30.5
+      },
+      "_control_gate_threshold": 13.181897717513426
+    }
+  }
+}
