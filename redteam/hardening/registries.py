@@ -33,6 +33,7 @@ REGISTRIES = {
     },
     "light_variants": {
         "better_loo": SCORE + ["--estimator", "lr", "--cv", "loo", "--n-splits", "20"],
+        "better_loo_refine": SCORE + ["--estimator", "lr", "--cv", "loo", "--n-splits", "20", "--refine"],
         "better_smooth": SCORE + ["--estimator", "lr", "--smooth"],
         "weaker_quarter_data": SCORE + ["--estimator", "lr", "--subsample", "0.25"],
     },

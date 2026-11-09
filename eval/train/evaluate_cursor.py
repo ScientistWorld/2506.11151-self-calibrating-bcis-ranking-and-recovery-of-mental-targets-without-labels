@@ -61,9 +61,13 @@ DESIGNS = {
 }
 DEFAULT_DESIGN = "s2"
 EXPERIMENTS = {
-    "unbiased_ranking_raw_eeg": "eeg_raw",
-    "unbiased_ranking_eegnet": "eeg_net",
+    "unbiased_ranking_raw_eeg": {"representation": "eeg_raw", "session_set": "main"},
+    "unbiased_ranking_eegnet": {"representation": "eeg_net", "session_set": "main"},
+    # The paper's data-size axis: independent sessions with fewer observations.
+    "unbiased_ranking_raw_eeg_low_data": {"representation": "eeg_raw", "session_set": "low_data"},
 }
+REPRESENTATIONS = sorted({spec["representation"] for spec in EXPERIMENTS.values()})
+LOW_DATA_OBSERVATIONS = 1000
 METRICS = (
     "score_distance_pearson_r",
     "target_rank",
@@ -152,7 +156,7 @@ def make_sessions(pool: dict, design_name: str, seed: int, n_aligned: int,
         control = index >= n_aligned
         if control:
             rows = rows[rng.permutation(n_obs)]
-        eeg_seeds = rng.integers(0, 2**63 - 1, size=len(EXPERIMENTS))
+        eeg_seeds = rng.integers(0, 2**63 - 1, size=len(REPRESENTATIONS))
         token = hashlib.sha256(f"{SLICE_NAME}:{seed}:{design_name}:{index}".encode()).hexdigest()
         sessions.append(
             {
@@ -165,7 +169,7 @@ def make_sessions(pool: dict, design_name: str, seed: int, n_aligned: int,
                 "target": target,
                 "true_distances": np.linalg.norm(cand - cand[target], axis=1),
                 "rows": rows,
-                "eeg_seeds": dict(zip(sorted(EXPERIMENTS.values()), eeg_seeds)),
+                "eeg_seeds": dict(zip(REPRESENTATIONS, eeg_seeds)),
             }
         )
     return sessions
@@ -193,9 +197,10 @@ def write_sessions(sessions: list[dict], pool: dict, representation: str, out_di
     (out_dir / "index.json").write_text(json.dumps(index, indent=1))
 
 
-def export_sessions(sessions: list[dict], pool: dict, out_dir: Path) -> None:
-    for experiment, representation in EXPERIMENTS.items():
-        write_sessions(sessions, pool, representation, out_dir / experiment)
+def export_sessions(session_sets: dict, pool: dict, out_dir: Path) -> None:
+    for experiment, spec in EXPERIMENTS.items():
+        write_sessions(session_sets[spec["session_set"]], pool, spec["representation"], out_dir / experiment)
+    sessions = [s for group in session_sets.values() for s in group]
     truth = {
         session["id"]: {
             "control": bool(session["control"]),
@@ -356,26 +361,33 @@ def main() -> None:
     parser.add_argument("--n-aligned", type=int, default=N_ALIGNED)
     parser.add_argument("--n-control", type=int, default=N_CONTROL)
     parser.add_argument("--n-observations", type=int, default=None)
+    parser.add_argument("--low-data-observations", type=int, default=LOW_DATA_OBSERVATIONS)
     args = parser.parse_args()
 
     pool = load_pool(Path(args.data))
-    sessions = make_sessions(pool, args.design, SPLIT_SEED, args.n_aligned, args.n_control,
-                             args.n_observations)
+    session_sets = {
+        "main": make_sessions(pool, args.design, SPLIT_SEED, args.n_aligned, args.n_control,
+                              args.n_observations),
+        "low_data": make_sessions(pool, args.design, SPLIT_SEED + 1, args.n_aligned, args.n_control,
+                                  args.low_data_observations),
+    }
     if args.export_sessions:
-        export_sessions(sessions, pool, Path(args.export_sessions))
+        export_sessions(session_sets, pool, Path(args.export_sessions))
         return
     solvers = load_solvers(Path(args.solvers_dir))
     if not solvers:
         raise SystemExit(f"No solver manifests found in {args.solvers_dir}")
     threshold = control_gate_threshold(args.n_control)
-    n_obs = int(sessions[0]["obs"].shape[0])
 
     Path(args.workdir).mkdir(parents=True, exist_ok=True)
     scratch = Path(tempfile.mkdtemp(prefix=f"cursor_{SLICE_NAME}_", dir=args.workdir))
     experiments: dict[str, dict] = {}
     per_session_dump: dict[str, dict] = {}
     try:
-        for experiment, representation in EXPERIMENTS.items():
+        for experiment, spec in EXPERIMENTS.items():
+            representation = spec["representation"]
+            sessions = session_sets[spec["session_set"]]
+            n_obs = int(sessions[0]["obs"].shape[0])
             sessions_dir = scratch / experiment
             write_sessions(sessions, pool, representation, sessions_dir)
             results, status, control_ranks = {}, {}, {}

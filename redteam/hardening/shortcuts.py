@@ -55,6 +55,8 @@ def _hidden_oracle(session_ids, candidates_by_id):
     pool = hidden.load_pool(WORKSPACE / "data/downloads/all_data_sorted.npz")
     sessions = hidden.make_sessions(pool, hidden.DEFAULT_DESIGN, hidden.SPLIT_SEED,
                                     hidden.N_ALIGNED, hidden.N_CONTROL)
+    sessions += hidden.make_sessions(pool, hidden.DEFAULT_DESIGN, hidden.SPLIT_SEED + 1,
+                                     hidden.N_ALIGNED, hidden.N_CONTROL, hidden.LOW_DATA_OBSERVATIONS)
     truth = {s["id"]: s["true_distances"] for s in sessions}
     return {sid: -truth[sid] for sid in session_ids if sid in truth}
 

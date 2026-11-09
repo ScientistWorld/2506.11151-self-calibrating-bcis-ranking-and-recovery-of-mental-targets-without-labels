@@ -1,8 +1,8 @@
 {
   "experiments": {
     "unbiased_ranking_raw_eeg": {
-      "description": "Rank 60 candidate face latents for a hidden mental target from 3000 unlabeled stimulus/EEG pairs per session, using the windowed raw-EEG representation (29 channels x 7 windows = 203 features). Stimuli and candidates are target-independent, so only the EEG/stimulus pairing carries information about the target. Paper analogue: Table 1 (EEG windowing).",
-      "weight": 0.65,
+      "description": "Rank 60 candidate face latents for a hidden mental target from 3000 unlabeled stimulus/EEG pairs per session, using the windowed raw-EEG representation (29 channels x 7 windows = 203 features). Stimuli and candidates are drawn independently of the target, so only the EEG/stimulus pairing carries information about the target. Paper analogue: Table 1 (EEG windowing).",
+      "weight": 0.5,
       "primary_metric": "top_rank_distance",
       "metrics": {
         "score_distance_pearson_r": {
@@ -52,7 +52,7 @@
           "type": "baseline"
         }
       },
-      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect). The gym draws stimuli and candidates from one target-independent distribution (2-D affine subspace of the 512-D latent space, per-axis SD 13, so the expected target-candidate distance, 23.0, matches the paper's random baseline of 23.08), assigns each stimulus the recorded EEG row at the nearest recorded distance, uses N = 3000 observations per session, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
+      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect on that protocol, see redteam/hardening/results/paper_protocol_check.json). The gym draws stimuli and candidates from one target-independent, homogeneous distribution (uniform on a 2-sphere of radius 17.3 in a random 3-D subspace of the 512-D latent space; expected target-candidate distance 23.07 vs the paper's random baseline 23.08), assigns each stimulus a recorded EEG row at the nearest recorded distance, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
       "_paper_results": {
         "source": "Table 1 / Appendix Table 2 (EEG windowing), Table 3 (top-k), N = 9234, target-centred synthetic stimuli, uniform-distance candidates",
         "lr": {
@@ -103,7 +103,7 @@
     },
     "unbiased_ranking_eegnet": {
       "description": "Same ranking task on the same sessions with the released 176-D EEGNet embedding of each EEG response instead of windowed raw EEG. Paper analogue: Appendix Table 2 (EEGNet columns).",
-      "weight": 0.35,
+      "weight": 0.25,
       "primary_metric": "top_rank_distance",
       "metrics": {
         "score_distance_pearson_r": {
@@ -153,7 +153,7 @@
           "type": "baseline"
         }
       },
-      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect). The gym draws stimuli and candidates from one target-independent distribution (2-D affine subspace of the 512-D latent space, per-axis SD 13, so the expected target-candidate distance, 23.0, matches the paper's random baseline of 23.08), assigns each stimulus the recorded EEG row at the nearest recorded distance, uses N = 3000 observations per session, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
+      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect on that protocol, see redteam/hardening/results/paper_protocol_check.json). The gym draws stimuli and candidates from one target-independent, homogeneous distribution (uniform on a 2-sphere of radius 17.3 in a random 3-D subspace of the 512-D latent space; expected target-candidate distance 23.07 vs the paper's random baseline 23.08), assigns each stimulus a recorded EEG row at the nearest recorded distance, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
       "_paper_results": {
         "source": "Appendix Table 2 (EEGNet embeddings), N = 9234, target-centred synthetic stimuli, uniform-distance candidates",
         "lr": {
@@ -191,6 +191,63 @@
           "target_rank": 44.86,
           "top_rank_distance": 13.17
         }
+      }
+    },
+    "unbiased_ranking_raw_eeg_low_data": {
+      "description": "Same ranking task with windowed raw EEG on independent hidden sessions that contain only 1000 stimulus/EEG pairs each. Paper analogue: the data-size ablation of Figure 3 (N from 100 to 9234), which the paper names its main practical limitation.",
+      "weight": 0.25,
+      "primary_metric": "top_rank_distance",
+      "metrics": {
+        "score_distance_pearson_r": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Mean over sessions of the Pearson correlation between a solver's candidate scores and the candidates' true distances to the hidden target (constant scores count as 0). Lower is better: higher scores should go to nearer candidates."
+        },
+        "target_rank": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Mean rank of the hidden target among the 60 candidates (1 = best), expected value under uniformly random tie-breaking."
+        },
+        "top_rank_distance": {
+          "higher_is_better": false,
+          "coefficient": 1.5,
+          "description": "Mean latent distance from the top-scored candidate to the hidden target (ties at the top averaged). The paper's preferred, perceptually grounded metric."
+        },
+        "target_top1_accuracy": {
+          "higher_is_better": true,
+          "coefficient": 0.35,
+          "description": "Fraction of sessions in which the hidden target is ranked first (expected under random tie-breaking)."
+        },
+        "target_top5_accuracy": {
+          "higher_is_better": true,
+          "coefficient": 0.25,
+          "description": "Fraction of sessions in which the hidden target is within the top five (expected under random tie-breaking)."
+        },
+        "reciprocal_target_rank": {
+          "higher_is_better": true,
+          "coefficient": 0.25,
+          "description": "Mean reciprocal rank of the hidden target (expected under random tie-breaking)."
+        },
+        "near_target_top_rank_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.4,
+          "description": "Fraction of sessions whose top-scored candidate lies within latent distance 5.0 of the hidden target (ties at the top averaged)."
+        }
+      },
+      "results": {
+        "lr": {
+          "type": "proposed"
+        },
+        "s_lr": {
+          "type": "baseline"
+        },
+        "dummy": {
+          "type": "baseline"
+        }
+      },
+      "_note": "Setup changed from the paper's: the paper's simulation places every stimulus at a recorded distance around the target and every candidate at a uniform distance from it, so stimulus and candidate geometry alone reveal the answer (a no-EEG centroid ranking is perfect on that protocol, see redteam/hardening/results/paper_protocol_check.json). The gym draws stimuli and candidates from one target-independent, homogeneous distribution (uniform on a 2-sphere of radius 17.3 in a random 3-D subspace of the 512-D latent space; expected target-candidate distance 23.07 vs the paper's random baseline 23.08), assigns each stimulus a recorded EEG row at the nearest recorded distance, and scores 48 hidden sessions per experiment. The paper's numbers are therefore not on this setup's scale and are kept under _paper_results; `results` holds the gym reference run (CURSOR-LR and the paper's S-LR / Dummy controls) on the hidden test.",
+      "_paper_results": {
+        "source": "Figure 3 / Appendix C.1 data-size ablation: ranking quality degrades as N shrinks from 9234 towards 100; per-N values are only given graphically, so no number is transcribed here."
       }
     }
   }

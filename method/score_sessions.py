@@ -38,6 +38,8 @@ def main() -> None:
                         help="shufflesplit: paper's repeated 90/10 splits; loo: exact leave-one-out.")
     parser.add_argument("--smooth", action="store_true",
                         help="Kernel-average scores over neighbouring candidates.")
+    parser.add_argument("--refine", action="store_true",
+                        help="Two-stage: re-score candidates by closeness to the top-scored one.")
     parser.add_argument("--centrality-weight", type=float, default=0.0,
                         help="Audit probe only: blend in a no-EEG geometric centrality prior.")
     args = parser.parse_args()
@@ -62,6 +64,10 @@ def main() -> None:
                                         seed=args.seed, estimator=estimator)
         if args.smooth:
             values = smooth_scores(values, candidates)
+        if args.refine:
+            cand = np.asarray(candidates, dtype=float)
+            best = cand[int(np.argmax(values))]
+            values = -np.linalg.norm(cand - best, axis=1) + 1e-6 * np.asarray(values)
         if args.centrality_weight:
             cand = np.asarray(candidates, dtype=float)
             spread = np.linalg.norm(cand[:, None, :] - cand[None, :, :], axis=2).mean(axis=1)
