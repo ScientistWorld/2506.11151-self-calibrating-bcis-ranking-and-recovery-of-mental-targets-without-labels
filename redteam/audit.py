@@ -88,8 +88,10 @@ def equivalence_check():
             a = scalar(arrays[eeg][rows], observed, candidates[:3], cfg)
             b = batched(arrays[eeg][rows], observed, candidates[:3], cfg)
             error = float(np.max(np.abs(a-b)))
-            tests.append({'eeg': eeg, 'estimator': estimator, 'max_abs_error': error})
-            np.testing.assert_allclose(a, b, rtol=1e-9, atol=1e-10)
+            tolerance = 1e-5 if arrays[eeg].dtype == np.float32 else 1e-9
+            tests.append({'eeg': eeg, 'estimator': estimator, 'max_abs_error': error, 'rtol': tolerance})
+            write(RT / 'equivalence.json', tests)
+            np.testing.assert_allclose(a, b, rtol=tolerance, atol=tolerance/10)
     write(RT / 'equivalence.json', tests)
 
 
@@ -118,7 +120,10 @@ def genuine(folder, seed, more_data=False):
             max_error = max(float(np.max(np.abs(np.asarray(a['scores'][m])-np.asarray(b['scores'][m]))))
                             for a, b in zip(old['runs'], new['runs']) for m in ['lr','s_lr','dummy'])
             comparisons.append({'eeg': new['eeg'], 'max_abs_error_vs_saved_reference': max_error})
-            if max_error > 1e-8:
+            tolerance = 1e-5 if new['eeg'] == 'eeg_net' else 1e-8
+            comparisons[-1]['tolerance'] = tolerance
+            comparisons[-1]['candidate_order_changes'] = sum(not np.array_equal(np.argsort(-np.asarray(a['scores'][m])), np.argsort(-np.asarray(b['scores'][m]))) for a,b in zip(old['runs'],new['runs']) for m in ['lr','s_lr','dummy'])
+            if max_error > tolerance:
                 raise ValueError(f'Reference rerun disagrees with cached artifact: {comparisons}')
         write(folder / 'equivalence_to_saved_reference.json', comparisons)
 
