@@ -11,8 +11,10 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import ShuffleSplit
 from sklearn.preprocessing import StandardScaler
 from method.cursor import _estimator
+from threadpoolctl import threadpool_limits
 
 
+@threadpool_limits.wrap(limits=1)
 def score_candidates(eeg, observed_faces, candidates, config):
     distances = np.linalg.norm(observed_faces[:, None, :] - candidates[None, :, :], axis=2)
     distances = StandardScaler().fit_transform(distances)
