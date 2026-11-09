@@ -31,7 +31,7 @@ def metric_specs():
             for exp, spec in ref.items()}
 
 
-def collect(results_dir: Path, design: str, split: str, groups=("reference", "variants", "shortcuts")):
+def collect(results_dir: Path, design: str, split: str, groups=("reference", "variants", "shortcuts", "probes")):
     attempts, status, per_session, control = {}, {}, {}, {}
     for group in groups:
         scores = load(results_dir / design / f"{split}_{group}.json")

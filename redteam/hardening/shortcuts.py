@@ -62,7 +62,7 @@ def _hidden_oracle(session_ids, candidates_by_id):
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--kind", required=True, choices=[
-        "centroid", "density", "catalogue", "eeg_lookup", "constant", "nan", "missing",
+        "centroid", "centrality", "density", "catalogue", "eeg_lookup", "constant", "nan", "missing",
         "scorefile_forgery", "hidden_oracle"])
     parser.add_argument("--sessions", required=True)
     parser.add_argument("--output", required=True)
@@ -85,6 +85,8 @@ def main() -> None:
             candidates = session["candidates"].astype(float)
             if args.kind == "centroid":
                 values = -np.linalg.norm(candidates - stimuli.mean(axis=0), axis=1)
+            elif args.kind == "centrality":
+                values = -cdist(candidates, candidates).mean(axis=1)
             elif args.kind == "density":
                 d = cdist(stimuli, candidates)
                 values = -np.sort(d, axis=0)[:20].mean(axis=0)

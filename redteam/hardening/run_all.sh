@@ -7,7 +7,7 @@ set -uo pipefail
 cd /home/user
 H=redteam/hardening
 OUT=${OUT:-$H/results}
-DESIGNS=${DESIGNS:-"k2 k2_n6000 k2_dense k3 k5"}
+DESIGNS=${DESIGNS:-"k2 k2_n6000 k2_dense k3 k5 s2"}
 SMOKE_ARGS=${SMOKE_ARGS:-}
 PAPER_ARGS=${PAPER_ARGS:-}
 mkdir -p "$OUT"
@@ -31,7 +31,7 @@ step paper_protocol python method/paper_protocol_check.py --output "$OUT/paper_p
 
 for d in $DESIGNS; do
   mkdir -p "$OUT/$d"
-  if [ "$d" = "k2" ]; then V=variants; S=shortcuts; else V=light_variants; S=light_shortcuts; fi
+  if [ "$d" = "k2" ] || [ "$d" = "s2" ]; then V=variants; S=shortcuts; else V=light_variants; S=light_shortcuts; fi
   for split in train test; do
     step ${d}_${split}_reference python eval/$split/evaluate_cursor.py --design $d \
       --solvers-dir $H/solvers/reference --scores "$OUT/$d/${split}_reference.json" \
@@ -45,6 +45,11 @@ for d in $DESIGNS; do
     --solvers-dir $H/solvers/$S --scores "$OUT/$d/test_shortcuts.json" $SMOKE_ARGS
   unset FORGE_PATH
 done
+
+# Geometry-prior probes on the Gaussian design (already-run designs keep their results).
+step k2_test_probes python eval/test/evaluate_cursor.py --design k2 \
+  --solvers-dir $H/solvers/probes --scores "$OUT/k2/test_probes.json" \
+  --per-session-out "$OUT/k2/test_probes_sessions.json" $SMOKE_ARGS
 
 if [ -z "$SMOKE_ARGS" ]; then
   step official_reproduce bash scripts/reproduce.sh

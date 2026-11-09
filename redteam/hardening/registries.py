@@ -23,6 +23,13 @@ REGISTRIES = {
         "better_cv100_smooth": SCORE + ["--estimator", "lr", "--n-splits", "100", "--smooth"],
         "better_loo": SCORE + ["--estimator", "lr", "--cv", "loo", "--n-splits", "20"],
         "weaker_quarter_data": SCORE + ["--estimator", "lr", "--subsample", "0.25"],
+        "shortcut_lr_plus_centrality_w03": SCORE + ["--estimator", "lr", "--centrality-weight", "0.3"],
+        "shortcut_lr_plus_centrality_w10": SCORE + ["--estimator", "lr", "--centrality-weight", "1.0"],
+    },
+    "probes": {
+        "shortcut_lr_plus_centrality_w03": SCORE + ["--estimator", "lr", "--centrality-weight", "0.3"],
+        "shortcut_lr_plus_centrality_w10": SCORE + ["--estimator", "lr", "--centrality-weight", "1.0"],
+        "shortcut_centrality": SHORT + ["--kind", "centrality"],
     },
     "light_variants": {
         "better_loo": SCORE + ["--estimator", "lr", "--cv", "loo", "--n-splits", "20"],
@@ -31,7 +38,7 @@ REGISTRIES = {
     },
     "shortcuts": {
         f"shortcut_{kind}": SHORT + ["--kind", kind]
-        for kind in ["centroid", "density", "catalogue", "eeg_lookup", "constant", "nan",
+        for kind in ["centroid", "centrality", "density", "catalogue", "eeg_lookup", "constant", "nan",
                      "missing", "scorefile_forgery", "hidden_oracle"]
     },
     "light_shortcuts": {

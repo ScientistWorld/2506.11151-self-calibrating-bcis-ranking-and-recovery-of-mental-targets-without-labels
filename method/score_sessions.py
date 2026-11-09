@@ -38,6 +38,8 @@ def main() -> None:
                         help="shufflesplit: paper's repeated 90/10 splits; loo: exact leave-one-out.")
     parser.add_argument("--smooth", action="store_true",
                         help="Kernel-average scores over neighbouring candidates.")
+    parser.add_argument("--centrality-weight", type=float, default=0.0,
+                        help="Audit probe only: blend in a no-EEG geometric centrality prior.")
     args = parser.parse_args()
 
     scores = {}
@@ -60,6 +62,11 @@ def main() -> None:
                                         seed=args.seed, estimator=estimator)
         if args.smooth:
             values = smooth_scores(values, candidates)
+        if args.centrality_weight:
+            cand = np.asarray(candidates, dtype=float)
+            spread = np.linalg.norm(cand[:, None, :] - cand[None, :, :], axis=2).mean(axis=1)
+            zscore = lambda v: (v - v.mean()) / (v.std() if v.std() > 0 else 1.0)  # noqa: E731
+            values = zscore(np.asarray(values)) - args.centrality_weight * zscore(spread)
         scores[session_id] = [float(v) for v in values]
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)

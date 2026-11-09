@@ -59,8 +59,12 @@ DESIGNS = {
     "k2_n6000": {"latent_dim": 2, "spread": 13.0, "n_observations": 6000},
     "k3": {"latent_dim": 3, "spread": 10.2, "n_observations": 3000},
     "k5": {"latent_dim": 5, "spread": 7.65, "n_observations": 3000},
+    # Homogeneous design: stimuli and candidates uniform on a 2-sphere of
+    # radius 17.3 (random 3-D subspace).  No candidate is a priori closer to a
+    # random target; mean candidate-target distance 23.07 (paper chance 23.08).
+    "s2": {"latent_dim": 3, "manifold": "sphere", "radius": 17.3, "n_observations": 3000},
 }
-DEFAULT_DESIGN = "k2"
+DEFAULT_DESIGN = "s2"
 EXPERIMENTS = {
     "unbiased_ranking_raw_eeg": "eeg_raw",
     "unbiased_ranking_eegnet": "eeg_net",
@@ -125,13 +129,19 @@ def _session_basis_eeg(eeg: np.ndarray, rng: np.random.Generator) -> np.ndarray:
     return (standardized @ q).astype(np.float32)
 
 
+def _sample_latents(rng: np.random.Generator, n: int, design: dict) -> np.ndarray:
+    if design.get("manifold") == "sphere":
+        x = rng.normal(size=(n, design["latent_dim"]))
+        return design["radius"] * x / np.linalg.norm(x, axis=1, keepdims=True)
+    return rng.normal(scale=design["spread"], size=(n, design["latent_dim"]))
+
+
 def make_sessions(pool: dict, design_name: str, seed: int, n_aligned: int,
                   n_control: int, n_observations: int | None = None) -> list[dict]:
     design = dict(DESIGNS[design_name])
     if n_observations is not None:
         design["n_observations"] = n_observations
     k = design["latent_dim"]
-    spread = design["spread"]
     n_obs = design["n_observations"]
     design_code = int(hashlib.sha256(design_name.encode()).hexdigest()[:8], 16)
     root = np.random.SeedSequence([seed, design_code])
@@ -140,8 +150,8 @@ def make_sessions(pool: dict, design_name: str, seed: int, n_aligned: int,
         rng = np.random.default_rng(child)
         center = rng.normal(size=LATENT_DIM)
         basis, _ = np.linalg.qr(rng.normal(size=(LATENT_DIM, k)))
-        obs = rng.normal(scale=spread, size=(n_obs, k))
-        cand = rng.normal(scale=spread, size=(N_CANDIDATES, k))
+        obs = _sample_latents(rng, n_obs, design)
+        cand = _sample_latents(rng, N_CANDIDATES, design)
         target = int(rng.integers(N_CANDIDATES))
         rows = _assign_rows(np.linalg.norm(obs - cand[target], axis=1), pool, rng)
         control = index >= n_aligned
