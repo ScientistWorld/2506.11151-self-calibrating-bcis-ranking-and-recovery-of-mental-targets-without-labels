@@ -1,0 +1,6 @@
+_cache/
+**/outputs/
+**/evaluation.log
+**/training.log
+**/fake_data.npz
+__pycache__/

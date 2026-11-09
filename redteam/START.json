@@ -1,0 +1,19 @@
+{
+  "head": "4d29b642c7c1d407760c53661778c02784a96aff",
+  "initial_status": " M README.md\n M manifest.json\n D trajectory/session.json\n D trajectory/turn_0001_raw.jsonl\n D trajectory/turn_0002_raw.jsonl\n D trajectory/turn_0003_raw.jsonl\n D trajectory/turn_0004_raw.jsonl\n D trajectory/turn_0005_raw.jsonl\n D trajectory/turn_0006_raw.jsonl\n D trajectory/turn_0007_raw.jsonl\n D trajectory/turn_0008_raw.jsonl\n D trajectory/turn_0009_raw.jsonl\n D trajectory/turn_0010_raw.jsonl\n D trajectory/turn_0011_raw.jsonl\n D trajectory/turn_0012_raw.jsonl\n D trajectory/turn_0013_raw.jsonl\n?? redteam/\n",
+  "reference_artifacts": [
+    "outputs/cursor_ranking.json",
+    "outputs/cursor_ranking_eegnet_n500.json"
+  ],
+  "reference_settings": {
+    "eeg_raw": {
+      "n_observations": 300,
+      "n_splits": 10
+    },
+    "eeg_net": {
+      "n_observations": 500,
+      "n_splits": 5
+    }
+  },
+  "allowed_source_note": "Shortcut implementations use visible data, visible train evaluator, and method artifacts. Existing trained outputs are reused as authorized; hidden files are only executed by unmodified evaluate_test.sh."
+}
