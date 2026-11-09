@@ -4,3 +4,5 @@ _cache/
 **/training.log
 **/fake_data.npz
 __pycache__/
+!job_evidence/**/checkpoints/
+!job_evidence/**/checkpoints/*.json

@@ -52,9 +52,11 @@ def evaluate(folder):
     No monkeypatches, background processes, environment changes, or test code
     imports survive to this subprocess. Test source is unchanged on disk.
     """
+    for name in ['scores_train.json', 'scores_test.json']:
+        (folder / name).unlink(missing_ok=True)
     with (folder / 'evaluation.log').open('w') as log:
         train = subprocess.run(['bash', 'scripts/evaluate_train.sh'], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
-        if (ROOT / 'scoring/scores_train.json').exists():
+        if train.returncode == 0 and (ROOT / 'scoring/scores_train.json').exists():
             shutil.copy2(ROOT / 'scoring/scores_train.json', folder / 'scores_train.json')
         # Never mistake a stale score file for a successful evaluation.
         if folder.name != 'shortcut_scorefile_forgery':
@@ -223,18 +225,36 @@ def shortcut(name, folder):
     write(folder / 'preparation.json', notes)
 
 
+def snapshot_workspace():
+    # Preserve pre-audit score files when replaying the suite on a fresh clone.
+    for name in ['scores_train.json', 'scores_test.json']:
+        source = ROOT / 'scoring' / name
+        backup = RT / '_cache/workspace/scoring' / name
+        if source.exists() and not backup.exists():
+            backup.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, backup)
+
+
 def restore_workspace():
     for name in NAMES:
-        shutil.copy2(RT / '_cache/original' / name, ROOT / 'outputs' / name)
+        source = RT / '_cache/original' / name
+        if source.exists():
+            (ROOT / 'outputs').mkdir(exist_ok=True)
+            shutil.copy2(source, ROOT / 'outputs' / name)
     # Root action and job entrypoint are restored by the audit agent when done.
     for name in ['scores_train.json', 'scores_test.json']:
-        shutil.copy2(RT / '_cache/workspace/scoring' / name, ROOT / 'scoring' / name)
+        source = RT / '_cache/workspace/scoring' / name
+        if source.exists():
+            shutil.copy2(source, ROOT / 'scoring' / name)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('name')
     args = parser.parse_args()
+    if args.name == 'snapshot':
+        snapshot_workspace()
+        return
     if args.name == 'restore':
         restore_workspace()
         return

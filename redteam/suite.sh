@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd /home/user
+python redteam/audit.py snapshot
 trap 'python redteam/audit.py restore' EXIT
 if [ ! -f redteam/equivalence.json ]; then
     python redteam/audit.py equivalence

@@ -1,0 +1,35 @@
+[hive] This stderr log is managed by Hive.
+[hive] job_id: 5c5f30dd
+[hive] host: node
+[hive] node_id: 06a144aa3ff15a212c5c6e99f2bd163d863d8a4caed927cff4c69623
+[hive] user: nexus/user (remote)
+[hive] resource: gpu-cpu-test
+[hive] gpus: 0
+[hive] cpus: 1
+[hive] workdir: /home/user
+[hive] timeout_sec: 21600
+[hive] started_at: 2026-11-09 06:09:32 EST
+[hive] command: apptainer exec --containall --cleanenv --env HF_HOME=/home/user/shared/hf_cache --env TRANSFORMERS_CACHE=/home/user/shared/hf_cache --env HF_DATASETS_CACHE=/home/user/shared/hf_cache/datasets --env TORCH_HOME=/home/user/shared/hf_cache/torch --bind /home/user/scratch/AgentWorkspaces/workspaces/2506.11151:/home/user --overlay /home/user/scratch/AgentWorkspaces/workspaces/2506.11151/environment/overlay.img:ro --bind /home/user/scratch/AgentWorkspaces/shared/datasets:/home/user/shared/datasets:ro --bind /home/user/scratch/AgentWorkspaces/shared/models:/home/user/shared/models:ro --bind /home/user/scratch/AgentWorkspaces/shared/hf_cache:/home/user/shared/hf_cache /home/user/scratch/AgentWorkspaces/workspaces/2506.11151/environment/container.sif bash -c 'cd /home/user && bash /home/user/scripts/run.sh'
+Traceback (most recent call last):
+  File "/home/user/redteam/audit.py", line 255, in <module>
+    main()
+  File "/home/user/redteam/audit.py", line 237, in main
+    equivalence_check()
+  File "/home/user/redteam/audit.py", line 92, in equivalence_check
+    np.testing.assert_allclose(a, b, rtol=1e-9, atol=1e-10)
+  File "/usr/local/lib/python3.11/site-packages/numpy/testing/_private/utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/usr/local/lib/python3.11/site-packages/numpy/testing/_private/utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-09, atol=1e-10
+
+Mismatched elements: 3 / 3 (100%)
+Mismatch at indices:
+ [0]: 1.0232155792054298 (ACTUAL), 1.0232156506349146 (DESIRED)
+ [1]: 1.0225123490580217 (ACTUAL), 1.0225122380354594 (DESIRED)
+ [2]: 0.9801513392372647 (ACTUAL), 0.9801516003562051 (DESIRED)
+Max absolute difference among violations: 2.6111894e-07
+Max relative difference among violations: 2.66406687e-07
+ ACTUAL: array([1.023216, 1.022512, 0.980151])
+ DESIRED: array([1.023216, 1.022512, 0.980152])

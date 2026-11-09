@@ -1,4 +1,8 @@
-action: submit
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
 gpus: 0
-test: true
-notes: "Resume four unfinished audit probes only (singleton test selection, forged score file, non-finite scores, null audit), preserving thirteen completed evaluations after worker loss; aggregate audit ranks and restore artifacts."
+test: false
+milestone: secondary_claims
+notes: ""
