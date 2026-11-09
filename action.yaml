@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: false
-notes: "Full hardening audit: equivalence, paper-protocol reproduction at N=9234, five session designs through train and hidden test (reference, better/weaker variants, shortcuts), official reproduction, report"
+notes: "Final audit on default sphere design incl. low-data experiment: reference, better/weaker variants, shortcuts through train and hidden test; k2 geometry-prior probes; official reproduction; report"
